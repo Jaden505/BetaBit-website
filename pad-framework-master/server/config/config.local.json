@@ -1,10 +1,10 @@
 {
   "database": {
-    "host": "",
+    "host": "localhost",
     "timeout": 30000,
-    "username": "",
+    "username": "root",
     "password": "",
-    "database": "",
+    "database": "pad_bbi_8_local",
     "connectionLimit": 1
   }
 }
