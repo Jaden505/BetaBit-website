@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Project Agile Development - Framework</title>
+
+    <link rel="shortcut icon" type="image/jpg" href="favicon.ico"/>
+
+    <!-- Load our stylesheets -->
+    <link href="assets/vendors/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/defaults.css" rel="stylesheet" />
+    <link href="assets/css/pages/welcome.css" rel="stylesheet" />
+
+    <!-- Load bootstrap, UI framework -->
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Only load the config of the API and the entry point of the app via regular script tags -->
+    <!-- Added .js files loaded via ES6 modules should not be added here but be referenced via ímport statement -->
+    <script src="api/config.js"></script>
+    <script src="assets/js/app.js" type="module"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navigation">
+        <!-- Loads navigation via JS -->
+    </div>
+
+    <!-- Page Content -->
+    <main class="content">
+        <!-- Loads content via JS -->
+    </main>
+
+    <footer id="sticky-footer" class="py-2 bg-light text-dark-50 border-top">
+        <div class="container text-center">
+            <small> &copy; HvA HBO-ICT 2021 | Ontwikkeld door Pim Meijer & Lennard Fonteijn</small>
+        </div>
+    </footer>
+</body>
+</html>

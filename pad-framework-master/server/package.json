@@ -1,0 +1,24 @@
+{
+    "name": "pad-server-app",
+    "displayName": "PAD server",
+    "description": "PAD server setup for HvA HBO-ICT",
+    "private": true,
+    "version": "2.0.0",
+    "devDependencies": {
+        "cypress": "9.1.1",
+        "nodemon": "2.0.15"
+    },
+    "dependencies": {
+        "body-parser": "1.19.0",
+        "express": "4.17.1",
+        "express-fileupload": "1.1.6",
+        "morgan": "1.10.0",
+        "multer": "1.4.4",
+        "mysql": "2.18.1"
+    },
+    "scripts": {
+        "start": "nodemon server.js",
+        "cy:open": "cypress open",
+        "cy:run": "cypress run"
+    }
+}

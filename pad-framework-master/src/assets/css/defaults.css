@@ -1,0 +1,16 @@
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar {
+    background-color: #2F72B9;
+}
+
+.bd-navbar .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    color: #cbbde2;
+}

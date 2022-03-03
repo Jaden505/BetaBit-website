@@ -1,0 +1,10 @@
+{
+  "database": {
+    "host": "",
+    "timeout": 30000,
+    "username": "",
+    "password": "",
+    "database": "",
+    "connectionLimit": 10
+  }
+}
