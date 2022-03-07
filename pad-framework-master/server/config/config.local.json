@@ -1,10 +1,10 @@
 {
   "database": {
-    "host": "localhost",
+    "host": "db.hbo-ict.cloud",
     "timeout": 30000,
-    "username": "root",
-    "password": "",
-    "database": "pad_bbi_8_local",
+    "username": "pad_bbi_8",
+    "password": "cyLz0nBmrSmlp9ql",
+    "database": "pad_bbi_8_dev",
     "connectionLimit": 1
   }
 }
