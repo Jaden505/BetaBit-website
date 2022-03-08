@@ -23,7 +23,7 @@ class calculatorRoute {
                 }
 
                 res.status(this.#errorCodes.HTTP_OK_CODE).json([
-                    "Calculator",
+                    "-Calculator-",
                     "Operator: " + calculationOperator,
                     "First number: " + req.params.firstNumber,
                     "Second number: " + req.params.secondNumber,
