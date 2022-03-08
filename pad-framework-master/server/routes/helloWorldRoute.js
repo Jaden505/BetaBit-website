@@ -17,7 +17,11 @@ class helloWorldRoute {
 
     #getHelloWorld() {
         this.#app.get("/hello_world/:helloWorldId", async (req, res) => {
-            res.status(this.#errorCodes.HTTP_OK_CODE).json("Hello World " + req.params.helloWorldId);
+            try {
+                res.status(this.#errorCodes.HTTP_OK_CODE).json("Hello World " + req.params.helloWorldId);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e})
+            }
         })
     }
 }
