@@ -13,7 +13,7 @@ class helloWorldRoute {
         this.#app = app;
 
         this.#getHelloWorld();
-    }s
+    }
 
     #getHelloWorld() {
         this.#app.get("/hello_world/:helloWorldId", async (req, res) => {
