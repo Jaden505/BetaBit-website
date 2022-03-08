@@ -17,7 +17,7 @@ class RoosterRoute {
     #getRoosterById() {
         this.#app.get("/rooster/:userId", async (req, res) => {
             try {
-                res.status(this.#errorCodes.HTTP_OK_CODE).json("Dit is het rooster van" + res.params.userId);
+                res.status(this.#errorCodes.HTTP_OK_CODE).json("Dit is het rooster van " + req.params.userId);
             } catch(e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e})
             }
