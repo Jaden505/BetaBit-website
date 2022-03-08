@@ -1,5 +1,5 @@
 /**
- * This is an example class to the route of a schedule
+ * This is an example class to the route of a schedule.
  *
  * @author Colin Laan
  */
