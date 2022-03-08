@@ -1,6 +1,6 @@
 class calculatorRoute {
-    #errorCodes = require("../framework/utils/httpErrorCodes")
-    #app
+    #errorCodes = require("../framework/utils/httpErrorCodes");
+    #app;
 
     constructor(app) {
         this.#app = app;
@@ -31,9 +31,9 @@ class calculatorRoute {
                     req.params.firstNumber + " " + calculationOperator + " " + req.params.secondNumber + " = " + result
                 ]);
             } catch (e) {
-                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e})
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }
-        })
+        });
     }
 }
 
