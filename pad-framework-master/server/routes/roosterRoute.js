@@ -5,13 +5,13 @@
  */
 
 class RoosterRoute {
-    #errorCodes = require("../framework/utils/httpErrorCodes")
-    #app
+    #errorCodes = require("../framework/utils/httpErrorCodes");
+    #app;
 
     constructor(app) {
         this.#app = app;
 
-        this.#getRoosterById()
+        this.#getRoosterById();
     }
 
     #getRoosterById() {
@@ -19,10 +19,10 @@ class RoosterRoute {
             try {
                 res.status(this.#errorCodes.HTTP_OK_CODE).json("Dit is het rooster van " + req.params.userId);
             } catch(e) {
-                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e})
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }
         });
     }
 }
 
-module.exports = RoosterRoute
+module.exports = RoosterRoute;
