@@ -5,6 +5,6 @@
     "username": "pad_bbi_8",
     "password": "cyLz0nBmrSmlp9ql",
     "database": "pad_bbi_8_dev",
-    "connectionLimit": 1
+    "connectionLimit": 10
   }
 }
