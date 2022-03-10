@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9b712b09-4b18-437e-94c0-996f8336747c" name="Changes" comment="" />
+    <list default="true" id="9b712b09-4b18-437e-94c0-996f8336747c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +12,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -26,6 +29,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -42,11 +46,24 @@
       <updated>1646677896785</updated>
       <workItem from="1646677903780" duration="8000" />
       <workItem from="1646677920208" duration="9009000" />
-      <workItem from="1646910348434" duration="1169000" />
+      <workItem from="1646910348434" duration="2129000" />
+      <workItem from="1646940436559" duration="636000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
