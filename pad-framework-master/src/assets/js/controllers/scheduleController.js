@@ -4,8 +4,8 @@
  * @author Jaden van Rijswijk
  */
 
-import {App} from "../app.js";
 import {Controller} from "./controller.js";
+import { App } from "../app.js";
 
 export class ScheduleController extends Controller{
     #scheduleView
@@ -14,6 +14,7 @@ export class ScheduleController extends Controller{
 
     constructor() {
         super();
+
         this.#setupView();
     }
 
@@ -25,6 +26,9 @@ export class ScheduleController extends Controller{
     async #setupView() {
         //await for when HTML is loaded
         this.#scheduleView = await super.loadHtmlIntoContent("html_views/schedule.html")
+
+        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
+        this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#loadCalendar();
     }

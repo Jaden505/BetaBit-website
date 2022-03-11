@@ -31,6 +31,10 @@ body {font-family: Verdana, sans-serif;}
     padding-top: 10px;
 }
 
+#new_event {
+    float: top;
+}
+
 .weekdays {
     margin: 0;
     padding: 10px 0;

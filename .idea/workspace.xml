@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b712b09-4b18-437e-94c0-996f8336747c" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/css/pages/schedule.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/assets/css/defaults.css" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/css/defaults.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/js/app.js" afterDir="false" />
@@ -9,6 +10,9 @@
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/html_views/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/html_views/navbar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/index.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/.gitignore" afterDir="false" />
+>>>>>>> ad8ca1f4acc542d5cd45a6c1935107952a3ca5f5
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +62,7 @@
       <workItem from="1646677903780" duration="8000" />
       <workItem from="1646677920208" duration="9009000" />
       <workItem from="1646910348434" duration="2129000" />
-      <workItem from="1646940436559" duration="636000" />
+      <workItem from="1646940436559" duration="1029000" />
     </task>
     <servers />
   </component>
