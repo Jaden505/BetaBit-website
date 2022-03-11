@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b712b09-4b18-437e-94c0-996f8336747c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/css/pages/schedule.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/assets/css/defaults.css" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/css/defaults.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/assets/js/controllers/scheduleController.js" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/assets/js/controllers/scheduleController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/html_views/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/html_views/navbar.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/html_views/schedule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pad-framework-master/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/pad-framework-master/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +20,7 @@
       <list>
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -34,7 +41,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
