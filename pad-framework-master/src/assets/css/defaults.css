@@ -1,20 +1,95 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v13/MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+}
+
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --red: #b70d31;
+    --dark-red: #9A102D;
+    --grey: #53535A;
+    --light-grey: #A5A6B3;
+}
+
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar-brand img {
+    height: 80px;
+}
+
+@media (min-width: 992px) {
+    .navbar-brand {
+        margin-right: 100px;
+    }
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav {
+        align-items: baseline;
+    }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--black);
+}
+
+.navbar-dark .navbar-nav .nav-link:focus {
+    color: var(--black);
+    text-decoration: underline;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--black);
+    text-decoration: underline;
+}
+
+.navbar-dark .navbar-nav .active .nav-link {
+    border-bottom: 2px solid var(--red);
+}
+
+@media (min-width: 992px) {
+    .navbar-dark .navbar-nav .nav-item {
+        margin-right: 25px;
+    }
+
+    .navbar-dark .navbar-nav .nav-item:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.border-bottom {
+    border-bottom: 1px solid #D7D8E2 !important;
+}
+
 footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-}
-
-.navbar {
-    background-color: #b70d31;;
-}
-
-.bd-navbar .navbar-nav .nav-link {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    color: #cbbde2;
-}
-
-.container {
-    padding: 30px;
 }

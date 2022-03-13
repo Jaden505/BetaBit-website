@@ -11,7 +11,7 @@ import { SessionManager } from "./framework/utils/sessionManager.js"
 import { LoginController } from "./controllers/loginController.js"
 import { NavbarController }  from "./controllers/navbarController.js"
 import { UploadController }  from "./controllers/uploadController.js"
-import { WelcomeController }  from "./controllers/welcomeController.js"
+import { DashboardController }  from "./controllers/dashboardController.js"
 import { ScheduleController }  from "./controllers/scheduleController.js"
 import { ChangeScheduleController }  from "./controllers/changeScheduleController.js"
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
@@ -25,7 +25,7 @@ export class App {
     static CONTROLLER_NAVBAR = "navbar";
     static CONTROLLER_LOGIN = "login";
     static CONTROLLER_LOGOUT = "logout";
-    static CONTROLLER_WELCOME = "welcome";
+    static CONTROLLER_DASHBOARD = "dashboard";
     static CONTROLLER_UPLOAD = "upload";
     static CONTROLLER_SCHEDULE = "schedule";
     static CONTROLLER_DEFAULT_SCHEDULE = "default_schedule";
@@ -36,7 +36,7 @@ export class App {
         App.loadController(App.CONTROLLER_NAVBAR);
 
         //Attempt to load the controller from the URL, if it fails, fall back to the welcome controller.
-        App.loadControllerFromUrl(App.CONTROLLER_WELCOME );
+        App.loadControllerFromUrl(App.CONTROLLER_DASHBOARD );
     }
 
     /**
@@ -61,7 +61,7 @@ export class App {
 
             case App.CONTROLLER_LOGIN:
                 App.setCurrentController(name);
-                App.isLoggedIn(() => new WelcomeController(), () => new LoginController());
+                App.isLoggedIn(() => new DashboardController(), () => new LoginController());
                 break;
 
             case App.CONTROLLER_LOGOUT:
@@ -69,9 +69,9 @@ export class App {
                 App.handleLogout();
                 break;
 
-            case App.CONTROLLER_WELCOME:
+            case App.CONTROLLER_DASHBOARD:
                 App.setCurrentController(name);
-                App.isLoggedIn(() => new WelcomeController(), () => new LoginController());
+                App.isLoggedIn(() => new DashboardController(), () => new LoginController());
                 break;
 
             case App.CONTROLLER_UPLOAD:
