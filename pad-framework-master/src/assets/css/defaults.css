@@ -138,8 +138,15 @@
     transform: rotate(180deg);
 }
 
-h1 {
+.divider {
+    width: 1.8125rem;
+    height: .25rem;
+    margin-bottom: 1.5625rem;
+    background-color: var(--red);
+}
 
+h1 {
+    color: var(--grey);
 }
 
 footer {
