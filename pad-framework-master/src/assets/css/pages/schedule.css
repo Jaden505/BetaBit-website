@@ -48,23 +48,7 @@ body {font-family: Verdana, sans-serif;}
     text-align: center;
 }
 
-.days {
-    padding: 10px 0;
-    background: #eee;
-    margin: 0;
-}
-
-.days li {
-    list-style-type: none;
-    display: inline-block;
-    width: 13.6%;
-    text-align: center;
-    margin-bottom: 5px;
-    font-size:12px;
-    color: #777;
-}
-
-.days li .active {
+.weekdays li .active {
     padding: 5px;
     background: #1abc9c;
     color: white !important
@@ -72,6 +56,14 @@ body {font-family: Verdana, sans-serif;}
 
 #year {
     font-size:18px;
+}
+
+.weekdays div {
+    background-color: lightgrey;
+    display: inline-block;
+    width: 13.6%;
+    height: 100%;
+    text-align: center;
 }
 
 /* Add media queries for smaller screens */
