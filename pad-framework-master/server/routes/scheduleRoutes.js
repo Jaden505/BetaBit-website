@@ -52,4 +52,4 @@ class ScheduleRoutes {
     }
 }
 
-module.exports = UsersRoutes
+module.exports = ScheduleRoutes
