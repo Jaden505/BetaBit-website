@@ -27,7 +27,7 @@ export class DashboardController extends Controller{
      */
     async #setupView() {
         //await for when HTML is loaded
-        this.#welcomeView = await super.loadHtmlIntoContent("html_views/welcome.html")
+        this.#welcomeView = await super.loadHtmlIntoContent("html_views/dashboard.html")
 
         //from here we can safely get elements from the view via the right getter
         this.#welcomeView.querySelector("span.name").innerHTML = App.sessionManager.get("username");
