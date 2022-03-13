@@ -16,34 +16,12 @@ export class ScheduleRepository {
         this.#networkManager = new NetworkManager();
     }
 
-    async getAll() {
-
-    }
-
     /**
-     * Async function that sends username and password to network manager which will send it to our back-end to see
-     * if a user is found with these credentials
+     * Async function that requests default schedule data to network manager which will send it to our back-end
      *
-     * POST request, so send data as an object which will be added to the body of the request by the network manager
-     * @param username
-     * @param password
-     * @returns {Promise<user>}
+     * GET request, because no given data is needed
      */
-    async login(username, password) {
-        return await this.#networkManager
-            .doRequest(`${this.#route}/default`, "POST", {"username": username, "password": password});
-    }
-
-    async delete() {
-
-    }
-
-    //example endpoint would be: /users/register
-    async register(username, password) {
-
-    }
-
-    async update(id, values = {}) {
-
+    async defaultSchedule() {
+        return await this.#networkManager.doRequest(`${this.#route}/default`, "GET");
     }
 }

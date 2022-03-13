@@ -4,16 +4,18 @@
  * @author Jaden van Rijswijk
  */
 
-import {Controller} from "./controller.js";
+import { Controller } from "./controller.js";
+import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import { App } from "../app.js";
 
 export class ScheduleController extends Controller{
     #scheduleView
-    #date = new Date();
-    #months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    #schedule
 
     constructor() {
         super();
+
+        this.#schedule = new ScheduleRepository();
 
         this.#setupView();
     }
@@ -27,19 +29,16 @@ export class ScheduleController extends Controller{
         //await for when HTML is loaded
         this.#scheduleView = await super.loadHtmlIntoContent("html_views/schedule.html")
 
+        // Redirect buttons
         this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
-        this.#loadCalendar();
+        this.#displaySchedule();
     }
 
-    #getMonthString() {
-        return this.#months[this.#date.getMonth()]
-    }
+    async #displaySchedule() {
+        const schedules = await this.#schedule.defaultSchedule();
 
-    #loadCalendar() {
-        // Loads year and month
-        document.getElementById("month").innerHTML = this.#getMonthString();
-        document.getElementById("year").innerHTML = this.#date.getFullYear();
+        console.log(schedules)
     }
 }

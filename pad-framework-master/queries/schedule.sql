@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS `defaultSchedules`
     PRIMARY KEY (`day`)
 );
 
+SELECT * FROM defaultSchedules;
+
 # INSERT INTO `schedules` VALUES ("Monday", "08:30:00", "18:00:00",  6, "Car", 0);
 # INSERT INTO `defaultSchedules` VALUES ("Monday", "08:00:00", "17:30:00",  6, "Car", 0);
 # INSERT INTO `defaultSchedules` VALUES ("Tuesday", "08:00:00", "17:30:00",  6, "Car", 0);

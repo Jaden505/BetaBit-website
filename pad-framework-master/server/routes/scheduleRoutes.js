@@ -21,29 +21,23 @@ class ScheduleRoutes {
     }
 
     /**
-     * Gets schedule from database and returns in json
+     * Gets schedule from database and returns to frontend in json
      * @private
      */
     #getSchedule() {
-        this.#app.post("/users/login", async (req, res) => {
-            const username = req.body.username;
-
-            //TODO: You shouldn't save a password unencrypted!! Improve this by using this.#cryptoHelper functions :)
-            const password = req.body.password;
-
+        this.#app.get("/schedule/default", async (req, res) => {
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                    query: "SELECT username, password FROM users WHERE username = ? AND password = ?",
-                    values: [username, password]
+                    query: "SELECT * FROM defaultSchedules;"
                 });
 
-                //if we founnd one record we know the user exists in users table
-                if (data.length === 1) {
-                    //return just the username for now, never send password back!
-                    res.status(this.#errorCodes.HTTP_OK_CODE).json({"username": data[0].username});
+                // If records found
+                if (data.length >= 1) {
+                    // returns default schedules
+                    res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
                 } else {
-                    //wrong username
-                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Wrong username or password"});
+                    // No default schedules found
+                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No schedules filled"});
                 }
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
