@@ -32,3 +32,68 @@
         margin-right: 0;
     }
 }
+
+.schedule-container-header {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid var(--gray);
+}
+
+@media (min-width: 992px) {
+    .schedule-container-header {
+        margin-top: 1.5rem;
+    }
+}
+
+.schedule-item {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem .25rem;
+    text-align: center;
+    color: var(--grey);
+    cursor: pointer;
+}
+
+@media (min-width: 992px) {
+    .schedule-item {
+        flex-direction: row;
+        padding: 1rem .5rem;
+    }
+}
+
+.schedule-item:first-of-type, .schedule-item:last-of-type {
+    padding: .5rem;
+}
+@media (min-width: 992px) {
+    .schedule-item:first-of-type, .schedule-item:last-of-type {
+        padding: 1rem;
+    }
+}
+
+.schedule-item .date {
+    color: var(--black);
+}
+
+.schedule-item:hover .date {
+    color: var(--red);
+}
+
+@media (min-width: 992px) {
+    .schedule-item .date {
+        padding: 0 .5rem;
+    }
+}
+
+.active-day {
+    background-color: var(--red);
+    color: var(--white);
+    cursor: default;
+}
+
+.active-day .date {
+    color: var(--gray);
+}
+
+.active-day:hover .date {
+    color: var(--gray);
+}
