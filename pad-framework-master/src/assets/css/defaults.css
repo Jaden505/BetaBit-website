@@ -125,13 +125,13 @@
 .breadcrumbs {
     display: flex;
     flex-direction: row;
-    padding: 10px 0 25px 0;
+    padding: 1rem 0 2rem 0;
     color: var(--gray);
     cursor: default;
 }
 
 .breadcrumbs-icon {
-    width: 20px;
+    width: 1.2rem;
 }
 
 .breadcrumbs .direction-icon img {
@@ -147,6 +147,20 @@
 
 h1 {
     color: var(--grey);
+}
+
+.buttons {
+    display: inline-block;
+    position: relative;
+    font-size: 1em;
+    padding: 1rem 1.5rem;
+    background-color: var(--red);
+    color: var(--white);
+    cursor: pointer;
+}
+
+.buttons:hover {
+    background-color: var(--dark-red);
 }
 
 footer {
