@@ -24,6 +24,7 @@
     --dark-red: #9A102D;
     --grey: #53535A;
     --light-grey: #A5A6B3;
+    --gray: #d7d8e2;
 }
 
 
@@ -119,6 +120,26 @@
 
 .border-bottom {
     border-bottom: 1px solid #D7D8E2 !important;
+}
+
+.breadcrumbs {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0 25px 0;
+    color: var(--gray);
+    cursor: default;
+}
+
+.breadcrumbs-icon {
+    width: 20px;
+}
+
+.breadcrumbs .direction-icon img {
+    transform: rotate(180deg);
+}
+
+h1 {
+
 }
 
 footer {
