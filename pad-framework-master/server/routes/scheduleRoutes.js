@@ -17,14 +17,14 @@ class ScheduleRoutes {
         this.#app = app;
 
         //call method per route for the users entity
-        this.#login()
+        this.#getSchedule()
     }
 
     /**
-     * Checks if passed username and password are found in db, if so let the front-end know
+     * Gets schedule from database and returns in json
      * @private
      */
-    #login() {
+    #getSchedule() {
         this.#app.post("/users/login", async (req, res) => {
             const username = req.body.username;
 
@@ -52,4 +52,4 @@ class ScheduleRoutes {
     }
 }
 
-module.exports = UsersRoutes
+module.exports = ScheduleRoutes;
