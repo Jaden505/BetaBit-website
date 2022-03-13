@@ -17,6 +17,16 @@
     src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v13/MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff) format('woff');
 }
 
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --red: #b70d31;
+    --dark-red: #9A102D;
+    --grey: #53535A;
+    --light-grey: #A5A6B3;
+}
+
+
 * {
     font-family: 'Open Sans', sans-serif;
 }
@@ -30,16 +40,16 @@
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: #000000;
+    color: var(--black);
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
-    color: #000000;
+    color: var(--black);
     text-decoration: underline;
 }
 
 .navbar-dark .navbar-nav .active .nav-link {
-    border-bottom: 2px solid #b70d31;
+    border-bottom: 2px solid var(--red);
 }
 
 footer {
