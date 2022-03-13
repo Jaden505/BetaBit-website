@@ -97,3 +97,21 @@
 .active-day:hover .date {
     color: var(--gray);
 }
+
+.schedule-container-content {
+    display: flex;
+    justify-content: center;
+    border: 2px solid var(--gray);
+    border-top: none;
+}
+
+.content-item {
+    padding: 2rem 0;
+    color: var(--grey);
+}
+
+.content-item p {
+    margin-bottom: 0;
+    padding: 0 .5rem .5rem .5rem;
+    border-bottom: 2px solid var(--red);
+}
