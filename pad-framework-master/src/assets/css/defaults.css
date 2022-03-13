@@ -52,6 +52,12 @@
     border: none;
 }
 
+@media (min-width: 992px) {
+    .navbar-dark .navbar-toggler {
+        display: none;
+    }
+}
+
 .navbar-toggler:focus {
     box-shadow: none;
 }
@@ -73,11 +79,13 @@
 
 .navbar-nav {
     align-items: center;
+    padding: 25px 0;
 }
 
 @media (min-width: 992px) {
     .navbar-nav {
         align-items: baseline;
+        padding: 0;
     }
 }
 
