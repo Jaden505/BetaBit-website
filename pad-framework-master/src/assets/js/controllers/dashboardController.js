@@ -9,7 +9,7 @@ import {RoomsExampleRepository} from "../repositories/roomsExampleRepository.js"
 import {App} from "../app.js";
 import {Controller} from "./controller.js";
 
-export class WelcomeController extends Controller{
+export class DashboardController extends Controller{
     #roomExampleRepository
     #welcomeView
 
