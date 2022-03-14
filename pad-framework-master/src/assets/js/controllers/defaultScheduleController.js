@@ -30,11 +30,16 @@ export class DefaultScheduleController extends Controller {
     #expandDayView() {
         const expandTab = this.#defaultScheduleView.getElementsByClassName("default-schedule-item")
         const expandableContent = this.#defaultScheduleView.getElementsByClassName("default-schedule-container-content")
+        const expandIcon = this.#defaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
             expandTab[i].addEventListener("click", function (){
-                // this.classList.toggle("acc-active");
                 expandableContent[i].classList.toggle("acc-active")
+                if (expandIcon[i].style.transform === "rotate(180deg)") {
+                    expandIcon[i].style.transform = "rotate(0)"
+                } else {
+                    expandIcon[i].style.transform = "rotate(180deg)"
+                }
                 let panel = expandableContent[i];
                 if (panel.style.maxHeight) {
                     panel.style.maxHeight = null;

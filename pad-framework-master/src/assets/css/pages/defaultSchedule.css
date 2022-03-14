@@ -119,12 +119,7 @@
     content: '\f107';
     float: right;
     margin-left: 5px;
-}
-
-.acc-active:after {
-    font-family: 'Font Awesome\ 5 Free';
-    font-weight: 900;
-    content: "\f106";
+    transform: rotate(180deg);
 }
 
 .default-schedule-container-content {
@@ -134,3 +129,4 @@
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
+
