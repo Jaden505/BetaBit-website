@@ -5,13 +5,15 @@
  * @author Jaden van Rijswijk
  */
 
-import {Controller} from "./controller.js";
+import { Controller } from "./controller.js";
+import { App } from "../app.js";
 
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
 
     constructor() {
         super();
+
         this.#setupView();
     }
 
@@ -23,6 +25,10 @@ export class DefaultScheduleController extends Controller {
     async #setupView() {
         //await for when HTML is loaded
         this.#defaultScheduleView = await super.loadHtmlIntoContent("html_views/defaultSchedule.html")
+
+        // Redirect buttons
+        this.#defaultScheduleView.querySelector("#currentSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_SCHEDULE));
+        this.#defaultScheduleView.querySelector("#editDefaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE));
 
         this.#expandDayView()
     }
