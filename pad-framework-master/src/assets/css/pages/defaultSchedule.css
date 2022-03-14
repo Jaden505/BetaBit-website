@@ -75,8 +75,6 @@
     .default-schedule-item {
         flex-direction: column;
         padding: 1rem .5rem;
-
-        width: calc(100% / 2);
     }
 }
 
