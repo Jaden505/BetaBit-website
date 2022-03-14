@@ -61,6 +61,7 @@
         width: calc(100% / 7);
         justify-content: center;
         padding: 1rem .5rem;
+        cursor: default;
     }
 }
 
@@ -84,6 +85,10 @@
 @media (min-width: 992px) {
     .schedule-item .date {
         padding: 0 .5rem;
+    }
+
+    .schedule-item:hover .date {
+        color: var(--black);
     }
 }
 
