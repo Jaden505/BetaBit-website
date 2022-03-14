@@ -4140,11 +4140,11 @@ pad\\_bbi\\_8\\_%|schema||pad_bbi_8||UPDATE|G</Grants>
     </column>
     <column id="972" parent="340" name="start_time">
       <Position>4</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
     </column>
     <column id="973" parent="340" name="end_time">
       <Position>5</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
     </column>
     <column id="974" parent="340" name="travel_distance">
       <Position>6</Position>
@@ -4234,11 +4234,11 @@ day</ColNames>
     </column>
     <column id="992" parent="343" name="start_time">
       <Position>4</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
     </column>
     <column id="993" parent="343" name="end_time">
       <Position>5</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>time|0s</DataType>
     </column>
     <column id="994" parent="343" name="travel_distance">
       <Position>6</Position>
@@ -4312,7 +4312,7 @@ date</ColNames>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="1009" parent="345" name="name">
+    <column id="1009" parent="345" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>

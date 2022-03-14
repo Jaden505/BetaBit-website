@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `pad_bbi_8_dev`.`defaultSchedules` (
   `user_email` VARCHAR(255) NOT NULL,
   `day` VARCHAR(45) NOT NULL,
   `type` INT NOT NULL,
-  `start_time` DATETIME NULL,
-  `end_time` DATETIME NULL,
+  `start_time` TIME NULL,
+  `end_time` TIME NULL,
   `travel_distance` DOUBLE NULL,
   `transport` INT NULL,
   INDEX `default_types_idx` (`type` ASC) VISIBLE,
@@ -107,8 +107,8 @@ CREATE TABLE IF NOT EXISTS `pad_bbi_8_dev`.`schedules` (
    `user_email` VARCHAR(255) NOT NULL,
    `date` DATE NOT NULL,
    `type` INT NOT NULL,
-   `start_time` DATETIME NULL,
-   `end_time` DATETIME NULL,
+   `start_time` TIME NULL,
+   `end_time` TIME NULL,
    `travel_distance` DOUBLE NULL,
    `transport` INT NULL,
    `emissions` INT(11) NOT NULL,
@@ -155,27 +155,5 @@ COMMIT;
 START TRANSACTION;
 USE `pad_bbi_8_dev`;
 INSERT INTO `pad_bbi_8_dev`.`users` (`email`, `name`, `password`, `role`) VALUES ('test@gmail.com', 'test', 'test', 2);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `pad_bbi_8_dev`.`transport`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `pad_bbi_8_dev`;
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (1, 'lopen', 0);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (2, 'fiets', 0);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (3, 'trein', 0);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (4, 'metro', 0);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (5, 'tram', 0);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (6, 'elektrische fiets', 3);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (7, 'elektrische scooter', 23);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (8, 'benzine scooter', 56);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (9, 'elektrische auto', 85);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (10, 'bus', 103);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (11, 'hybride auto', 128);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (12, 'diesel auto', 180);
-INSERT INTO `pad_bbi_8_dev`.`transport` (`id`, `name`, `emissions`) VALUES (13, 'bezine auto', 204);
 
 COMMIT;
