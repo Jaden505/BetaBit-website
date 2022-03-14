@@ -72,22 +72,9 @@
 
 @media (min-width: 992px) {
     .default-schedule-item {
-        flex-direction: row;
+        flex-direction: column;
+        width: 100%;
         padding: 1rem .5rem;
-    }
-}
-
-.default-schedule-item .date {
-    color: var(--black);
-}
-
-.default-schedule-item:hover .date {
-    color: var(--red);
-}
-
-@media (min-width: 992px) {
-    .default-schedule-item .date {
-        padding: 0 .5rem;
     }
 }
 
@@ -114,9 +101,6 @@
 }
 
 .default-schedule-container-content .expand-button:after {
-    font-family: 'Font Awesome\ 5 Free';
-    font-weight: 900;
-    content: '\f107';
     float: right;
     margin-left: 5px;
     transform: rotate(180deg);
