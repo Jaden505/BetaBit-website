@@ -37,7 +37,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 5vh;
+    padding-bottom: 1rem;
+    border: 1px solid var(--gray);
 }
 
 @media (min-width: 992px) {
@@ -49,33 +50,30 @@
 .default-schedule-item {
     display: flex;
     flex-direction: column;
+    width: calc(100% / 1.5);
     padding: .5rem .25rem;
     text-align: left;
     color: var(--grey);
     cursor: pointer;
+}
 
-    width: calc(100% / 1.5);
+@media (min-width: 992px) {
+    .default-schedule-item {
+        flex-direction: column;
+        width: auto;
+        padding: 1rem;
+    }
 }
 
 .default-schedule-item button {
     border: none;
     background-color: white;
     text-align: left;
-    padding-left: 3px;
     border-bottom: 2px solid var(--red);
 }
 
 .default-schedule-item img {
-    margin-left: 1.5vw;
-    width: 2vw;
-    height: 2.5vh;
-}
-
-@media (min-width: 992px) {
-    .default-schedule-item {
-        flex-direction: column;
-        padding: 1rem .5rem;
-    }
+    width: 1rem;
 }
 
 .day {
@@ -86,19 +84,26 @@
 
 @media (min-width: 992px) {
     .day {
-        width: calc(100% / 2);
+        width: calc(100% / 4.5);
+    }
+}
+
+.default-schedule-container-content {
+    background-color: var(--white);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+@media (min-width: 992px) {
+    .default-schedule-container-content {
+        width: calc(100% / 1.5);
     }
 }
 
 .default-schedule-container-content .content-item {
-    padding: 2rem 0;
+    padding: .2rem .5rem;
     color: var(--grey);
-}
-
-.default-schedule-container-content .content-item p {
-    margin-bottom: 0;
-    padding: 0 .5rem .5rem .5rem;
-    border-bottom: 1px solid var(--gray);
 }
 
 .default-schedule-container-content .container-btn {
@@ -117,12 +122,3 @@
     margin-left: 5px;
     transform: rotate(180deg);
 }
-
-.default-schedule-container-content {
-    padding: 0 18px;
-    background-color: white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}
-
