@@ -51,50 +51,52 @@ export class ScheduleController extends Controller{
         }
     }
 
-    #getCurrentDates() {
+    #getCurrentDates(date_type) {
         let curr = new Date;
         let dates = [];
 
         for (let i = 1; i <= 7; i++) {
-            let first = curr.getDate() - curr.getDay() + i
-            let day = new Date(curr.setDate(first)).toISOString().slice(8, 10);
+            let date;
+            let first = curr.getDate() - curr.getDay() + i;
 
-            dates.push(day);
+            if (date_type === "day") {
+                date = new Date(curr.setDate(first)).toISOString().slice(8, 10);
+            }
+            else if (date_type === "month") {
+                let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
+                date = this.#months[parseInt(month_decimal)-1];
+            }
+            else if (date_type === "date") {
+                date = new Date(curr.setDate(first)).toISOString().slice(0, 10);
+            }
+
+            dates.push(date);
         }
 
         return dates;
     }
 
-    #getCurrentMonth() {
-        let curr = new Date;
-        let month;
-
-        for (let i = 1; i <= 7; i++) {
-            let first = curr.getDate() - curr.getDay() + i
-            let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-
-            month = this.#months[parseInt(month_decimal)-1];
-        }
-
-        return month.toLowerCase();
-    }
-
     #displayCurrentDates() {
         let day_containers = document.getElementById("days_holder").children
-        let current_dates = this.#getCurrentDates();
-        let current_month = this.#getCurrentMonth();
+        let current_days = this.#getCurrentDates("day");
+        let current_months = this.#getCurrentDates("month");
 
         for (let i=0; i<7; i++) {
             let day = day_containers[i];
-            day.querySelector(".date").innerHTML = current_dates[i];
-            day.querySelector(".month").innerHTML = current_month;
+            day.querySelector(".date").innerHTML = current_days[i];
+            day.querySelector(".month").innerHTML = current_months[i];
         }
     }
 
     async #displaySchedule() {
-        const schedules = await this.#schedule.defaultSchedule();
+        const username = App.sessionManager.get("username");
 
-        schedules.forEach(function (schedule) {
+        console.log(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6])
+
+        const default_schedules = await this.#schedule.defaultSchedule(username);
+        const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], username);
+
+        default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_detail");
 
             if (schedule.type !== 4 && schedule.type !== 2) {

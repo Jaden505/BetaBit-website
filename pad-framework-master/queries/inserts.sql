@@ -37,3 +37,8 @@ INSERT INTO `defaultSchedules` VALUES ('test@gmail.com', 'Thurdsay', 1, '08:00:0
 INSERT INTO `defaultSchedules` VALUES ('test@gmail.com', 'Friday', 1, '08:00:00', '17:30:00',  6, 4);
 INSERT INTO `defaultSchedules` (user_email, day, type) VALUES ('test@gmail.com', 'Saturday', 4);
 INSERT INTO `defaultSchedules` (user_email, day, type) VALUES ('test@gmail.com', 'Sunday', 4);
+
+-- -----------------------------------------------------
+-- Data for table `pad_bbi_8_dev`.`schedules`
+-- -----------------------------------------------------
+INSERT INTO `schedules` VALUES ('test@gmail.com', '2022-03-18', 1, '08:00:00', '19:30:00', 12.02, 6, 12);
