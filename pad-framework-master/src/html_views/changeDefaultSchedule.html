@@ -1,90 +1,160 @@
 <div class="container">
-  <div class="breadcrumbs">
+    <div class="breadcrumbs">
         <span class="breadcrumbs-icon">
             <a href="#">
                 <img src="assets/img/dashboard.svg" alt="breadcrumbs dashboard icon">
             </a>
         </span>
-    <span class="breadcrumbs-icon direction-icon">
+        <span class="breadcrumbs-icon direction-icon">
             <img src="assets/img/arrow.svg" alt="breadcrumbs direction icon">
         </span>
-    <span class="breadcrumb-text">Rooster</span>
-    <span class="breadcrumbs-icon direction-icon">
+        <span class="breadcrumb-text">Rooster</span>
+        <span class="breadcrumbs-icon direction-icon">
             <img src="assets/img/arrow.svg" alt="breadcrumbs direction icon">
         </span>
-    <span class="breadcrumb-text">Standaard</span>
-  </div>
-
-  <div class="schedule-header">
-    <div class="schedule-buttons">
-      <div class="buttons" id="currentSchedule">Huidig rooster</div>
-      <div class="buttons" id="editDefaultSchedule">Bewerk standaard rooster</div>
+        <span class="breadcrumb-text">Standaard</span>
     </div>
 
-    <div>
-      <div class="divider"></div>
-      <h1>Standaard rooster</h1>
-    </div>
-  </div>
-  <div class="default-schedule-container">
-    <div class="default-schedule-container-list accordion-header">
-      <div class="default-schedule-item" id="monday">
-        <button class="day">Maandag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content accordion-item">
-          <div class="default-schedule-edit-item"><p>Werk op kantoor</p></div>
+    <div class="schedule-header">
+        <div class="schedule-buttons">
+            <div class="buttons" id="currentSchedule">Annuleren</div>
+            <div class="buttons" id="saveDefaultSchedule">Wijzigingen opslaan</div>
         </div>
-      </div>
-      <div class="default-schedule-item" id="tuesday">
-        <button class="day">Dinsdag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Werk bij de klant</p></div>
-        </div>
-      </div>
-      <div class="default-schedule-item" id="wednesday">
-        <button class="day">Woensdag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Online</p></div>
-        </div>
-      </div>
-      <div class="default-schedule-item" id="thursday">
-        <button class="day">Donderdag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Online</p></div>
-        </div>
-      </div>
-      <div class="default-schedule-item" id="friday">
-        <button class="day">Vrijdag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Werk bij de klant</p></div>
-        </div>
-      </div>
-      <div class="default-schedule-item" id="saturday">
-        <button class="day">Zaterdag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Geen werk</p></div>
-        </div>
-      </div>
-      <div class="default-schedule-item" id="sunday">
-        <button class="day">Zondag
-          <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
-        </button>
-        <div class="default-schedule-container-content">
-          <div class="default-schedule-edit-item"><p>Geen werk</p></div>
-        </div>
-      </div>
-    </div>
 
-  </div>
+        <div>
+            <div class="divider"></div>
+            <h1>Standaard rooster</h1>
+        </div>
+    </div>
+    <div class="default-schedule-container">
+        <div class="default-schedule-container-list">
+            <div class="default-schedule-item" id="monday">
+                <button class="day">Maandag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeMon">Type dag</label><select name="Type Dag" id="dayTypeMon"></select>
+                        <label for="dayStartMon">Starttijd</label><input type="time" id="dayStartMon" name="Starttijd">
+                        <label for="dayEndMon">Eindtijd</label><input type="time" id="dayEndMon" name="Eindtijd">
+                        <label for="travelDistanceMon">Reisafstand</label><input type="number" id="travelDistanceMon"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingMon">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingMon"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="tuesday">
+                <button class="day">Dinsdag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeTue">Type dag</label><select name="Type Dag" id="dayTypeTue"></select>
+                        <label for="dayStartTue">Starttijd</label><input type="time" id="dayStartTue" name="Starttijd">
+                        <label for="dayEndTue">Eindtijd</label><input type="time" id="dayEndTue" name="Eindtijd">
+                        <label for="travelDistanceTue">Reisafstand</label><input type="number" id="travelDistanceTue"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingTue">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingTue"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="wednesday">
+                <button class="day">Woensdag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeWed">Type dag</label><select name="Type Dag" id="dayTypeWed"></select>
+                        <label for="dayStartWed">Starttijd</label><input type="time" id="dayStartWed" name="Starttijd">
+                        <label for="dayEndWed">Eindtijd</label><input type="time" id="dayEndWed" name="Eindtijd">
+                        <label for="travelDistanceWed">Reisafstand</label><input type="number" id="travelDistanceWed"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingWed">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingWed"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="thursday">
+                <button class="day">Donderdag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeThu">Type dag</label><select name="Type Dag" id="dayTypeThu"></select>
+                        <label for="dayStartThu">Starttijd</label><input type="time" id="dayStartThu" name="Starttijd">
+                        <label for="dayEndThu"></label>Eindtijd<input type="time" id="dayEndThu" name="Eindtijd">
+                        <label for="travelDistanceThu">Reisafstand</label><input type="number" id="travelDistanceThu"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingThu">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingThu"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="friday">
+                <button class="day">Vrijdag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeFri">Type dag</label><select name="Type Dag" id="dayTypeFri"></select>
+                        <label for="dayStartFri">Starttijd</label><input type="time" id="dayStartFri" name="Starttijd">
+                        <label for="dayEndFri">Eindtijd</label><input type="time" id="dayEndFri" name="Eindtijd">
+                        <label for="travelDistanceFri">Reisafstand</label><input type="number" id="travelDistanceFri"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingFri">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingFri"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="saturday">
+                <button class="day">Zaterdag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeSat">Type dag</label><select name="Type Dag" id="dayTypeSat"></select>
+                        <label for="dayStartSat">Starttijd</label><input type="time" id="dayStartSat" name="Starttijd">
+                        <label for="dayEndSat">Eindtijd</label><input type="time" id="dayEndSat" name="Eindtijd">
+                        <label for="travelDistanceSat">Reisafstand</label><input type="number" id="travelDistanceSat"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingSat">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingSat"></select>
+                    </form>
+                </div>
+            </div>
+            <div class="default-schedule-item" id="sunday">
+                <button class="day">Zondag
+                    <img src="assets/img/dropdown-expand.svg" alt="expand-button" class="expand-img">
+                </button>
+            </div>
+            <div class="default-schedule-container-content">
+                <div class="default-schedule-edit-items">
+                    <form>
+                        <label for="dayTypeSun">Type dag</label><select name="Type Dag" id="dayTypeSun"></select>
+                        <label for="dayStartSun">Eindtijd</label><input type="time" id="dayStartSun" name="Starttijd">
+                        <label for="dayEndSun">Eindtijd</label><input type="time" id="dayEndSun" name="Eindtijd">
+                        <label for="travelDistanceSun">Reisafstand</label><input type="number" id="travelDistanceSun"
+                                                                      name="Reisafstand">
+                        <label for="wayOfTravellingSun">Vervoer</label><select name="Transportation"
+                                                                        id="wayOfTravellingSun"></select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

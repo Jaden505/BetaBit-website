@@ -68,6 +68,7 @@
 .schedule-item:first-of-type, .schedule-item:last-of-type {
     padding: .5rem;
 }
+
 @media (min-width: 992px) {
     .schedule-item:first-of-type, .schedule-item:last-of-type {
         padding: 1rem;
@@ -158,4 +159,26 @@
 
 .schedule-container-content .details-data {
     color: var(--black);
+}
+
+.default-schedule-edit-items form {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% / 2.5);
+    padding: 1.5vw;
+}
+
+@media (min-width: 992px) {
+    .default-schedule-edit-items form {
+        display: flex;
+        flex-direction: row;
+        width: calc(100% / 1);
+        padding: 1.5vw;
+    }
+
+    .default-schedule-edit-items label {
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+    }
 }
