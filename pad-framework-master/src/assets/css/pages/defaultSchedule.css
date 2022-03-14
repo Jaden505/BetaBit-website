@@ -96,7 +96,7 @@
     color: var(--grey);
 }
 
-.content-item p {
+.default-schedule-container-content .content-item p {
     margin-bottom: 0;
     padding: 0 .5rem .5rem .5rem;
     border-bottom: 1px solid var(--gray);
