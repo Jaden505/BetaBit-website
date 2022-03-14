@@ -90,12 +90,6 @@
     }
 }
 
-@media (min-width: 992px) {
-    .default-schedule-item:first-of-type, .default-schedule-item:last-of-type {
-        padding: 1rem;
-    }
-}
-
 .default-schedule-item .date {
     color: var(--black);
 }
