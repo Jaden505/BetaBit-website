@@ -1,6 +1,6 @@
 /**
  * Responsible for creating and editing the users personal default schedule.
- * The default schedule gets repeated every week and can be changed using changeScheduleController.
+ * The default schedule gets repeated every week and can be changed using changeDefaultScheduleController.
  *
  * @author Jaden van Rijswijk
  */

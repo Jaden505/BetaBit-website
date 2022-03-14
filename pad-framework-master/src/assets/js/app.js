@@ -15,6 +15,7 @@ import { DashboardController }  from "./controllers/dashboardController.js"
 import { ScheduleController }  from "./controllers/scheduleController.js"
 import { ChangeScheduleController }  from "./controllers/changeScheduleController.js"
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
+import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -30,6 +31,7 @@ export class App {
     static CONTROLLER_SCHEDULE = "schedule";
     static CONTROLLER_DEFAULT_SCHEDULE = "default_schedule";
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
+    static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
 
     constructor() {
         //Always load the navigation
@@ -90,6 +92,9 @@ export class App {
                 App.isLoggedIn(() => new ChangeScheduleController(),() => new LoginController());
                 break;
 
+            case App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE:
+                App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
+                break;
             default:
                 return false;
         }
