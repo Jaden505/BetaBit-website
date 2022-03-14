@@ -38,7 +38,7 @@
     flex-direction: column;
     justify-content: space-between;
     border: 2px solid var(--gray);
-    padding-bottom: 20vw;
+    padding-bottom: 5vh;
 }
 
 @media (min-width: 992px) {
@@ -66,8 +66,8 @@
 
 .default-schedule-item img {
     margin-left: 1.5vw;
-    width: 21px;
-    height: 15px;
+    width: 2vw;
+    height: 2.5vh;
 }
 
 @media (min-width: 992px) {
