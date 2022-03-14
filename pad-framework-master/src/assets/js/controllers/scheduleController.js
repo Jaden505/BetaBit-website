@@ -51,30 +51,43 @@ export class ScheduleController extends Controller{
         }
     }
 
-    #getcurrentDates() {
+    #getCurrentDates() {
         let curr = new Date;
         let dates = [];
 
         for (let i = 1; i <= 7; i++) {
             let first = curr.getDate() - curr.getDay() + i
+            let day = new Date(curr.setDate(first)).toISOString().slice(8, 10);
 
-            let day = new Date(curr.setDate(first)).toISOString().slice(8, 10)
-            let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-            let month = this.#months[parseInt(month_decimal)-1];
-
-            dates.push(day + " " + month)
+            dates.push(day);
         }
 
         return dates;
     }
 
+    #getCurrentMonth() {
+        let curr = new Date;
+        let month;
+
+        for (let i = 1; i <= 7; i++) {
+            let first = curr.getDate() - curr.getDay() + i
+            let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
+
+            month = this.#months[parseInt(month_decimal)-1];
+        }
+
+        return month.toLowerCase();
+    }
+
     #displayCurrentDates() {
         let day_containers = document.getElementById("days_holder").children
-        let current_dates = this.#getcurrentDates();
+        let current_dates = this.#getCurrentDates();
+        let current_month = this.#getCurrentMonth();
 
         for (let i=0; i<7; i++) {
             let day = day_containers[i];
-            day.querySelector(".date").innerHTML = current_dates[i]
+            day.querySelector(".date").innerHTML = current_dates[i];
+            day.querySelector(".month").innerHTML = current_month;
         }
     }
 
