@@ -32,6 +32,10 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.content {
+    margin-bottom: 5rem;
+}
+
 .navbar {
     padding: 0;
 }
