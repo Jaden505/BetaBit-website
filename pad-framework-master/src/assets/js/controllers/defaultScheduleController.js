@@ -7,8 +7,8 @@
 
 import {Controller} from "./controller.js";
 
-export class DefaultScheduleController extends Controller{
-    #scheduleView
+export class DefaultScheduleController extends Controller {
+    #defaultScheduleView
 
     constructor() {
         super();
@@ -22,6 +22,26 @@ export class DefaultScheduleController extends Controller{
      */
     async #setupView() {
         //await for when HTML is loaded
-        this.#scheduleView = await super.loadHtmlIntoContent("html_views/defaultSchedule.html")
+        this.#defaultScheduleView = await super.loadHtmlIntoContent("html_views/defaultSchedule.html")
+
+        this.#expandDayView()
+    }
+
+    #expandDayView() {
+        const expandTab = this.#defaultScheduleView.getElementsByClassName("default-schedule-item")
+        const expandableContent = this.#defaultScheduleView.getElementsByClassName("default-schedule-container-content")
+
+        for (let i = 0; i < expandTab.length; i++) {
+            expandTab[i].addEventListener("click", function (){
+                // this.classList.toggle("acc-active");
+                expandableContent[i].classList.toggle("acc-active")
+                let panel = expandableContent[i];
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            })
+        }
     }
 }

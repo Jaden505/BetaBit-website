@@ -56,7 +56,10 @@
     cursor: pointer;
 }
 
-.default-schedule-item span {
+.default-schedule-item button {
+    border: none;
+    background-color: white;
+    text-align: left;
     padding-left: 3px;
     border-bottom: 2px solid var(--red);
 }
@@ -65,22 +68,6 @@
     margin-left: 1.5vw;
     width: 21px;
     height: 15px;
-}
-
-.default-schedule-item .minimize-button {
-    display: none;
-}
-
-.default-schedule-item .expand-button {
-    display: none;
-}
-
-.default-schedule-item .minimize-button:active {
-    display: block;
-}
-
-.default-schedule-item .expand-button:active {
-    display: block;
 }
 
 @media (min-width: 992px) {
@@ -104,16 +91,6 @@
     }
 }
 
-.default-schedule-container-content {
-    display: none;
-}
-.default-schedule-container-content:active {
-    display: flex;
-    justify-content: center;
-    border: 2px solid var(--gray);
-    border-top: none;
-}
-
 .content-item {
     padding: 2rem 0;
     color: var(--grey);
@@ -123,4 +100,37 @@
     margin-bottom: 0;
     padding: 0 .5rem .5rem .5rem;
     border-bottom: 1px solid var(--gray);
+}
+
+.container-btn {
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.expand-button:after {
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900;
+    content: '\f107';
+    float: right;
+    margin-left: 5px;
+}
+
+.acc-active:after {
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900;
+    content: "\f106";
+}
+
+.default-schedule-container-content {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }
