@@ -76,14 +76,14 @@
     width: 1rem;
 }
 
-.day {
+.default-schedule-item .day {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 @media (min-width: 992px) {
-    .day {
+    .default-schedule-item .day {
         width: calc(100% / 4.5);
     }
 }
