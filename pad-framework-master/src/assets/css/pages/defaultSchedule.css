@@ -91,7 +91,7 @@
     }
 }
 
-.content-item {
+.default-schedule-container-content .content-item {
     padding: 2rem 0;
     color: var(--grey);
 }
@@ -102,7 +102,7 @@
     border-bottom: 1px solid var(--gray);
 }
 
-.container-btn {
+.default-schedule-container-content .container-btn {
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -113,7 +113,7 @@
     transition: 0.4s;
 }
 
-.expand-button:after {
+.default-schedule-container-content .expand-button:after {
     font-family: 'Font Awesome\ 5 Free';
     font-weight: 900;
     content: '\f107';
