@@ -36,7 +36,7 @@ export class ScheduleController extends Controller{
         this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
-        // this.#displaySchedule();
+        this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
     }
@@ -94,19 +94,20 @@ export class ScheduleController extends Controller{
     async #displaySchedule() {
         const schedules = await this.#schedule.defaultSchedule();
 
-        // `user_email` VARCHAR(255) NOT NULL,
-        //     `day` VARCHAR(45) NOT NULL,
-        //     `type` INT NOT NULL,
-        //     `start_time` TIME NULL,
-        //     `end_time` TIME NULL,
-        //     `travel_distance` DOUBLE NULL,
-        //     `transport` INT NULL,
-
         schedules.forEach(function (schedule) {
-            let day = document.getElementById(schedule.day);
-            let text = document.createTextNode(`Start tijd: ${schedule.type}Eind tijd: ${schedule.end_time}`);
+            let schedule_day = document.getElementById(schedule.day + "_detail");
 
-            day.appendChild(text);
+            if (schedule.type !== 4 && schedule.type !== 2) {
+                schedule_day.querySelector(".start-time").innerHTML = schedule.start_time.slice(0, 5);
+                schedule_day.querySelector(".end-time").innerHTML = schedule.end_time.slice(0, 5);
+                schedule_day.querySelector(".transport").innerHTML = schedule.transport;
+                schedule_day.querySelector(".emission").innerHTML = schedule.transport;
+            }
+            else {
+                schedule_day.innerHTML = `<div class="content-item-details">
+                <p class="details-label">Geen werk</p>
+            </div>`;
+            }
         });
     }
 }
