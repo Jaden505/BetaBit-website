@@ -11,6 +11,8 @@ import { App } from "../app.js";
 export class ScheduleController extends Controller{
     #scheduleView
     #schedule
+    #date = new Date();
+    #days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
 
     constructor() {
         super();
@@ -34,11 +36,18 @@ export class ScheduleController extends Controller{
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#displaySchedule();
+        this.#highlightDay();
+    }
+
+    #highlightDay() {
+        let day_containers = document.getElementById("days_holder").children
+        let today = this.#days[this.#date.getDay()];
+
+        for (let day in day_containers) {console.log(day.id, today)}
     }
 
     async #displaySchedule() {
         const schedules = await this.#schedule.defaultSchedule();
-
-        console.log(schedules)
+        let day_containers = document.getElementById("days_holder").children
     }
 }
