@@ -160,6 +160,11 @@
     color: var(--black);
 }
 
+.schedule-container-content .day-type {
+    padding-bottom: .5rem;
+    color: var(--grey);
+}
+
 .default-schedule-edit-items form {
     display: flex;
     flex-direction: column;
