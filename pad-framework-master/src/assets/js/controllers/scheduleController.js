@@ -1,7 +1,7 @@
 /**
  * Responsible for handling the actions happening on schedule view
  *
- * @author Jaden van Rijswijk
+ * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
 import { Controller } from "./controller.js";
@@ -45,6 +45,9 @@ export class ScheduleController extends Controller{
         }
     }
 
+    /**
+     * Checks which day is equal to today and highlights it.
+     */
     #highlightDay() {
         let day_containers = Array.from(document.getElementById("days_holder").children)
         let today = ScheduleController.days[this.#date.getDay()];
@@ -62,6 +65,11 @@ export class ScheduleController extends Controller{
         }
     }
 
+    /**
+     * Gets the current dates for all seven days of the week.
+     * @param date_type it can either be 'day', 'month' or 'date'
+     * @returns {*[]}
+     */
     #getCurrentDates(date_type) {
         let curr = new Date;
         let dates = [];
@@ -87,6 +95,9 @@ export class ScheduleController extends Controller{
         return dates;
     }
 
+    /**
+     * Displays the current dates for all seven days of the week, and also uses the first and last days of the week.
+     */
     #displayCurrentDates() {
         let day_containers = document.getElementById("days_holder").children
         let current_days = this.#getCurrentDates("day");
@@ -104,6 +115,9 @@ export class ScheduleController extends Controller{
         }
     }
 
+    /**
+     * Calculates the current week number of the year.
+     */
     #getWeekOfTheYear() {
         let currentDate = new Date();
         let oneJan = new Date(currentDate.getFullYear(),0,1);
@@ -134,6 +148,13 @@ export class ScheduleController extends Controller{
         });
     }
 
+    /**
+     * Gets the default schedule, and schedule from the db.
+     * It checks if the days exists in the schedule else it uses the default schedule day.
+     * at the end the schedule gets put in the corresponding html fields.
+     *
+     * @returns {Promise<void>}
+     */
     async #displaySchedule() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#schedule.defaultSchedule(email);
