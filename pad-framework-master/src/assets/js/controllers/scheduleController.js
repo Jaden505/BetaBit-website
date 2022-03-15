@@ -12,8 +12,8 @@ export class ScheduleController extends Controller{
     #scheduleView
     #schedule
     #date = new Date();
-    #days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
-    #months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
+    static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+    static months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
 
     constructor() {
         super();
@@ -44,7 +44,7 @@ export class ScheduleController extends Controller{
 
     #highlightDay() {
         let day_containers = Array.from(document.getElementById("days_holder").children)
-        let today = this.#days[this.#date.getDay()];
+        let today = ScheduleController.days[this.#date.getDay()];
 
         for (let day of day_containers) {
             // Highlight current day
@@ -65,7 +65,7 @@ export class ScheduleController extends Controller{
             }
             else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-                date = this.#months[parseInt(month_decimal)-1];
+                date = ScheduleController.months[parseInt(month_decimal)-1];
             }
             else if (date_type === "date") {
                 date = new Date(curr.setDate(first)).toISOString().slice(0, 10);
@@ -94,7 +94,7 @@ export class ScheduleController extends Controller{
         }
     }
 
-    #getWeekOfTheYear() {
+    static #getWeekOfTheYear() {
         let currentdate = new Date();
         let oneJan = new Date(currentdate.getFullYear(),0,1);
         let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
@@ -104,15 +104,30 @@ export class ScheduleController extends Controller{
     }
 
     async #displaySchedule() {
-        const username = App.sessionManager.get("username");
-
-        console.log(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6])
-
+        const username = App.sessionManager.get("email");
         const default_schedules = await this.#schedule.defaultSchedule(username);
         const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], username);
 
-        default_schedules.forEach(function (schedule) {
-            let schedule_day = document.getElementById(schedule.day + "_detail");
+        let day_schedules = schedules.slice(0);
+
+        day_schedules.forEach(function(part, index) {
+            let date = part.date;
+            this[index] = ScheduleController.days[new Date(date).getDay()]
+        }, day_schedules);
+
+        default_schedules.forEach(function (s) {
+            let schedule;
+            let schedule_day;
+
+            if (day_schedules.includes(s.day)) {
+                schedule = schedules[day_schedules.indexOf(s.day)];
+                schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
+            }
+            else {
+                schedule = s;
+                schedule_day = document.getElementById(s.day + "_detail");
+            }
+
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;

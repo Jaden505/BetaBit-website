@@ -21,11 +21,11 @@ export class ScheduleRepository {
      *
      * GET request, because no given data is needed
      */
-    async defaultSchedule(username) {
-        return await this.#networkManager.doRequest(`${this.#route}/default`, "POST", {"username": username});
+    async defaultSchedule(email) {
+        return await this.#networkManager.doRequest(`${this.#route}/default`, "POST", {"email": email});
     }
 
-    async Schedule(begin_date, end_date, username) {
-        return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"begin_date": begin_date, "end_date": end_date, "username": username});
+    async Schedule(begin_date, end_date, email) {
+        return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"begin_date": begin_date, "end_date": end_date, "email": email});
     }
 }

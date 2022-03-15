@@ -140,7 +140,7 @@ export class App {
      * @param whenNo - function to execute when user is logged in
      */
     static isLoggedIn(whenYes, whenNo) {
-        if (App.sessionManager.get("username")) {
+        if (App.sessionManager.get("email")) {
             whenYes();
         } else {
             whenNo();
@@ -151,7 +151,7 @@ export class App {
      * Removes username via sessionManager and loads the login screen
      */
     static handleLogout() {
-        App.sessionManager.remove("username");
+        App.sessionManager.remove("email");
 
         //go to login screen
         App.loadController(App.CONTROLLER_LOGIN);

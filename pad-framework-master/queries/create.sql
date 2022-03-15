@@ -111,7 +111,6 @@ CREATE TABLE IF NOT EXISTS `pad_bbi_8_dev`.`schedules` (
    `end_time` TIME NULL,
    `travel_distance` DOUBLE NULL,
    `transport` INT NULL,
-   `emissions` INT(11) NOT NULL,
    INDEX `schedule_dayType_idx` (`type` ASC) VISIBLE,
    INDEX `schedule_transport_idx` (`transport` ASC) VISIBLE,
    INDEX `schedule_user_email_idx` (`user_email` ASC) VISIBLE,

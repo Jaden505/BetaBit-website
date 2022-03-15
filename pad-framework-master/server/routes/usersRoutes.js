@@ -27,24 +27,24 @@ class UsersRoutes {
      */
     #login() {
         this.#app.post("/users/login", async (req, res) => {
-            const username = req.body.username;
+            const email = req.body.email;
 
             //TODO: You shouldn't save a password unencrypted!! Improve this by using this.#cryptoHelper functions :)
             const password = req.body.password;
 
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                    query: "SELECT username, password FROM users WHERE username = ? AND password = ?",
-                    values: [username, password]
+                    query: "SELECT email, password FROM users WHERE email = ? AND password = ?",
+                    values: [email, password]
                 });
 
                 //if we founnd one record we know the user exists in users table
                 if (data.length === 1) {
                     //return just the username for now, never send password back!
-                    res.status(this.#errorCodes.HTTP_OK_CODE).json({"username": data[0].username});
+                    res.status(this.#errorCodes.HTTP_OK_CODE).json({"email": data[0].email});
                 } else {
                     //wrong username
-                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Wrong username or password"});
+                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Wrong email or password"});
                 }
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});

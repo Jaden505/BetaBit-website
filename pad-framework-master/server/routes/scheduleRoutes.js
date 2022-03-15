@@ -27,12 +27,11 @@ class ScheduleRoutes {
      */
     #getDefaultSchedule() {
         this.#app.post("/schedule/default", async (req, res) => {
-            const username = req.body.username;
+            const email = req.body.email;
 
             try {
                 const data = await this.#databaseHelper.handleQuery({
                 query: `SELECT
-                            ds.user_email,
                             ds.day,
                             ds.type AS schedule_daytype_id,
                             ds.start_time,
@@ -44,15 +43,12 @@ class ScheduleRoutes {
                             t.id AS transport_id,
                             t.name AS transport,
                             t.emissions AS transport_emissions,
-                            t.icon,
-                            u.email,
-                            u.username
+                            t.icon
                         FROM defaultschedules ds
                                  INNER JOIN daytypes d on ds.type = d.id
                                  INNER JOIN transport t on ds.transport = t.id
-                                 INNER JOIN users u on ds.user_email = u.email
-                        WHERE u.username = ?;`,
-                values: [username]
+                        WHERE ds.user_email = ?;`,
+                values: [email]
             });
 
             // If records found
@@ -61,7 +57,7 @@ class ScheduleRoutes {
                 res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } else {
                 // No default schedules found
-                res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No schedules filled"});
+                res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No default schedules filled"});
             }
         } catch (e) {
             res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
@@ -75,17 +71,32 @@ class ScheduleRoutes {
      */
     #getSchedule() {
         this.#app.post("/schedule", async (req, res) => {
-            const username = req.body.username;
+            const email = req.body.email;
             const begin_date = req.body.begin_date;
             const end_date = req.body.end_date;
 
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                    query: `select * from schedules s
-                            inner join users u on u.username = ?
+                    query: `SELECT
+                                s.date,
+                                s.type AS schedule_daytype_id,
+                                s.start_time,
+                                s.end_time,
+                                s.travel_distance,
+                                s.transport AS schedule_transport_id,
+                                d.id AS daytype_id,
+                                d.name AS daytype,
+                                t.id AS transport_id,
+                                t.name AS transport,
+                                t.emissions AS transport_emissions,
+                                t.icon
+                            FROM schedules s
+                             INNER JOIN daytypes d on s.type = d.id
+                             INNER JOIN transport t on s.transport = t.id
                             where s.date >= ?
-                            and s.date <= ?;`,
-                    values: [username, begin_date, end_date]
+                            and s.date <= ?
+                            and s.user_email = ?;`,
+                    values: [begin_date, end_date, email]
                 });
 
             // If records found
