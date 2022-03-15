@@ -40,6 +40,9 @@ export class ScheduleController extends Controller{
         this.#displayCurrentDates();
         this.#highlightDay();
         this.#getWeekOfTheYear();
+        if (screen.width < 992) {
+            this.#createScheduleTabs();
+        }
     }
 
     #highlightDay() {
@@ -48,7 +51,14 @@ export class ScheduleController extends Controller{
 
         for (let day of day_containers) {
             // Highlight current day
-            if (day.id === today) {day.classList.add("active-day")}
+            if (day.id === today) {
+                day.classList.add("current-day");
+
+                if (screen.width < 992) {
+                    day.classList.add("selected-day");
+                    document.querySelector("#" + day.id + "_detail").classList.add("selected-day");
+                }
+            }
         }
     }
 
@@ -94,13 +104,34 @@ export class ScheduleController extends Controller{
         }
     }
 
-    static #getWeekOfTheYear() {
-        let currentdate = new Date();
-        let oneJan = new Date(currentdate.getFullYear(),0,1);
-        let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
-        let result = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
+    #getWeekOfTheYear() {
+        let currentDate = new Date();
+        let oneJan = new Date(currentDate.getFullYear(),0,1);
+        let numberOfDays = Math.floor((currentDate - oneJan) / (24 * 60 * 60 * 1000));
+        let result = Math.ceil(( currentDate.getDay() + 1 + numberOfDays) / 7);
 
         document.querySelector("#schedule-week").innerHTML = result;
+    }
+
+    /**
+     * Creates tabs for each schedule day.
+     */
+    #createScheduleTabs() {
+        const items = document.querySelectorAll(".schedule-item");
+        items.forEach(node => {
+            node.addEventListener("click", e => {
+                let activeTabs = document.querySelectorAll('.selected-day');
+
+                activeTabs.forEach(function(tab) {
+                    tab.className = tab.className.replace('selected-day', '');
+                });
+
+                // activate new tab and panel
+                e.currentTarget.className += ' selected-day';
+                let goodId = e.currentTarget.id + "_detail";
+                document.getElementById(goodId).className += ' selected-day';
+            });
+        });
     }
 
     async #displaySchedule() {
