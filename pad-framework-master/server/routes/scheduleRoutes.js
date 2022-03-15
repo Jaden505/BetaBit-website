@@ -2,7 +2,7 @@
  * This class contains ExpressJS routes specific for the users schedule
  * this file is automatically loaded in app.js
  *
- * @author Jaden van Rijswijk
+ * @author Jaden van Rijswijk & Dia Fortmeier
  */
 class ScheduleRoutes {
     #errorCodes = require("../framework/utils/httpErrorCodes")
