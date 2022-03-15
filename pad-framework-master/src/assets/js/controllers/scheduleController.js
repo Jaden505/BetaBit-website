@@ -13,7 +13,7 @@ export class ScheduleController extends Controller{
     #schedule
     #date = new Date();
     #days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
-    #months = ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
+    #months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
 
     constructor() {
         super();
@@ -39,6 +39,7 @@ export class ScheduleController extends Controller{
         this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
+        this.#getWeekOfTheYear();
     }
 
     #highlightDay() {
@@ -85,7 +86,21 @@ export class ScheduleController extends Controller{
             let day = day_containers[i];
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
+
+            document.querySelector("#first-weekDay").innerHTML =
+                "maandag " + current_days[0] + " " + current_months[i] + " " + new Date().getFullYear();
+            document.querySelector("#last-weekDay").innerHTML =
+                "zondag " + current_days[6] + " " + current_months[i] + " " + new Date().getFullYear();
         }
+    }
+
+    #getWeekOfTheYear() {
+        let currentdate = new Date();
+        let oneJan = new Date(currentdate.getFullYear(),0,1);
+        let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+        let result = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
+
+        document.querySelector("#schedule-week").innerHTML = result;
     }
 
     async #displaySchedule() {
