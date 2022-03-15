@@ -5,6 +5,7 @@
  */
 
 import {Controller} from "./controller.js";
+import { App } from "../app.js";
 
 export class ChangeDefaultScheduleController extends Controller {
     #changeDefaultScheduleView
@@ -22,6 +23,9 @@ export class ChangeDefaultScheduleController extends Controller {
     async #setupView() {
         //await for when HTML is loaded
         this.#changeDefaultScheduleView = await super.loadHtmlIntoContent("html_views/changeDefaultSchedule.html")
+
+        //Redirect buttons
+        this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#expandDayView()
     }
