@@ -89,21 +89,47 @@
 }
 
 .default-schedule-container-content {
+    display: flex;
+    flex-direction: column;
     background-color: var(--white);
     max-height: 0;
+    padding-top: .5rem;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
 
 @media (min-width: 992px) {
     .default-schedule-container-content {
+        flex-direction: row;
         width: calc(100% / 1.5);
     }
 }
 
 .default-schedule-container-content .content-item {
+    width: fit-content;
     padding: .2rem .5rem;
+    margin-bottom: .5rem;
     color: var(--grey);
+    border-bottom: 1px solid var(--light-grey);
+}
+
+@media (min-width: 992px) {
+    .default-schedule-container-content .content-item {
+        margin-bottom: 0;
+        margin-right: 2rem;
+    }
+
+    .default-schedule-container-content .content-item:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.default-schedule-container-content .content-item p {
+    margin-bottom: .2rem;
+}
+
+.default-schedule-container-content .content-item .item-data {
+    color: var(--black);
 }
 
 .default-schedule-container-content .container-btn {
