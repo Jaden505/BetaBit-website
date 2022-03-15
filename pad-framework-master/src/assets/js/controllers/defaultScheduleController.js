@@ -2,7 +2,7 @@
  * Responsible for creating and editing the users personal default schedule.
  * The default schedule gets repeated every week and can be changed using changeDefaultScheduleController.
  *
- * @author Jaden van Rijswijk
+ * @author Jaden van Rijswijk & Dia Fortmeier & Colin Laan
  */
 
 import { Controller } from "./controller.js";
@@ -65,6 +65,12 @@ export class DefaultScheduleController extends Controller {
         }
     }
 
+    /**
+     * Gets the default schedule from the db,
+     * and then displays the schedule in the corresponding html fields.
+     *
+     * @returns {Promise<void>}
+     */
     async #displaySchedule() {
         try {
             const email = App.sessionManager.get("email");
