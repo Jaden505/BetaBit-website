@@ -67,8 +67,8 @@ export class DefaultScheduleController extends Controller {
 
     async #displaySchedule() {
         try {
-            const username = App.sessionManager.get("username");
-            const default_schedules = await this.#defaultSchedule.defaultSchedule(username);
+            const email = App.sessionManager.get("email");
+            const default_schedules = await this.#defaultSchedule.defaultSchedule(email);
 
             default_schedules.forEach(function (schedule) {
 

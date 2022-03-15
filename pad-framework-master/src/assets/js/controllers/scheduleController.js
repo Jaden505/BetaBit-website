@@ -135,9 +135,9 @@ export class ScheduleController extends Controller{
     }
 
     async #displaySchedule() {
-        const username = App.sessionManager.get("email");
-        const default_schedules = await this.#schedule.defaultSchedule(username);
-        const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], username);
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#schedule.defaultSchedule(email);
+        const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], email);
 
         let day_schedules = schedules.slice(0);
 
