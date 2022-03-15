@@ -56,7 +56,7 @@ export class DefaultScheduleController extends Controller {
                     panel.style.maxHeight = null;
                 } else {
                     panel.style.maxHeight = "fit-content";
-                    pannel.style.paddingTop = ".5rem";
+                    panel.style.paddingTop = ".5rem";
                 }
             })
         }

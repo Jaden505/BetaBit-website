@@ -176,11 +176,11 @@
     .default-schedule-edit-items form {
         display: flex;
         flex-direction: row;
-        width: calc(100% / 1);
+        width: 100%;
         padding: 1.5vw;
     }
 
-    .default-schedule-edit-items label {
+    .default-schedule-edit-items label input select{
         padding: 0.5rem 0.5rem 0.5rem 1rem;
         display: flex;
         flex-direction: column;
