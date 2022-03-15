@@ -133,7 +133,6 @@
     padding: .5rem .25rem;
     text-align: center;
     color: var(--grey);
-    cursor: pointer;
 }
 
 @media (min-width: 992px) {

@@ -98,17 +98,21 @@ export class ScheduleController extends Controller{
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_detail");
+            let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
-            if (schedule.type !== 4 && schedule.type !== 2) {
+            if (schedule.schedule_daytype_id === 4 || schedule.schedule_daytype_id === 5) {
+                schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
+            } else if (schedule.schedule_daytype_id === 3) {
+                schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
                 schedule_day.querySelector(".start-time").innerHTML = schedule.start_time.slice(0, 5);
                 schedule_day.querySelector(".end-time").innerHTML = schedule.end_time.slice(0, 5);
+            } else {
+                schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
+                schedule_day.querySelector(".start-time").innerHTML = schedule.start_time.slice(0, 5);
+                schedule_day.querySelector(".end-time").innerHTML = schedule.end_time.slice(0, 5);
+                schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
                 schedule_day.querySelector(".transport").innerHTML = schedule.transport;
-                schedule_day.querySelector(".emission").innerHTML = schedule.transport;
-            }
-            else {
-                schedule_day.innerHTML = `<div class="content-item-details">
-                <p class="details-label">Geen werk</p>
-            </div>`;
+                schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
             }
         });
     }
