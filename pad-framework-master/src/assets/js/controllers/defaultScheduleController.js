@@ -6,13 +6,17 @@
  */
 
 import { Controller } from "./controller.js";
+import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import { App } from "../app.js";
 
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
+    #defaultSchedule
 
     constructor() {
         super();
+
+        this.#defaultSchedule = new ScheduleRepository();
 
         this.#setupView();
     }
@@ -30,7 +34,8 @@ export class DefaultScheduleController extends Controller {
         this.#defaultScheduleView.querySelector("#currentSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_SCHEDULE));
         this.#defaultScheduleView.querySelector("#editDefaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE));
 
-        this.#expandDayView()
+        await this.#displaySchedule();
+        this.#expandDayView();
     }
 
     #expandDayView() {
@@ -50,9 +55,44 @@ export class DefaultScheduleController extends Controller {
                 if (panel.style.maxHeight) {
                     panel.style.maxHeight = null;
                 } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    panel.style.maxHeight = "fit-content";
+                    pannel.style.paddingTop = ".5rem";
                 }
             })
+        }
+    }
+
+    async #displaySchedule() {
+        try {
+            const username = App.sessionManager.get("username");
+            const default_schedules = await this.#defaultSchedule.defaultSchedule(username);
+
+            default_schedules.forEach(function (schedule) {
+
+                let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
+                let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
+
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +
+                    schedule.daytype + "</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">Start tijd</p><p class=\"item-data\">" +
+                    schedule.start_time.slice(0, 5) + "</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">Eind tijd</p><p class=\"item-data\">" +
+                    schedule.end_time.slice(0, 5) + "</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">Reisafstand</p><p class=\"item-data\">" +
+                    schedule.travel_distance + " km</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">Vervoersmiddel</p><p class=\"item-data\">" +
+                    schedule.transport + "</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">CO2 uitstoot</p><p class=\"item-data\">" +
+                    totalEmissions + " g</p></div>";
+            });
+        } catch (e) {
+            console.log(e);
         }
     }
 }
