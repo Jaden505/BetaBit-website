@@ -25,6 +25,11 @@ export class ScheduleRepository {
         return await this.#networkManager.doRequest(`${this.#route}/default`, "POST", {"email": email});
     }
 
+    /**
+     * Async function that requests schedule data to network manager which will send it to our back-end
+     *
+     * POST request, because given data is needed
+     */
     async Schedule(begin_date, end_date, email) {
         return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"begin_date": begin_date, "end_date": end_date, "email": email});
     }
