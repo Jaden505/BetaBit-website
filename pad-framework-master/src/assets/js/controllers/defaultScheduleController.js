@@ -12,6 +12,8 @@ import { App } from "../app.js";
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
     #defaultSchedule
+    #date = new Date();
+    static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
 
     constructor() {
         super();
@@ -36,6 +38,7 @@ export class DefaultScheduleController extends Controller {
 
         await this.#displaySchedule();
         this.#expandDayView();
+        this.#openCurrentDay();
     }
 
     /**
@@ -62,6 +65,24 @@ export class DefaultScheduleController extends Controller {
                     panel.style.paddingTop = ".5rem";
                 }
             })
+        }
+    }
+
+    /**
+     * Checks which day it is today, and opens that accordion
+     */
+    #openCurrentDay() {
+        let defaultDayContainers = Array.from(document.getElementById("defaultScheduleList").children);
+        let today = DefaultScheduleController.days[this.#date.getDay()];
+
+        for (let defaultDay of defaultDayContainers) {
+            // open accordion of current day
+            if (defaultDay.id === today) {
+                defaultDay.children[0].children[0].style = "transform: rotate(180deg);";
+
+                defaultDay.children[1].classList.add("acc-active");
+                defaultDay.children[1].style = "max-height: fit-content; padding-top: 0.5rem;";
+            }
         }
     }
 
