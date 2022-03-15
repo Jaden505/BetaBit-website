@@ -31,7 +31,27 @@ class ScheduleRoutes {
 
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                query: `SELECT * FROM defaultSchedules d INNER JOIN users u on u.username = ?;`,
+                query: `SELECT
+                            ds.user_email,
+                            ds.day,
+                            ds.type AS schedule_daytype_id,
+                            ds.start_time,
+                            ds.end_time,
+                            ds.travel_distance,
+                            ds.transport AS schedule_transport_id,
+                            d.id AS daytype_id,
+                            d.name AS daytype,
+                            t.id AS transport_id,
+                            t.name AS transport,
+                            t.emissions AS transport_emissions,
+                            t.icon,
+                            u.email,
+                            u.username
+                        FROM defaultschedules ds
+                                 INNER JOIN daytypes d on ds.type = d.id
+                                 INNER JOIN transport t on ds.transport = t.id
+                                 INNER JOIN users u on ds.user_email = u.email
+                        WHERE u.username = ?;`,
                 values: [username]
             });
 
