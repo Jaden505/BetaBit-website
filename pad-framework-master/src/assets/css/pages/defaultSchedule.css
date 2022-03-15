@@ -116,7 +116,7 @@
 @media (min-width: 992px) {
     .default-schedule-container-content .content-item {
         margin-bottom: 0;
-        margin-right: 2rem;
+        margin-right: 0.5rem;
     }
 
     .default-schedule-container-content .content-item:last-of-type {
@@ -147,4 +147,38 @@
     float: right;
     margin-left: 5px;
     transform: rotate(180deg);
+}
+
+.default-schedule-edit-items form {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% / 2.5);
+    padding: 1vw;
+}
+
+@media (min-width: 992px) {
+    .default-schedule-edit-items form {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 5px;
+    }
+
+    .default-schedule-edit-items label input select {
+        padding: 0.5rem 0.5rem 0.25rem 0.25rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .default-schedule-edit-items label {
+        padding-bottom: 0.5rem;
+    }
+
+    .default-schedule-edit-items select {
+        border: none;
+    }
+
+    .default-schedule-edit-items .schedule-item {
+        border: none;
+    }
 }

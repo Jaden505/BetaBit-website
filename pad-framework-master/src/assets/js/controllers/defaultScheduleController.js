@@ -38,6 +38,9 @@ export class DefaultScheduleController extends Controller {
         this.#expandDayView();
     }
 
+    /**
+     * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
+     */
     #expandDayView() {
         const expandTab = this.#defaultScheduleView.getElementsByClassName("default-schedule-item")
         const expandableContent = this.#defaultScheduleView.getElementsByClassName("default-schedule-container-content")
