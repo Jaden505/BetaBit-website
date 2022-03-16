@@ -41,7 +41,11 @@ class UsersRoutes {
                 //if we founnd one record we know the user exists in users table
                 if (data.length === 1) {
                     //return just the username for now, never send password back!
-                    res.status(this.#errorCodes.HTTP_OK_CODE).json({"email": data[0].email});
+                    res.status(this.#errorCodes.HTTP_OK_CODE).json({
+                        "email": data[0].email,
+                        "username": data[0].username,
+                        "role": data[0].role
+                    });
                 } else {
                     //wrong username
                     res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Wrong email or password"});

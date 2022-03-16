@@ -151,7 +151,7 @@ export class App {
      * Removes username via sessionManager and loads the login screen
      */
     static handleLogout() {
-        App.sessionManager.remove("email");
+        App.sessionManager.remove("email", "username", "role");
 
         //go to login screen
         App.loadController(App.CONTROLLER_LOGIN);
