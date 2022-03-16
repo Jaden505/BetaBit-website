@@ -149,6 +149,31 @@ export class ScheduleController extends Controller{
     }
 
     /**
+     * Creates the right label for the transport icon.
+     * Checks if the transport has an type added to it.
+     * If it does then it returns the type.
+     * If it doesn't then it returns the full transport
+     *
+     * @param transport transport of the day
+     */
+    static #getTransportTypeLabel(transport) {
+        let transportLabel;
+        let transportList = transport.split(" ");
+
+        if (transportList.length > 1) {
+            transportLabel = transportList[0];
+
+            if (transportList[0] === "elektrische") {
+                transportLabel = transportLabel.slice(0, transportLabel.length - 1);
+            }
+        } else {
+            transportLabel = transport;
+        }
+
+        return transportLabel;
+    }
+
+    /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
@@ -182,11 +207,14 @@ export class ScheduleController extends Controller{
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
+            schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
             schedule_day.querySelector(".work-time").innerHTML =
                 schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
             schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
-            schedule_day.querySelector(".transport").innerHTML = schedule.transport;
+            schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
+            schedule_day.querySelector(".transport").innerHTML =
+                ScheduleController.#getTransportTypeLabel(schedule.transport);
             schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
         });
     }

@@ -169,16 +169,23 @@
     margin-top: 0;
 }
 
+.schedule-container-content .content-item-details .transport-icon,
+.schedule-container-content .content-item-details .type-icon {
+    font-size: 1.8rem;
+    color: var(--grey);
+}
+
 .schedule-container-content .details-label,
 .schedule-container-content .details-data {
     margin-bottom: 0;
 }
 
-.schedule-container-content .details-data {
-    color: var(--black);
+.schedule-container-content .content-item-details .transport,
+.schedule-container-content .content-item-details .day-type {
+    font-size: .8rem;
+    color: var(--grey);
 }
 
-.schedule-container-content .day-type {
-    padding-bottom: .5rem;
-    color: var(--grey);
+.schedule-container-content .details-data {
+    color: var(--black);
 }
