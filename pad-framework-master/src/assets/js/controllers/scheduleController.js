@@ -1,7 +1,7 @@
 /**
  * Responsible for handling the actions happening on schedule view
  *
- * @author Jaden van Rijswijk
+ * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
 import { Controller } from "./controller.js";
@@ -54,7 +54,14 @@ export class ScheduleController extends Controller{
 
         for (let day of day_containers) {
             // Highlight current day
-            if (day.id === today) {day.classList.add("active-day")}
+            if (day.id === today) {
+                day.classList.add("current-day");
+
+                if (screen.width < 992) {
+                    day.classList.add("selected-day");
+                    document.querySelector("#" + day.id + "_detail").classList.add("selected-day");
+                }
+            }
         }
     }
 
@@ -111,27 +118,13 @@ export class ScheduleController extends Controller{
     /**
      * Calculates the current week number of the year.
      */
-    static #getWeekOfTheYear() {
-        let currentdate = new Date();
-        let oneJan = new Date(currentdate.getFullYear(),0,1);
-        let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
-        let result = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
+    #getWeekOfTheYear() {
+        let currentDate = new Date();
+        let oneJan = new Date(currentDate.getFullYear(),0,1);
+        let numberOfDays = Math.floor((currentDate - oneJan) / (24 * 60 * 60 * 1000));
+        let result = Math.ceil(( currentDate.getDay() + 1 + numberOfDays) / 7);
 
         document.querySelector("#schedule-week").innerHTML = result;
-    }
-
-    /**
-     * @param day_schedules
-     * @returns {*}
-     * Returns all days where a schedule overwrites a defaultSchedule
-     */
-    #getScheduleDays(day_schedules) {
-        day_schedules.forEach(function(part, index) {
-            let date = part.date;
-            this[index] = ScheduleController.days[new Date(date).getDay()]
-        }, day_schedules);
-
-        return day_schedules
     }
 
     /**
@@ -163,12 +156,16 @@ export class ScheduleController extends Controller{
      * @returns {Promise<void>}
      */
     async #displaySchedule() {
-        const username = App.sessionManager.get("email");
-        const default_schedules = await this.#schedule.defaultSchedule(username);
-        const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], username);
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#schedule.defaultSchedule(email);
+        const schedules = await this.#schedule.Schedule(this.#getCurrentDates("date")[0], this.#getCurrentDates("date")[6], email);
 
-        let schedules_clone = schedules.slice();
-        let day_schedules = this.#getScheduleDays(schedules_clone);
+        let day_schedules = schedules.slice(0);
+
+        day_schedules.forEach(function(part, index) {
+            let date = part.date;
+            this[index] = ScheduleController.days[new Date(date).getDay()]
+        }, day_schedules);
 
         default_schedules.forEach(function (s) {
             let schedule;
@@ -176,12 +173,12 @@ export class ScheduleController extends Controller{
 
             if (day_schedules.includes(s.day)) {
                 schedule = schedules[day_schedules.indexOf(s.day)];
+                schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
             }
             else {
                 schedule = s;
+                schedule_day = document.getElementById(s.day + "_detail");
             }
-
-            schedule_day = document.getElementById(s.day + "_detail");
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
