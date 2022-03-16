@@ -183,8 +183,8 @@ export class ScheduleController extends Controller{
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
-            schedule_day.querySelector(".start-time").innerHTML = schedule.start_time.slice(0, 5);
-            schedule_day.querySelector(".end-time").innerHTML = schedule.end_time.slice(0, 5);
+            schedule_day.querySelector(".work-time").innerHTML =
+                schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
             schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
             schedule_day.querySelector(".transport").innerHTML = schedule.transport;
             schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
