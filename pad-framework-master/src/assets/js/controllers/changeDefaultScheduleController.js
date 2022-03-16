@@ -5,13 +5,18 @@
  */
 
 import {Controller} from "./controller.js";
-import { App } from "../app.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
 
 export class ChangeDefaultScheduleController extends Controller {
     #changeDefaultScheduleView
+    #changeDefaultSchedule
 
     constructor() {
         super();
+
+        this.#changeDefaultSchedule = new ScheduleRepository();
+
         this.#setupView();
     }
 
@@ -28,6 +33,7 @@ export class ChangeDefaultScheduleController extends Controller {
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#expandDayView()
+        this.#updateDefaultScheduleData()
     }
 
     /**
@@ -39,7 +45,7 @@ export class ChangeDefaultScheduleController extends Controller {
         const expandIcon = this.#changeDefaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
-            expandTab[i].addEventListener("click", function (){
+            expandTab[i].addEventListener("click", function () {
                 expandableContent[i].classList.toggle("acc-active")
                 if (expandIcon[i].style.transform === "rotate(180deg)") {
                     expandIcon[i].style.transform = "rotate(0)"
@@ -54,5 +60,40 @@ export class ChangeDefaultScheduleController extends Controller {
                 }
             })
         }
+    }
+
+    async #updateDefaultScheduleData() {
+        const email = App.sessionManager.get("email");
+        const here = this.#changeDefaultScheduleView;
+        const saveBtn = here.querySelector("#saveDefaultSchedule");
+        const day_start = here.querySelectorAll(".day-start")
+        const day_end = here.querySelectorAll(".day-end")
+        const distance = here.querySelectorAll(".distance-input")
+        const vehicle = here.querySelectorAll(".transport")
+        const type = here.querySelectorAll(".day-type")
+        const day = here.querySelectorAll(".day")
+
+        console.log(day)
+        console.log(vehicle)
+        console.log(day_end)
+
+        saveBtn.addEventListener("click", async e => {
+            for (let i = 0; i < 7; i++) {
+
+                console.log(day[i]);
+                console.log(vehicle[i]);
+                console.log(day_end[i]);
+                let dayValue = day[i];
+                let dayEndValue = day_end[i];
+                let dayStartValue = day_start[i];
+                let distanceValue = distance[i];
+                let vehicleValue = vehicle[i];
+                let typeValue = type[i];
+
+                await this.#changeDefaultSchedule
+                    .updateDefaultSchedule(dayStartValue, dayEndValue, distanceValue, vehicleValue, typeValue, email, dayValue)
+
+            }
+        });
     }
 }
