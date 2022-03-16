@@ -1,0 +1,247 @@
+<div class="container">
+    <div class="breadcrumbs">
+        <span class="breadcrumbs-icon">
+            <a href="#">
+                <img src="assets/img/dashboard.svg" alt="breadcrumbs dashboard icon">
+            </a>
+        </span>
+        <span class="breadcrumbs-icon direction-icon">
+            <img src="assets/img/arrow.svg" alt="breadcrumbs direction icon">
+        </span>
+        <span class="breadcrumb-text">Rooster</span>
+    </div>
+
+    <div class="schedule-header">
+        <div class="schedule-buttons">
+            <div class="buttons" id="changeSchedule">Wijzig rooster</div>
+            <div class="buttons" id="defaultSchedule">Standaard rooster</div>
+        </div>
+
+        <div>
+            <div class="divider"></div>
+            <h1>Rooster | week <span id="schedule-week"></span></h1>
+            <h2>
+                <span id="first-weekDay"></span> -
+                <span id="last-weekDay"></span>
+            </h2>
+        </div>
+    </div>
+    <div class="schedule-container">
+        <div class="schedule-container-header" id="days_holder">
+            <div class="schedule-item" id="monday">
+                <span class="day">Ma</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="tuesday">
+                <span class="day">Di</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="wednesday">
+                <span class="day">Wo</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="thursday">
+                <span class="day">Do</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="friday">
+                <span class="day">Vr</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="saturday">
+                <span class="day">Za</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+            <div class="schedule-item" id="sunday">
+                <span class="day">Zo</span>
+                <span class="date"></span>
+                <span class="month"></span>
+            </div>
+        </div>
+
+
+        <div class="schedule-container-content" id="schedule">
+            <div class="content-item" id="monday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="tuesday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="wednesday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="thursday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="friday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="saturday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+            <div class="content-item" id="sunday_detail">
+                <div class="content-item-details">
+                    <p class="details-data day-type"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Start tijd</p>
+                    <p class="details-data start-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">End tijd</p>
+                    <p class="details-data end-time"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Reisafstand</p>
+                    <p class="details-data travel-distance"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">Vervoersmiddel</p>
+                    <p class="details-data transport"></p>
+                </div>
+                <div class="content-item-details">
+                    <p class="details-label">CO2 uitstoot</p>
+                    <p class="details-data emission"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

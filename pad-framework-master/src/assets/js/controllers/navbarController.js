@@ -9,6 +9,7 @@ import {Controller} from "./controller.js";
 
 export class NavbarController extends Controller{
     #navbarView
+    #prevController
 
     constructor() {
         super();
@@ -42,12 +43,16 @@ export class NavbarController extends Controller{
         const clickedAnchor = event.target;
         const controller = clickedAnchor.dataset.controller;
 
+       // Highlights current page in navbar
+        if (this.#prevController != null) {this.#prevController.parentElement.classList.remove("active")}
+        this.#prevController = clickedAnchor;
+
         if(typeof controller === "undefined") {
             console.error("No data-controller attribute defined in anchor HTML tag, don't know which controller to load!")
             return false;
         }
 
-        //TODO: You should add highlighting of correct anchor when page is active :)
+        clickedAnchor.parentElement.classList.add("active")
 
         //Pass the action to a new function for further processing
         App.loadController(controller);

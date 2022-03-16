@@ -26,13 +26,13 @@ export class UsersRepository {
      * if a user is found with these credentials
      *
      * POST request, so send data as an object which will be added to the body of the request by the network manager
-     * @param username
+     * @param email
      * @param password
      * @returns {Promise<user>}
      */
-    async login(username, password) {
+    async login(email, password) {
         return await this.#networkManager
-            .doRequest(`${this.#route}/login`, "POST", {"username": username, "password": password});
+            .doRequest(`${this.#route}/login`, "POST", {"email": email, "password": password});
     }
 
     async delete() {
@@ -40,7 +40,7 @@ export class UsersRepository {
     }
 
     //example endpoint would be: /users/register
-    async register(username, password) {
+    async register(email, password) {
 
     }
 
