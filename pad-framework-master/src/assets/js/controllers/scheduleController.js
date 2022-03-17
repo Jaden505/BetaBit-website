@@ -198,6 +198,8 @@ export class ScheduleController extends Controller{
         }, day_schedules);
 
         default_schedules.forEach(function (s) {
+            const noTransportDays = [3, 4, 5];
+            const noWorkTimeDays = [4, 5];
             let schedule;
             let schedule_day;
 
@@ -215,7 +217,7 @@ export class ScheduleController extends Controller{
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
 
-            if (schedule.schedule_daytype_id === 4 || schedule.schedule_daytype_id === 5) {
+            if (noTransportDays.includes(schedule.schedule_daytype_id)) {
                 let noWorkDay = schedule_day.querySelector(".work-time").parentElement;
                 let dayDetails = noWorkDay.parentElement;
 
@@ -223,8 +225,12 @@ export class ScheduleController extends Controller{
                     dayDetails.removeChild(dayDetails.firstChild);
                 }
                 dayDetails.appendChild(noWorkDay);
-                noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
-
+                if (noWorkTimeDays.includes(schedule.schedule_daytype_id)) {
+                    noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
+                } else {
+                    schedule_day.querySelector(".work-time").innerHTML =
+                        schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
+                }
             } else {
                 schedule_day.querySelector(".work-time").innerHTML =
                     schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
