@@ -209,13 +209,26 @@ export class ScheduleController extends Controller{
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
-            schedule_day.querySelector(".work-time").innerHTML =
-                schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
-            schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
-            schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
-            schedule_day.querySelector(".transport").innerHTML =
-                ScheduleController.#getTransportTypeLabel(schedule.transport);
-            schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+
+            if (schedule.schedule_daytype_id === 4 || schedule.schedule_daytype_id === 5) {
+                let noWorkDay = schedule_day.querySelector(".work-time").parentElement;
+                let dayDetails = noWorkDay.parentElement;
+
+                while (dayDetails.firstChild) {
+                    dayDetails.removeChild(dayDetails.firstChild);
+                }
+                dayDetails.appendChild(noWorkDay);
+                noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
+
+            } else {
+                schedule_day.querySelector(".work-time").innerHTML =
+                    schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
+                schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
+                schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
+                schedule_day.querySelector(".transport").innerHTML =
+                    ScheduleController.#getTransportTypeLabel(schedule.transport);
+                schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+            }
         });
     }
 }
