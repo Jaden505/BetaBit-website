@@ -119,12 +119,17 @@ export class ScheduleController extends Controller{
      * Calculates the current week number of the year.
      */
     #getWeekOfTheYear() {
-        let currentDate = new Date();
-        let oneJan = new Date(currentDate.getFullYear(),0,1);
-        let numberOfDays = Math.floor((currentDate - oneJan) / (24 * 60 * 60 * 1000));
-        let result = Math.ceil(( currentDate.getDay() + 1 + numberOfDays) / 7);
+        Date.prototype.getWeekNumber = function(){
+            let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+            let dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            let yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+        };
 
-        document.querySelector("#schedule-week").innerHTML = result;
+        let weekNumber = (new Date().getWeekNumber());
+
+        document.querySelector("#schedule-week").innerHTML = weekNumber.toString();
     }
 
     /**
@@ -146,6 +151,31 @@ export class ScheduleController extends Controller{
                 document.getElementById(goodId).className += ' selected-day';
             });
         });
+    }
+
+    /**
+     * Creates the right label for the transport icon.
+     * Checks if the transport has an type added to it.
+     * If it does then it returns the type.
+     * If it doesn't then it returns the full transport
+     *
+     * @param transport transport of the day
+     */
+    static #getTransportTypeLabel(transport) {
+        let transportLabel;
+        let transportList = transport.split(" ");
+
+        if (transportList.length > 1) {
+            transportLabel = transportList[0];
+
+            if (transportList[0] === "elektrische") {
+                transportLabel = transportLabel.slice(0, transportLabel.length - 1);
+            }
+        } else {
+            transportLabel = transport;
+        }
+
+        return transportLabel;
     }
 
     /**
@@ -182,12 +212,28 @@ export class ScheduleController extends Controller{
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
+            schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
-            schedule_day.querySelector(".start-time").innerHTML = schedule.start_time.slice(0, 5);
-            schedule_day.querySelector(".end-time").innerHTML = schedule.end_time.slice(0, 5);
-            schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
-            schedule_day.querySelector(".transport").innerHTML = schedule.transport;
-            schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+
+            if (schedule.schedule_daytype_id === 4 || schedule.schedule_daytype_id === 5) {
+                let noWorkDay = schedule_day.querySelector(".work-time").parentElement;
+                let dayDetails = noWorkDay.parentElement;
+
+                while (dayDetails.firstChild) {
+                    dayDetails.removeChild(dayDetails.firstChild);
+                }
+                dayDetails.appendChild(noWorkDay);
+                noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
+
+            } else {
+                schedule_day.querySelector(".work-time").innerHTML =
+                    schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
+                schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
+                schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
+                schedule_day.querySelector(".transport").innerHTML =
+                    ScheduleController.#getTransportTypeLabel(schedule.transport);
+                schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+            }
         });
     }
 }
