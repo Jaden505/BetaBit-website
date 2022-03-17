@@ -119,12 +119,17 @@ export class ScheduleController extends Controller{
      * Calculates the current week number of the year.
      */
     #getWeekOfTheYear() {
-        let currentDate = new Date();
-        let oneJan = new Date(currentDate.getFullYear(),0,1);
-        let numberOfDays = Math.floor((currentDate - oneJan) / (24 * 60 * 60 * 1000));
-        let result = Math.ceil(( currentDate.getDay() + 1 + numberOfDays) / 7);
+        Date.prototype.getWeekNumber = function(){
+            let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+            let dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            let yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+        };
 
-        document.querySelector("#schedule-week").innerHTML = result;
+        let weekNumber = (new Date().getWeekNumber());
+
+        document.querySelector("#schedule-week").innerHTML = weekNumber.toString();
     }
 
     /**
