@@ -117,7 +117,7 @@ class ScheduleRoutes {
      * @private
      */
     #setDefaultSchedule() {
-        this.#app.put("/schedule", async (req, res) => {
+        this.#app.post("/schedule", async (req, res) => {
             const email = req.body.email;
             const type = req.body.day_type;
             const begin_date = req.body.begin_date;
@@ -145,7 +145,7 @@ class ScheduleRoutes {
                     res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
                 } else {
                     // No default schedules found
-                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No schedules filled"});
+                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Default schedule could not update"});
                 }
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});

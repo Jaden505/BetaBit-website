@@ -83,15 +83,9 @@ export class ChangeDefaultScheduleController extends Controller {
                 console.log(day[i]);
                 console.log(vehicle[i]);
                 console.log(day_end[i]);
-                let dayValue = day[i];
-                let dayEndValue = day_end[i];
-                let dayStartValue = day_start[i];
-                let distanceValue = distance[i];
-                let vehicleValue = vehicle[i];
-                let typeValue = type[i];
 
                 await this.#changeDefaultSchedule
-                    .updateDefaultSchedule(dayStartValue, dayEndValue, distanceValue, vehicleValue, typeValue, email, dayValue)
+                    .updateDefaultSchedule(type[i], day_start[i], day_end[i], distance[i], vehicle[i], email, day[i]);
 
             }
         });
