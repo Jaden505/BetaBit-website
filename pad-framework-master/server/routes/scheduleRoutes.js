@@ -117,7 +117,7 @@ class ScheduleRoutes {
      * @private
      */
     #setDefaultSchedule() {
-        this.#app.post("/schedule", async (req, res) => {
+        this.#app.put("/schedule/update/default", async (req, res) => {
             const email = req.body.email;
             const type = req.body.day_type;
             const begin_date = req.body.begin_date;
@@ -127,26 +127,19 @@ class ScheduleRoutes {
             const day = req.body.target_day;
 
             try {
-                const data = await this.#databaseHelper.handleQuery({
-                    query: `UPDATE defaultschedules
-                            SET type = ?,
+                await this.#databaseHelper.handleQuery({
+                    query: `UPDATE defaultSchedules ds
+                                INNER JOIN daytypes d on d.name = ?
+                                INNER JOIN transport t on t.name = ?
+                            SET type = d.id,
                                 start_time = ?,
                                 end_time = ?,
                                 travel_distance = ?,
-                                transport = ?
+                                transport = t.id
                             WHERE user_email = ? 
                             AND day = ?;`,
-                    values: [type, begin_date, end_date, distance, transport, email, day]
+                    values: [type, transport, begin_date, end_date, distance, email, day]
                 });
-
-                // If records found
-                if (data.length >= 1) {
-                    // returns default schedules
-                    res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
-                } else {
-                    // No default schedules found
-                    res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "Default schedule could not update"});
-                }
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }

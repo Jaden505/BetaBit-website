@@ -31,9 +31,10 @@ export class ChangeDefaultScheduleController extends Controller {
 
         //Redirect buttons
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
+        this.#changeDefaultScheduleView.querySelector("#saveDefaultSchedule").addEventListener("click", event => this.#updateDefaultScheduleData());
 
-        this.#expandDayView()
-        this.#updateDefaultScheduleData()
+        this.#expandDayView();
+        this.#fillChangeFields();
     }
 
     /**
@@ -64,30 +65,34 @@ export class ChangeDefaultScheduleController extends Controller {
 
     async #updateDefaultScheduleData() {
         const email = App.sessionManager.get("email");
-        const here = this.#changeDefaultScheduleView;
-        const saveBtn = here.querySelector("#saveDefaultSchedule");
-        const day_start = here.querySelectorAll(".day-start")
-        const day_end = here.querySelectorAll(".day-end")
-        const distance = here.querySelectorAll(".distance-input")
-        const vehicle = here.querySelectorAll(".transport")
-        const type = here.querySelectorAll(".day-type")
-        const day = here.querySelectorAll(".day")
+        const containers = document.querySelectorAll(".default-schedule-container-content")
+        let cds = this.#changeDefaultSchedule;
 
-        console.log(day)
-        console.log(vehicle)
-        console.log(day_end)
+        containers.forEach(async function (container) {
+            let day_start = container.querySelector(".day-start").value
+            let day_end = container.querySelector(".day-end").value
+            let distance = container.querySelector(".distance-input").value
+            let vehicle = container.querySelector(".transport").value
+            let type = container.querySelector(".day-type").value
+            let day = (container.id).substring(0, container.id.length -6);
 
-        saveBtn.addEventListener("click", async e => {
-            for (let i = 0; i < 7; i++) {
+            await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
+        });
+    }
 
-                console.log(day[i]);
-                console.log(vehicle[i]);
-                console.log(day_end[i]);
+    async #fillChangeFields() {
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
 
-                await this.#changeDefaultSchedule
-                    .updateDefaultSchedule(type[i], day_start[i], day_end[i], distance[i], vehicle[i], email, day[i]);
+        default_schedules.forEach(function (schedule) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
 
-            }
+            schedule_day.querySelector(".day-type").value = schedule.daytype;
+            schedule_day.querySelector(".day-start").value = schedule.start_time.slice(0, 5);
+            schedule_day.querySelector(".day-end").value = schedule.end_time.slice(0, 5);
+
+            schedule_day.querySelector(".distance-input").value = schedule.travel_distance;
+            schedule_day.querySelector(".transport").value = schedule.transport;
         });
     }
 }

@@ -31,7 +31,7 @@ export class ScheduleRepository {
      * PUT request because data is being sent
      */
     async updateDefaultSchedule(day_type, begin_date, end_date, distance, vehicle, email, target_day) {
-        return await this.#networkManager.doRequest(`${this.#route}`, "PUT",
+        return await this.#networkManager.doRequest(`${this.#route}/update/default`, "PUT",
             {"begin_date": begin_date, "end_date": end_date, "email": email,
                 "distance": distance, "vehicle": vehicle, "day_type": day_type, "target_day": target_day});
     }
