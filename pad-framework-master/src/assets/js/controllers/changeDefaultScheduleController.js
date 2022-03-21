@@ -5,13 +5,18 @@
  */
 
 import {Controller} from "./controller.js";
-import { App } from "../app.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
 
 export class ChangeDefaultScheduleController extends Controller {
     #changeDefaultScheduleView
+    #changeDefaultSchedule
 
     constructor() {
         super();
+
+        this.#changeDefaultSchedule = new ScheduleRepository();
+
         this.#setupView();
     }
 
@@ -26,8 +31,10 @@ export class ChangeDefaultScheduleController extends Controller {
 
         //Redirect buttons
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
+        this.#changeDefaultScheduleView.querySelector("#saveDefaultSchedule").addEventListener("click", event => this.#updateDefaultScheduleData());
 
-        this.#expandDayView()
+        this.#expandDayView();
+        this.#fillChangeFields();
     }
 
     /**
@@ -39,7 +46,7 @@ export class ChangeDefaultScheduleController extends Controller {
         const expandIcon = this.#changeDefaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
-            expandTab[i].addEventListener("click", function (){
+            expandTab[i].addEventListener("click", function () {
                 expandableContent[i].classList.toggle("acc-active")
                 if (expandIcon[i].style.transform === "rotate(180deg)") {
                     expandIcon[i].style.transform = "rotate(0)"
@@ -54,5 +61,38 @@ export class ChangeDefaultScheduleController extends Controller {
                 }
             })
         }
+    }
+
+    async #updateDefaultScheduleData() {
+        const email = App.sessionManager.get("email");
+        const containers = document.querySelectorAll(".default-schedule-container-content")
+        let cds = this.#changeDefaultSchedule;
+
+        containers.forEach(async function (container) {
+            let day_start = container.querySelector(".day-start").value
+            let day_end = container.querySelector(".day-end").value
+            let distance = container.querySelector(".distance-input").value
+            let vehicle = container.querySelector(".transport").value
+            let type = container.querySelector(".day-type").value
+            let day = (container.id).substring(0, container.id.length -6);
+
+            await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
+        });
+    }
+
+    async #fillChangeFields() {
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+
+        default_schedules.forEach(function (schedule) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
+
+            schedule_day.querySelector(".day-type").value = schedule.daytype;
+            schedule_day.querySelector(".day-start").value = schedule.start_time.slice(0, 5);
+            schedule_day.querySelector(".day-end").value = schedule.end_time.slice(0, 5);
+
+            schedule_day.querySelector(".distance-input").value = schedule.travel_distance;
+            schedule_day.querySelector(".transport").value = schedule.transport;
+        });
     }
 }
