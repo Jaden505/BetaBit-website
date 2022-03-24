@@ -20,6 +20,7 @@ class ScheduleRoutes {
         this.#getDefaultSchedule()
         this.#getSchedule()
         this.#setDefaultSchedule()
+        this.#setSchedule()
     }
 
     /**
@@ -129,6 +130,48 @@ class ScheduleRoutes {
                             WHERE user_email = ? 
                             AND day = ?;`,
                     values: [type, transport, begin_date, end_date, distance, email, day]
+                });
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * sets a new schedule in the database using json
+     * @private
+     */
+    #setSchedule() {
+        this.#app.put("/schedule/update", async (req, res) => {
+            const email = req.body.email;
+            const date = req.body.date;
+            const type = req.body.day_type;
+            const start_time = req.body.begin_date;
+            const end_time = req.body.end_date;
+            const distance = req.body.distance;
+            const transport = req.body.vehicle;
+
+            try {
+                await this.#databaseHelper.handleQuery({
+                    query: `INSERT INTO schedules (user_email, date, 
+                                    type, start_time, end_time, travel_distance, transport)
+                            SELECT ?, ?, d.id, ?, ?, ?, t.id
+                            FROM schedules
+                                     INNER JOIN daytypes d on d.name = ?
+                                     INNER JOIN transport t on t.name = ?
+
+                            ON DUPLICATE KEY UPDATE
+                                     user_email = ?,
+                                     date = ?,
+                                     type = d.id,
+                                     start_time = ?,
+                                     end_time = ?,
+                                     travel_distance = ?,
+                                     transport = t.id;
+                    `,
+                    values: [email, date, start_time, end_time, distance,
+                        type, transport,
+                        email, date, start_time, end_time, distance]
                 });
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
