@@ -212,6 +212,13 @@ export class ScheduleController extends Controller {
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
+
+            /**
+             * calculates how much points you get
+             * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
+             * with the first number being the amount of points per KM and the second number being the point cap.
+             */
+
             function pointCalculator(transport, distance) {
                 let number
                 const loopVar = [150, 700];
@@ -332,11 +339,6 @@ export class ScheduleController extends Controller {
 
 
     }
-    /**
-     * calculates how much points you get
-     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
-     * with the first number being the amount of points per KM and the second number being the point cap.
-     */
 
 
 }
