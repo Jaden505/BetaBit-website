@@ -20,6 +20,6 @@
         "start": "nodemon server.js",
         "cy:open": "cypress open",
         "cy:run": "cypress run",
-        "doc": "jsdoc -v jsdoc.json"
+        "doc": "jsdoc -c jsdoc.json"
     }
 }
