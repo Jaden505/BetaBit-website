@@ -176,7 +176,6 @@ export class ScheduleController extends Controller {
     }
 
 
-
     /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
@@ -197,145 +196,164 @@ export class ScheduleController extends Controller {
         }, day_schedules);
 
         default_schedules.forEach(function (s) {
-            const noTransportDays = [3, 4, 5];
-            const noWorkTimeDays = [4, 5];
-            let schedule;
-            let schedule_day;
+                const noTransportDays = [3, 4, 5];
+                const noWorkTimeDays = [4, 5];
+                let schedule;
+                let schedule_day;
 
-            if (day_schedules.includes(s.day)) {
-                schedule = schedules[day_schedules.indexOf(s.day)];
-                schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
-            } else {
-                schedule = s;
-                schedule_day = document.getElementById(s.day + "_detail");
-            }
+                if (day_schedules.includes(s.day)) {
+                    schedule = schedules[day_schedules.indexOf(s.day)];
+                    schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
+                } else {
+                    schedule = s;
+                    schedule_day = document.getElementById(s.day + "_detail");
+                }
 
-            let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-
-
-            /**
-             * calculates how much points you get
-             * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
-             * with the first number being the amount of points per KM and the second number being the point cap.
-             */
-
-            function pointCalculator(transport, distance) {
-                let number
-                const loopVar = [150, 700];
-                const fietsVar = [75, 700];
-                const elFietsVar = [70, 750];
-                const scooterVar = [30, 500];
-                const elScooterVar = [35, 550];
-                const oVVar = [25, 500];
-                const treinVar = [20, 400];
-                const elAutoVar = [7, 450];
-                const autoVar = [6, 400];
-                const hybrideAutoVar = [6, 450];
-                const onlineVar = [0, 0];
-                let voertuig = transport;
+                let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
 
 
-                if (voertuig === "lopen") {
-                    number = distance * loopVar[0];
-                    if (number > loopVar[1]) {
-                        number = loopVar[1];
+                /**
+                 * calculates how much points you get
+                 * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
+                 * with the first number being the amount of points per KM and the second number being the point cap.
+                 */
+
+                function pointCalculator(transport, distance) {
+                    let number
+                    const loopVar = [150, 700];
+                    const fietsVar = [75, 700];
+                    const elFietsVar = [70, 750];
+                    const scooterVar = [30, 500];
+                    const elScooterVar = [35, 550];
+                    const oVVar = [25, 500];
+                    const treinVar = [20, 400];
+                    const elAutoVar = [7, 450];
+                    const autoVar = [6, 400];
+                    const hybrideAutoVar = [6, 450];
+                    const onlineVar = [0, 0];
+                    let voertuig = transport;
+
+                    switch (voertuig) {
+                        case "lopen":
+                            number = distance * loopVar[0];
+                            if (number > loopVar[1]) {
+                                number = loopVar[1];
+                            }
+                            break;
+                        case    "fiets":
+                            number = distance * fietsVar[0];
+                            if (number > fietsVar[1]) {
+                                number = fietsVar[1];
+
+                            }
+                            break;
+                        case  "elektrische fiets":
+                            number = distance * elFietsVar[0];
+                            if (number > elFietsVar[1]) {
+                                number = elFietsVar[1];
+                            }
+                            break;
+                        case     "scooter":
+                            number = distance * scooterVar[0];
+                            if (number > scooterVar[1]) {
+                                number = scooterVar[1];
+                            }
+                            break;
+
+
+                        case   "elektrische scooter":
+                            number = distance * elScooterVar[0];
+                            if (number > elScooterVar[1]) {
+                                number = elScooterVar[1];
+                            }
+                            break;
+                        case "tram":
+                            number = distance * oVVar[0];
+                            if (number > oVVar[1]) {
+                                number = oVVar[1];
+                            }
+                            break;
+                        case "metro":
+                            number = distance * oVVar[0];
+                            if (number > oVVar[1]) {
+                                number = oVVar[1];
+                            }
+                            break;
+
+                        case "bus":
+                            number = distance * oVVar[0];
+                            if (number > oVVar[1]) {
+                                number = oVVar[1];
+                            }
+                            break;
+                        case   "trein":
+                            number = distance * treinVar[0];
+                            if (number > treinVar[1]) {
+                                number = treinVar[1];
+                            }
+                            break;
+                        case    "elektrische auto":
+                            number = distance * elAutoVar[0];
+                            if (number > elAutoVar[1]) {
+                                number = elAutoVar[1];
+                            }
+                            break;
+                        case "benzine auto" || "diesel auto":
+                            number = distance * autoVar[0];
+                            if (number > autoVar[1]) {
+                                number = autoVar[1];
+                            }
+                            break;
+                        case "hybride auto":
+                            number = distance * hybrideAutoVar[0];
+
+                            if (number > hybrideAutoVar[1]) {
+                                number = hybrideAutoVar[1];
+                            }
+                            break;
+                        case    "online" || "geen" || "Empty" :
+                            number = distance * onlineVar[0]
+                            if (number > onlineVar[1]) {
+                                number = onlineVar[1];
+                            }
+                            break;
                     }
+                    return number;
                 }
-                if (voertuig === "fiets") {
-                    number = distance * fietsVar[0];
-                    if (number > fietsVar[1]) {
-                        number = fietsVar[1];
-                    }
-                }
-                if (voertuig === "elektrische fiets") {
-                    number = distance * elFietsVar[0];
-                    if (number > elFietsVar[1]) {
-                        number = elFietsVar[1];
-                    }
-                }
-                if (voertuig === "scooter") {
-                    number = distance * scooterVar[0];
-                    if (number > scooterVar[1]) {
-                        number = scooterVar[1];
-                    }
-                }
-                if (voertuig === "elektrische scooter") {
-                    number = distance * elScooterVar[0];
-                    if (number > elScooterVar[1]) {
-                        number = elScooterVar[1];
-                    }
-                }
-                if (voertuig === "tram" || voertuig === "metro" || voertuig === "bus") {
-                    number = distance * oVVar[0];
-                    if (number > oVVar[1]) {
-                        number = oVVar[1];
-                    }
-                }
-                if (voertuig === "trein") {
-                    number = distance * treinVar[0];
-                    if (number > treinVar[1]) {
-                        number = treinVar[1];
-                    }
-                }
-                if (voertuig === "elektrische auto") {
-                    number = distance * elAutoVar[0];
-                    if (number > elAutoVar[1]) {
-                        number = elAutoVar[1];
-                    }
-                }
-                if (voertuig === "benzine auto" || voertuig === "diesel auto") {
-                    number = distance * autoVar[0];
-                    if (number > autoVar[1]) {
-                        number = autoVar[1];
-                    }
-                }
-                if (voertuig === "hybride auto") {
-                    number = distance * hybrideAutoVar[0];
 
-                    if (number > hybrideAutoVar[1]) {
-                        number = hybrideAutoVar[1];
+                let totalPoints = pointCalculator(ScheduleController.#getTransportTypeLabel(schedule.transport), schedule.travel_distance);
+
+                schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
+                schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
+
+                if (noTransportDays.includes(schedule.schedule_daytype_id)) {
+                    let noWorkDay = schedule_day.querySelector(".work-time").parentElement;
+                    let dayDetails = noWorkDay.parentElement;
+
+                    while (dayDetails.firstChild) {
+                        dayDetails.removeChild(dayDetails.firstChild);
                     }
-                }
-                if (voertuig === "online" || voertuig === "geen" || voertuig === "Empty") {
-                    number = distance * onlineVar[0]
-                    if (number > onlineVar[1]) {
-                        number = onlineVar[1];
+                    dayDetails.appendChild(noWorkDay);
+                    if (noWorkTimeDays.includes(schedule.schedule_daytype_id)) {
+                        noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
+                    } else {
+                        schedule_day.querySelector(".work-time").innerHTML =
+                            schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
                     }
-                }
-                return number;
-            }
-
-            let totalPoints = pointCalculator(ScheduleController.#getTransportTypeLabel(schedule.transport), schedule.travel_distance);
-
-            schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
-            schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
-
-            if (noTransportDays.includes(schedule.schedule_daytype_id)) {
-                let noWorkDay = schedule_day.querySelector(".work-time").parentElement;
-                let dayDetails = noWorkDay.parentElement;
-
-                while (dayDetails.firstChild) {
-                    dayDetails.removeChild(dayDetails.firstChild);
-                }
-                dayDetails.appendChild(noWorkDay);
-                if (noWorkTimeDays.includes(schedule.schedule_daytype_id)) {
-                    noWorkDay.querySelector(".work-time").innerHTML = "n.v.t";
                 } else {
                     schedule_day.querySelector(".work-time").innerHTML =
                         schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
-                }
-            } else {
-                schedule_day.querySelector(".work-time").innerHTML =
-                    schedule.start_time.slice(0, 5) + " - " + schedule.end_time.slice(0, 5);
-                schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
-                schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
-                schedule_day.querySelector(".transport").innerHTML =
-                    ScheduleController.#getTransportTypeLabel(schedule.transport);
-                schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
-                schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
+                    schedule_day.querySelector(".travel-distance").innerHTML = schedule.travel_distance + " km";
+                    schedule_day.querySelector(".transport-icon").classList.add(schedule.transport_icon);
+                    schedule_day.querySelector(".transport").innerHTML =
+                        ScheduleController.#getTransportTypeLabel(schedule.transport);
+                    schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+                    schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
 
+                }
             }
-        });
+        )
+        ;
 
 
     }
