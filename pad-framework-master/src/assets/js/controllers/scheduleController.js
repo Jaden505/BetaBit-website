@@ -4,15 +4,15 @@
  * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
-import { Controller } from "./controller.js";
-import { ScheduleRepository } from "../repositories/scheduleRepository.js";
-import { App } from "../app.js";
+import {Controller} from "./controller.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
 
-export class ScheduleController extends Controller{
+export class ScheduleController extends Controller {
     #scheduleView
     #schedule
     #date = new Date();
-    static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+    static days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
     static months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
 
     constructor() {
@@ -35,7 +35,6 @@ export class ScheduleController extends Controller{
         // Redirect buttons
         this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
-
         this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
@@ -80,12 +79,10 @@ export class ScheduleController extends Controller{
 
             if (date_type === "day") {
                 date = new Date(curr.setDate(first)).toISOString().slice(8, 10);
-            }
-            else if (date_type === "month") {
+            } else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-                date = ScheduleController.months[parseInt(month_decimal)-1];
-            }
-            else if (date_type === "date") {
+                date = ScheduleController.months[parseInt(month_decimal) - 1];
+            } else if (date_type === "date") {
                 date = new Date(curr.setDate(first)).toISOString().slice(0, 10);
             }
 
@@ -103,7 +100,7 @@ export class ScheduleController extends Controller{
         let current_days = this.#getCurrentDates("day");
         let current_months = this.#getCurrentDates("month");
 
-        for (let i=0; i<7; i++) {
+        for (let i = 0; i < 7; i++) {
             let day = day_containers[i];
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
@@ -119,12 +116,12 @@ export class ScheduleController extends Controller{
      * Calculates the current week number of the year.
      */
     #getWeekOfTheYear() {
-        Date.prototype.getWeekNumber = function(){
+        Date.prototype.getWeekNumber = function () {
             let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
             let dayNum = d.getUTCDay() || 7;
             d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-            let yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-            return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+            let yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
         };
 
         let weekNumber = (new Date().getWeekNumber());
@@ -141,7 +138,7 @@ export class ScheduleController extends Controller{
             node.addEventListener("click", e => {
                 let activeTabs = document.querySelectorAll('.selected-day');
 
-                activeTabs.forEach(function(tab) {
+                activeTabs.forEach(function (tab) {
                     tab.className = tab.className.replace('selected-day', '');
                 });
 
@@ -178,6 +175,8 @@ export class ScheduleController extends Controller{
         return transportLabel;
     }
 
+
+
     /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
@@ -192,7 +191,7 @@ export class ScheduleController extends Controller{
 
         let day_schedules = schedules.slice(0);
 
-        day_schedules.forEach(function(part, index) {
+        day_schedules.forEach(function (part, index) {
             let date = part.date;
             this[index] = ScheduleController.days[new Date(date).getDay()]
         }, day_schedules);
@@ -206,14 +205,100 @@ export class ScheduleController extends Controller{
             if (day_schedules.includes(s.day)) {
                 schedule = schedules[day_schedules.indexOf(s.day)];
                 schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
-            }
-            else {
+            } else {
                 schedule = s;
                 schedule_day = document.getElementById(s.day + "_detail");
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = 5 * schedule.travel_distance;
+
+            function pointCalculator(transport, distance) {
+                let number
+                const loopVar = [150, 700];
+                const fietsVar = [75, 700];
+                const elFietsVar = [70, 750];
+                const scooterVar = [30, 500];
+                const elScooterVar = [35, 550];
+                const oVVar = [25, 500];
+                const treinVar = [20, 400];
+                const elAutoVar = [7, 450];
+                const autoVar = [6, 400];
+                const hybrideAutoVar = [6, 450];
+                const onlineVar = [0, 0];
+                let voertuig = transport;
+
+
+                if (voertuig === "lopen") {
+                    number = distance * loopVar[0];
+                    if (number > loopVar[1]) {
+                        number = loopVar[1];
+                    }
+                }
+                if (voertuig === "fiets") {
+                    number = distance * fietsVar[0];
+                    if (number > fietsVar[1]) {
+                        number = fietsVar[1];
+                    }
+                }
+                if (voertuig === "elektrische fiets") {
+                    number = distance * elFietsVar[0];
+                    if (number > elFietsVar[1]) {
+                        number = elFietsVar[1];
+                    }
+                }
+                if (voertuig === "scooter") {
+                    number = distance * scooterVar[0];
+                    if (number > scooterVar[1]) {
+                        number = scooterVar[1];
+                    }
+                }
+                if (voertuig === "elektrische scooter") {
+                    number = distance * elScooterVar[0];
+                    if (number > elScooterVar[1]) {
+                        number = elScooterVar[1];
+                    }
+                }
+                if (voertuig === "tram" || voertuig === "metro" || voertuig === "bus") {
+                    number = distance * oVVar[0];
+                    if (number > oVVar[1]) {
+                        number = oVVar[1];
+                    }
+                }
+                if (voertuig === "trein") {
+                    number = distance * treinVar[0];
+                    if (number > treinVar[1]) {
+                        number = treinVar[1];
+                    }
+                }
+                if (voertuig === "elektrische auto") {
+                    number = distance * elAutoVar[0];
+                    if (number > elAutoVar[1]) {
+                        number = elAutoVar[1];
+                    }
+                }
+                if (voertuig === "benzine auto" || voertuig === "diesel auto") {
+                    number = distance * autoVar[0];
+                    if (number > autoVar[1]) {
+                        number = autoVar[1];
+                    }
+                }
+                if (voertuig === "hybride auto") {
+                    number = distance * hybrideAutoVar[0];
+
+                    if (number > hybrideAutoVar[1]) {
+                        number = hybrideAutoVar[1];
+                    }
+                }
+                if (voertuig === "online" || voertuig === "geen" || voertuig === "Empty") {
+                    number = distance * onlineVar[0]
+                    if (number > onlineVar[1]) {
+                        number = onlineVar[1];
+                    }
+                }
+                return number;
+            }
+
+            let totalPoints = pointCalculator(ScheduleController.#getTransportTypeLabel(schedule.transport), schedule.travel_distance);
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -244,5 +329,14 @@ export class ScheduleController extends Controller{
 
             }
         });
+
+
     }
+    /**
+     * calculates how much points you get
+     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
+     * with the first number being the amount of points per KM and the second number being the point cap.
+     */
+
+
 }
