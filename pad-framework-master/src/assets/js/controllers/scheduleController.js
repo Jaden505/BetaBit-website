@@ -213,6 +213,7 @@ export class ScheduleController extends Controller{
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
+            let totalPoints = 5 * schedule.travel_distance;
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -239,6 +240,8 @@ export class ScheduleController extends Controller{
                 schedule_day.querySelector(".transport").innerHTML =
                     ScheduleController.#getTransportTypeLabel(schedule.transport);
                 schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+                schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
+
             }
         });
     }

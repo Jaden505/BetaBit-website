@@ -29,7 +29,6 @@ export class UsersRepository {
      * @param email
      * @param password
      * @returns {Promise<user>}
-     * 
      */
     async login(email, password) {
         return await this.#networkManager
