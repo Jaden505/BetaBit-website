@@ -111,7 +111,7 @@ export class ScheduleController extends Controller{
     /**
      * Calculates the current week number of the year.
      */
-    static #getWeekOfTheYear() {
+    #getWeekOfTheYear() {
         let currentdate = new Date();
         let oneJan = new Date(currentdate.getFullYear(),0,1);
         let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));

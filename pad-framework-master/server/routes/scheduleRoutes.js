@@ -51,14 +51,8 @@ class ScheduleRoutes {
                 values: [email]
             });
 
-            // If records found
-            if (data.length >= 1) {
-                // returns default schedules
-                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
-            } else {
-                // No default schedules found
-                res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No default schedules filled"});
-            }
+            // returns default schedules
+            res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
         } catch (e) {
             res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
         }
@@ -99,14 +93,9 @@ class ScheduleRoutes {
                     values: [begin_date, end_date, email]
                 });
 
-            // If records found
-            if (data.length >= 1) {
-                // returns default schedules
-                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
-            } else {
-                // No default schedules found
-                res.status(this.#errorCodes.AUTHORIZATION_ERROR_CODE).json({reason: "No schedules filled"});
-            }
+            // returns default schedules
+            res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }
