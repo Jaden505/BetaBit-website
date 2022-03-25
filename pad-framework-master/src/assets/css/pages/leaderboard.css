@@ -1,0 +1,11 @@
+.leaderboard-container {
+    display: flex;
+    padding: 1rem;
+    border: 2px solid var(--gray);
+}
+
+@media (min-width: 992px) {
+    .leaderboard-container {
+        margin-top: 1.5rem;
+    }
+}
