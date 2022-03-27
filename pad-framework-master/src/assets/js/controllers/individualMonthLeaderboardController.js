@@ -8,9 +8,12 @@ import { Controller } from "./controller.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
+    #today
 
     constructor() {
         super();
+        this.#today = new Date;
+
         this.#setupView();
     }
 
@@ -23,39 +26,33 @@ export class IndividualMonthLeaderboardController extends Controller {
         //await for when HTML is loaded
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
-        //countdown
-        const countdown = () => {
-            const countDate = new Date('May 17, 2022 00:00:00').getTime();
-            const now = new Date().getTime();
-            const gap = countDate - now;
+        this.#weekCounter();
+    }
 
-            //tijd
+    #weekCounter() {
+        const countdown = () => {
             const second = 1000;
             const minute = second * 60;
             const hour = minute * 60;
             const day = hour * 24;
 
-            //tijd berekenen
+            const nextMon = this.#today.getDate() - this.#today.getDay();
+            const countDate = new Date(this.#today.setDate(nextMon)).setHours(24,0,0,0);
+            const now = this.#today.getTime();
+            const gap = countDate - now;
+
             const textDay = Math.floor(gap / day);
             const textHour = Math.floor((gap % day) / hour);
             const textMinute = Math.floor((gap % hour) / minute);
             const textSecond = Math.floor((gap % minute) / second);
 
-            document.querySelector('.day').innerText = textDay;
-            document.querySelector('.hour').innerText = textHour;
-            document.querySelector('.minute').innerText = textMinute;
-            document.querySelector('.second').innerText = textSecond;
-
-            console.log(gap,textDay,textHour,textMinute,textSecond)
-
-            if(gap < 1000) {
-
-            }
-
+            document.querySelector('.updateText #day').innerText = textDay + "d";
+            document.querySelector('.updateText #hour').innerText = textHour + "u";
+            document.querySelector('.updateText #minute').innerText = textMinute + "m";
+            document.querySelector('.updateText #second').innerText = textSecond + "s";
         };
 
         countdown();
         setInterval(countdown, 1000);
-
     }
 }
