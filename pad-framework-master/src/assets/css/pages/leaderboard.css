@@ -8,6 +8,7 @@
 @media (min-width: 992px) {
     .leaderboard-container {
         margin-top: 1.5rem;
+        padding: 1rem 2rem;
     }
 }
 
@@ -27,6 +28,12 @@
     width: 100%;
 }
 
+@media (min-width: 992px) {
+    .leaderboard-list .rank-user  {
+        width: 85%;
+    }
+}
+
 .leaderboard-list .list-rank {
     margin-bottom: 1rem;
 }
@@ -36,15 +43,37 @@
     margin: auto;
 }
 
+@media (min-width: 992px) {
+    .leaderboard-list .rank-user,
+    .leaderboard-list .rank-placement  {
+        margin: 0;
+    }
+}
+
 .leaderboard-list .rank-user .user-image {
     margin: 0 .2rem 0 .5rem;
 }
+
+@media (min-width: 992px) {
+    .leaderboard-list .rank-user .user-image {
+        margin: 0 1rem 0 2rem;
+    }
+}
+
 
 .leaderboard-list .rank-points  {
     display: flex;
     flex-direction: column;
     text-align: center;
     color: var(--grey);
+}
+
+@media (min-width: 992px) {
+    .leaderboard-list .rank-points  {
+        width: 15%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .leaderboard-list .rank-points .points-total {
