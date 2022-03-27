@@ -41,6 +41,8 @@ export class ChangeDefaultScheduleController extends Controller {
 
     /**
      * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
+     * @author Colin Laan
+     * @private
      */
     async #expandDayView() {
         const expandTab = this.#changeDefaultScheduleView.getElementsByClassName("default-schedule-item")
@@ -65,6 +67,12 @@ export class ChangeDefaultScheduleController extends Controller {
         }
     }
 
+    /**
+     * Updates the default schedule data in the database with the values of the input fields to the email that is used
+     * in the current session.
+     * @authors Colin Laan & Jaden van Rijswijk
+     * @private
+     */
     async #updateDefaultScheduleData() {
         const email = App.sessionManager.get("email");
         const containers = document.querySelectorAll(".default-schedule-container-content")
@@ -82,6 +90,11 @@ export class ChangeDefaultScheduleController extends Controller {
         });
     }
 
+    /**
+     * Fills the input fields with the data that is already present in the database.
+     * @authors Jaden van Rijswijk & Colin Laan
+     * @private
+     */
     async #fillChangeFields() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
@@ -98,6 +111,11 @@ export class ChangeDefaultScheduleController extends Controller {
         });
     }
 
+    /**
+     * Changes the visibility of certain input fields to be more fitting for the day type.
+     * @author Colin Laan
+     * @private
+     */
     async #dayTypeContentUpdate() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
