@@ -96,6 +96,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             const userImage = document.createElement("div");
             const userName = document.createElement("div");
             const rankPoints = document.createElement("div");
+            const pointsLabel = document.createElement("span");
             const pointsTotal = document.createElement("span");
 
             listRank.classList.add("list-rank");
@@ -104,18 +105,19 @@ export class IndividualMonthLeaderboardController extends Controller {
             userImage.classList.add("user-image");
             userName.classList.add("user-name");
             rankPoints.classList.add("rank-points");
+            pointsLabel.classList.add("points-label");
             pointsTotal.classList.add("points-total");
 
             rankPlacementNumber++;
             rankPlacement.textContent = rankPlacementNumber.toString();
             userImage.textContent = "[Foto]";
             userName.textContent = lu.username;
-            rankPoints.textContent = "Punten";
+            pointsLabel.textContent = "Punten";
             pointsTotal.textContent = lu.points;
 
             leaderboardContainer.appendChild(listRank);
             rankUser.append(userImage, userName);
-            rankPoints.appendChild(pointsTotal);
+            rankPoints.append(pointsLabel, pointsTotal);
             listRank.append(rankPlacement, rankUser, rankPoints);
         });
     }

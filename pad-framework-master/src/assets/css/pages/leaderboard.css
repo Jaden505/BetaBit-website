@@ -43,13 +43,6 @@
     margin: auto;
 }
 
-@media (min-width: 992px) {
-    .leaderboard-list .rank-user,
-    .leaderboard-list .rank-placement  {
-        margin: 0;
-    }
-}
-
 .leaderboard-list .rank-user .user-image {
     margin: 0 .2rem 0 .5rem;
 }
@@ -74,9 +67,19 @@
         flex-direction: row;
         justify-content: space-between;
     }
+
+    .leaderboard-list .rank-points .points-label {
+        margin: auto 0;
+    }
 }
 
 .leaderboard-list .rank-points .points-total {
     color: var(--red);
     font-weight: bold;
+}
+
+@media (min-width: 992px) {
+    .leaderboard-list .rank-points .points-total {
+        font-size: 2rem;
+    }
 }
