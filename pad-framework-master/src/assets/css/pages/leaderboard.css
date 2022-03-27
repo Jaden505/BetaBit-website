@@ -1,7 +1,7 @@
 .leaderboard-container {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: .5rem;
     border: 2px solid var(--gray);
 }
 
@@ -11,7 +11,43 @@
     }
 }
 
-.leaderboard-container-list {
+.leaderboard-list {
     display: flex;
     flex-direction: column;
+}
+
+.leaderboard-list .list-label {
+    margin: .4rem 0 .2rem 0;
+    color: var(--grey);
+}
+
+.leaderboard-list .list-rank,
+.leaderboard-list .rank-user  {
+    display: flex;
+    width: 100%;
+}
+
+.leaderboard-list .list-rank {
+    margin-bottom: 1rem;
+}
+
+.leaderboard-list .rank-user,
+.leaderboard-list .rank-placement  {
+    margin: auto;
+}
+
+.leaderboard-list .rank-user .user-image {
+    margin: 0 .2rem 0 .5rem;
+}
+
+.leaderboard-list .rank-points  {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: var(--grey);
+}
+
+.leaderboard-list .rank-points .points-total {
+    color: var(--red);
+    font-weight: bold;
 }
