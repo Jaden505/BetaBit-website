@@ -4,47 +4,6 @@
     border: 2px solid var(--gray);
 }
 
-.updateText {
-    font-size: 1rem;
-}
-
-.monthTimer {
-}
-
-.countdown{
-    display: flex;
-    padding: 10px;
-    text-align: center;
-}
-
-.h3 {
-    font-size: 1rem;
-}
-
-.container-day,
-.container-hour,
-.container-minute,
-.container-second {
-    padding: 5px;
-}
-
-.day,
-.hour,
-.minute,
-.second {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.dayText,
-.hourText,
-.minuteText,
-.secondText {
-    font-size: 1rem;
-    font-weight: lighter;
-    color: #A5A6B3;
-}
-
 @media (min-width: 992px) {
     .leaderboard-container {
         margin-top: 1.5rem;
