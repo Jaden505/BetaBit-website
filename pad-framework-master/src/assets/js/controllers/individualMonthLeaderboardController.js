@@ -85,7 +85,7 @@ export class IndividualMonthLeaderboardController extends Controller {
 
     async #displayIndividualMonthLeaderboard() {
         const leaderboardUsers = await this.#monthLeaderboard.individualMonthLeaderboard();
-        const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-container-list");
+        const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");
         const email = App.sessionManager.get("email");
         let rankPlacementNumber = 0;
 
