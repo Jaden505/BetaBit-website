@@ -1,5 +1,6 @@
 .leaderboard-container {
     display: flex;
+    flex-direction: column;
     padding: 1rem;
     border: 2px solid var(--gray);
 }
@@ -8,4 +9,9 @@
     .leaderboard-container {
         margin-top: 1.5rem;
     }
+}
+
+.leaderboard-container-list {
+    display: flex;
+    flex-direction: column;
 }

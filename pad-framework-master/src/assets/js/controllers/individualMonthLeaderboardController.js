@@ -5,13 +5,18 @@
  */
 
 import { Controller } from "./controller.js";
+import { MonthLeaderboardRepository } from "../repositories/monthLeaderboardRepository.js";
+import { App } from "../app.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
+    #monthLeaderboard
     today
 
     constructor() {
         super();
+
+        this.#monthLeaderboard = new MonthLeaderboardRepository();
         this.today = new Date;
 
         this.#setupView();
@@ -28,6 +33,7 @@ export class IndividualMonthLeaderboardController extends Controller {
 
         this.#currentMonth();
         this.weekCounter();
+        await this.#displayIndividualMonthLeaderboard();
     }
 
     /**
@@ -51,12 +57,12 @@ export class IndividualMonthLeaderboardController extends Controller {
      * @author Dennis Bleeker, Dia Fortmeier
      */
     weekCounter() {
-        const countdown = () => {
-            const second = 1000;
-            const minute = second * 60;
-            const hour = minute * 60;
-            const day = hour * 24;
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
 
+        const countdown = () => {
             this.today = new Date;
             const nextMon = this.today.getDate() - this.today.getDay();
             const countDate = new Date(this.today.setDate(nextMon)).setHours(24,0,0,0);
@@ -74,6 +80,43 @@ export class IndividualMonthLeaderboardController extends Controller {
         };
 
         countdown();
-        setInterval(countdown, 1000);
+        setInterval(countdown, second);
+    }
+
+    async #displayIndividualMonthLeaderboard() {
+        const leaderboardUsers = await this.#monthLeaderboard.individualMonthLeaderboard();
+        const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-container-list");
+        const email = App.sessionManager.get("email");
+        let rankPlacementNumber = 0;
+
+        leaderboardUsers.forEach(function (lu) {
+            const listRank = document.createElement("div");
+            const rankPlacement = document.createElement("div");
+            const rankUser = document.createElement("div");
+            const userImage = document.createElement("div");
+            const userName = document.createElement("div");
+            const rankPoints = document.createElement("div");
+            const pointsTotal = document.createElement("span");
+
+            listRank.classList.add("list-rank");
+            rankPlacement.classList.add("rank-placement");
+            rankUser.classList.add("rank-user");
+            userImage.classList.add("user-image");
+            userName.classList.add("user-name");
+            rankPoints.classList.add("rank-points");
+            pointsTotal.classList.add("points-total");
+
+            rankPlacementNumber++;
+            rankPlacement.textContent = rankPlacementNumber.toString();
+            userImage.textContent = "[Foto]";
+            userName.textContent = lu.username;
+            rankPoints.textContent = "Punten";
+            pointsTotal.textContent = lu.points;
+
+            leaderboardContainer.appendChild(listRank);
+            rankUser.append(userImage, userName);
+            rankPoints.appendChild(pointsTotal);
+            listRank.append(rankPlacement, rankUser, rankPoints);
+        });
     }
 }
