@@ -83,6 +83,17 @@ export class IndividualMonthLeaderboardController extends Controller {
         setInterval(countdown, second);
     }
 
+    /**
+     * Gets the users and all their current month points.
+     * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
+     * @author Dia Fortmeier
+     * @memberOf IndividualMonthLeaderboardController
+     * @name displayIndividualMonthLeaderboard
+     * @function
+     * @private
+     * @returns {Promise<void>}
+     * @instance
+     */
     async #displayIndividualMonthLeaderboard() {
         const leaderboardUsers = await this.#monthLeaderboard.individualMonthLeaderboard();
         const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");

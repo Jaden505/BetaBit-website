@@ -22,7 +22,12 @@ class LeaderboardRoutes {
 
     /**
      * Gets individual monthly leaderboard from database and returns to frontend in json
+     * @author Dia Fortmeier
+     * @memberOf LeaderboardRoutes
+     * @name getIndividualMonthLeaderboard
+     * @function
      * @private
+     * @instance
      */
     #getIndividualMonthLeaderboard() {
         this.#app.get("/monthLeaderboard/individual", async (req, res) => {
