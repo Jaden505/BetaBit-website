@@ -32,21 +32,23 @@ export class ChangeDefaultScheduleController extends Controller {
         //Redirect buttons
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
         this.#changeDefaultScheduleView.querySelector("#saveDefaultSchedule").addEventListener("click", event => this.#updateDefaultScheduleData());
+        this.#changeDefaultScheduleView.querySelector(".day-type").addEventListener("click", event => this.#dayTypeContentUpdate());
 
         this.#expandDayView();
         this.#fillChangeFields();
+        this.#dayTypeContentUpdate();
     }
 
     /**
      * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
      */
-    #expandDayView() {
+    async #expandDayView() {
         const expandTab = this.#changeDefaultScheduleView.getElementsByClassName("default-schedule-item")
         const expandableContent = this.#changeDefaultScheduleView.getElementsByClassName("default-schedule-container-content")
         const expandIcon = this.#changeDefaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
-            expandTab[i].addEventListener("click", function () {
+            expandTab[i].addEventListener("click", async function () {
                 expandableContent[i].classList.toggle("acc-active")
                 if (expandIcon[i].style.transform === "rotate(180deg)") {
                     expandIcon[i].style.transform = "rotate(0)"
@@ -59,7 +61,7 @@ export class ChangeDefaultScheduleController extends Controller {
                 } else {
                     panel.style.maxHeight = panel.scrollHeight + "px";
                 }
-            })
+            });
         }
     }
 
@@ -74,7 +76,7 @@ export class ChangeDefaultScheduleController extends Controller {
             let distance = container.querySelector(".distance-input").value
             let vehicle = container.querySelector(".transport").value
             let type = container.querySelector(".day-type").value
-            let day = (container.id).substring(0, container.id.length -6);
+            let day = (container.id).substring(0, container.id.length - 6);
 
             await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
         });
@@ -93,6 +95,29 @@ export class ChangeDefaultScheduleController extends Controller {
 
             schedule_day.querySelector(".distance-input").value = schedule.travel_distance;
             schedule_day.querySelector(".transport").value = schedule.transport;
+        });
+    }
+
+    async #dayTypeContentUpdate() {
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+
+        default_schedules.forEach(function (schedule) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
+            let day_type = schedule_day.querySelector(".day-type").value;
+
+            if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
+                schedule_day.querySelector(".day-start").classList.add("hideOnAtHome");
+                schedule_day.querySelector(".day-end").classList.add("hideOnAtHome");
+                schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
+                schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+
+            } else {
+                schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
+                schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
+                schedule_day.querySelector(".distance-input").classList.remove("hideOnAtHome");
+                schedule_day.querySelector(".transport").classList.remove("hideOnAtHome");
+            }
         });
     }
 }

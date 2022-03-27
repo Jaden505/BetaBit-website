@@ -175,7 +175,7 @@
     border: none;
 }
 
-.default-schedule-edit-items .day-end{
+.default-schedule-edit-items .day-end {
     border: none;
 }
 
@@ -203,7 +203,8 @@
     .default-schedule-edit-items .schedule-item {
         border: none;
     }
-    .default-schedule-edit-items .distance-input{
+
+    .default-schedule-edit-items .distance-input {
         text-align: right;
         border: none;
     }
@@ -212,7 +213,11 @@
         border: none;
     }
 
-    .default-schedule-edit-items .day-end{
+    .default-schedule-edit-items .day-end {
         border: none;
+    }
+
+    .hideOnAtHome {
+        visibility: hidden;
     }
 }
