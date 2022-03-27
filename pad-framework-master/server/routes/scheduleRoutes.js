@@ -81,10 +81,11 @@ class ScheduleRoutes {
                                    s.transport AS schedule_transport_id,
                                    d.id        AS daytype_id,
                                    d.name      AS daytype,
+                                   d.icon AS type_icon,
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
-                                   t.icon
+                                   t.icon AS transport_icon
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
