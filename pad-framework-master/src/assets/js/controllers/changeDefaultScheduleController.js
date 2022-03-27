@@ -32,7 +32,6 @@ export class ChangeDefaultScheduleController extends Controller {
         //Redirect buttons
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
         this.#changeDefaultScheduleView.querySelector("#saveDefaultSchedule").addEventListener("click", event => this.#updateDefaultScheduleData());
-        this.#changeDefaultScheduleView.querySelector(".day-type").addEventListener("click", event => this.#dayTypeContentUpdate());
 
         this.#expandDayView();
         this.#fillChangeFields();
@@ -122,26 +121,28 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-            let day_type = schedule_day.querySelector(".day-type").value;
+            schedule_day.addEventListener("click", event => {
+                let day_type = schedule_day.querySelector(".day-type").value;
 
-            if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
-                schedule_day.querySelector(".day-start").classList.add("hideOnAtHome");
-                schedule_day.querySelector(".day-end").classList.add("hideOnAtHome");
-                schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
-                schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+                if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
+                    schedule_day.querySelector(".day-start").classList.add("hideOnAtHome");
+                    schedule_day.querySelector(".day-end").classList.add("hideOnAtHome");
+                    schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
+                    schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
 
-            } else if (day_type === "online") {
-                schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
-                schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
-                schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
-                schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+                } else if (day_type === "online") {
+                    schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
+                    schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
+                    schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
+                    schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
 
-            } else {
-                schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
-                schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
-                schedule_day.querySelector(".distance-input").classList.remove("hideOnAtHome");
-                schedule_day.querySelector(".transport").classList.remove("hideOnAtHome");
-            }
+                } else {
+                    schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
+                    schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
+                    schedule_day.querySelector(".distance-input").classList.remove("hideOnAtHome");
+                    schedule_day.querySelector(".transport").classList.remove("hideOnAtHome");
+                }
+            })
         });
     }
 }
