@@ -112,6 +112,12 @@ export class ChangeDefaultScheduleController extends Controller {
                 schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
                 schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
 
+            } else if (day_type === "online") {
+                schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
+                schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
+                schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
+                schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+
             } else {
                 schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
                 schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
