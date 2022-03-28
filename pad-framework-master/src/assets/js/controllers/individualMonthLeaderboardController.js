@@ -123,9 +123,8 @@ export class IndividualMonthLeaderboardController extends Controller {
             rankPlacementNumber++;
             rankPlacement.textContent = rankPlacementNumber.toString();
             userName.textContent = lu.username;
-            let nameList = userName.textContent.split(" ").join("+");
 
-            console.log(nameList);
+            let nameList = userName.textContent.split(" ").join("+");
             userImage.src = `https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`;
             pointsLabel.textContent = "Punten";
             pointsTotal.textContent = lu.points;
