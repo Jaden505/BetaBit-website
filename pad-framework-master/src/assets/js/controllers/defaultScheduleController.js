@@ -101,6 +101,7 @@ export class DefaultScheduleController extends Controller {
 
                 let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
+                let punten = 2 * schedule.travel_distance;
 
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +
@@ -120,6 +121,9 @@ export class DefaultScheduleController extends Controller {
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">CO2 uitstoot</p><p class=\"item-data\">" +
                     totalEmissions + " g</p></div>";
+                schedule_day.innerHTML +=
+                    "<div class=\"content-item\"><p class=\"item-label\">punten</p><p class=\"item-data\">" +
+                    punten + " punten</p></div>";
             });
         } catch (e) {
             console.log(e);
