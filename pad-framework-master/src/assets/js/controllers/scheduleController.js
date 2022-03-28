@@ -229,6 +229,7 @@ export class ScheduleController extends Controller {
                     const train = [20, 400];
                     const elCar = [7, 450];
                     const car = [6, 400];
+                    const carDiesel=[5,400];
                     const hybrideCar = [6, 450];
                     const online = [0, 0];
 
@@ -297,10 +298,16 @@ export class ScheduleController extends Controller {
                                 number = elCar[1];
                             }
                             break;
-                        case "benzine auto" || "diesel auto":
+                        case "benzine auto":
                             number = distance * car[0];
                             if (number > car[1]) {
                                 number = car[1];
+                            }
+                            break;
+                        case "diesel auto":
+                            number = distance * carDiesel[0];
+                            if (number > carDiesel[1]) {
+                                number = carDiesel[1];
                             }
                             break;
                         case "hybride auto":
