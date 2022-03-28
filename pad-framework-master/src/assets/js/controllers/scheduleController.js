@@ -320,7 +320,7 @@ export class ScheduleController extends Controller {
                     return number;
                 }
 
-                let totalPoints = pointCalculator(ScheduleController.#getTransportTypeLabel(schedule.transport), schedule.travel_distance);
+                let totalPoints = pointCalculator(schedule.transport, schedule.travel_distance);
 
                 schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
                 schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
