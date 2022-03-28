@@ -44,15 +44,21 @@
 }
 
 .leaderboard-list .rank-user .user-image {
-    margin: 0 .2rem 0 .5rem;
+    width: 45px;
+    margin: 0 .5rem;
 }
 
 @media (min-width: 992px) {
     .leaderboard-list .rank-user .user-image {
+        width: 65px;
         margin: 0 1rem 0 2rem;
     }
 }
 
+.leaderboard-list .rank-user .user-name {
+    width: 75%;
+    margin: auto 0;
+}
 
 .leaderboard-list .rank-points  {
     display: flex;
@@ -66,6 +72,7 @@
         width: 15%;
         flex-direction: row;
         justify-content: space-between;
+        margin: auto 0;
     }
 
     .leaderboard-list .rank-points .points-label {

@@ -104,11 +104,12 @@ export class IndividualMonthLeaderboardController extends Controller {
             const listRank = document.createElement("div");
             const rankPlacement = document.createElement("div");
             const rankUser = document.createElement("div");
-            const userImage = document.createElement("div");
+            const userImage = document.createElement("img");
             const userName = document.createElement("div");
             const rankPoints = document.createElement("div");
             const pointsLabel = document.createElement("span");
             const pointsTotal = document.createElement("span");
+
 
             listRank.classList.add("list-rank");
             rankPlacement.classList.add("rank-placement");
@@ -121,8 +122,10 @@ export class IndividualMonthLeaderboardController extends Controller {
 
             rankPlacementNumber++;
             rankPlacement.textContent = rankPlacementNumber.toString();
-            userImage.textContent = "[Foto]";
             userName.textContent = lu.username;
+
+            let nameList = userName.textContent.split(" ").join("+");
+            userImage.src = `https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`;
             pointsLabel.textContent = "Punten";
             pointsTotal.textContent = lu.points;
 
