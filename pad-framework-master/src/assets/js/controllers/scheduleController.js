@@ -175,6 +175,122 @@ export class ScheduleController extends Controller {
         return transportLabel;
     }
 
+    /**
+     * calculates how much points you get
+     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
+     * by changing the (x)var variables. With the first number being the amount of points per KM and
+     * the second number being the point cap.
+     * @author Mairo Garf Tzouvelekis
+     */
+    static #pointCalculator(transport, distance) {
+        let number
+        const walking = [150, 700];
+        const biking = [75, 700];
+        const elBiking = [70, 750];
+        const scooter = [30, 500];
+        const elScooter = [35, 550];
+        const ov = [25, 500];
+        const train = [20, 400];
+        const elCar = [7, 450];
+        const carBenzine = [6, 400];
+        const carDiesel = [5,400];
+        const hybrideCar = [6, 450];
+        const online = [0, 0];
+
+        switch (transport) {
+            case "lopen":
+                number = distance * walking[0];
+                if (number > walking[1]) {
+                    number = walking[1];
+                }
+                break;
+            case    "fiets":
+                number = distance * biking[0];
+                if (number > biking[1]) {
+                    number = biking[1];
+
+                }
+                break;
+            case  "elektrische fiets":
+                number = distance * elBiking[0];
+                if (number > elBiking[1]) {
+                    number = elBiking[1];
+                }
+                break;
+            case     "scooter":
+                number = distance * scooter[0];
+                if (number > scooter[1]) {
+                    number = scooter[1];
+                }
+                break;
+
+
+            case   "elektrische scooter":
+                number = distance * elScooter[0];
+                if (number > elScooter[1]) {
+                    number = elScooter[1];
+                }
+                break;
+            case "tram":
+                number = distance * ov[0];
+                if (number > ov[1]) {
+                    number = ov[1];
+                }
+                break;
+            case "metro":
+                number = distance * ov[0];
+                if (number > ov[1]) {
+                    number = ov[1];
+                }
+                break;
+
+            case "bus":
+                number = distance * ov[0];
+                if (number > ov[1]) {
+                    number = ov[1];
+                }
+                break;
+            case   "trein":
+                number = distance * train[0];
+                if (number > train[1]) {
+                    number = train[1];
+                }
+                break;
+            case    "elektrische auto":
+                number = distance * elCar[0];
+                if (number > elCar[1]) {
+                    number = elCar[1];
+                }
+                break;
+            case "benzine auto":
+                number = distance * carBenzine[0];
+                if (number > carBenzine[1]) {
+                    number = carBenzine[1];
+                }
+                break;
+            case "diesel auto":
+                number = distance * carDiesel[0];
+                if (number > carDiesel[1]) {
+                    number = carDiesel[1];
+                }
+                break;
+            case "hybride auto":
+                number = distance * hybrideCar[0];
+
+                if (number > hybrideCar[1]) {
+                    number = hybrideCar[1];
+                }
+                break;
+            case    "online" || "geen" || "Empty" :
+                number = distance * online[0]
+                if (number > online[1]) {
+                    number = online[1];
+                }
+                break;
+        }
+        return number;
+    }
+
 
     /**
      * Gets the default schedule, and schedule from the db.
@@ -210,124 +326,7 @@ export class ScheduleController extends Controller {
                 }
 
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-
-
-                /**
-                 * calculates how much points you get
-                 * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited by changing the (x)var variables.
-                 * with the first number being the amount of points per KM and the second number being the point cap.
-                 * @author Mairo Garf Tzouvelekis
-                 */
-                function pointCalculator(transport, distance) {
-                    let number
-                    const walking = [150, 700];
-                    const biking = [75, 700];
-                    const elBiking = [70, 750];
-                    const scooter = [30, 500];
-                    const elScooter = [35, 550];
-                    const ov = [25, 500];
-                    const train = [20, 400];
-                    const elCar = [7, 450];
-                    const car = [6, 400];
-                    const carDiesel=[5,400];
-                    const hybrideCar = [6, 450];
-                    const online = [0, 0];
-
-                    switch (transport) {
-                        case "lopen":
-                            number = distance * walking[0];
-                            if (number > walking[1]) {
-                                number = walking[1];
-                            }
-                            break;
-                        case    "fiets":
-                            number = distance * biking[0];
-                            if (number > biking[1]) {
-                                number = biking[1];
-
-                            }
-                            break;
-                        case  "elektrische fiets":
-                            number = distance * elBiking[0];
-                            if (number > elBiking[1]) {
-                                number = elBiking[1];
-                            }
-                            break;
-                        case     "scooter":
-                            number = distance * scooter[0];
-                            if (number > scooter[1]) {
-                                number = scooter[1];
-                            }
-                            break;
-
-
-                        case   "elektrische scooter":
-                            number = distance * elScooter[0];
-                            if (number > elScooter[1]) {
-                                number = elScooter[1];
-                            }
-                            break;
-                        case "tram":
-                            number = distance * ov[0];
-                            if (number > ov[1]) {
-                                number = ov[1];
-                            }
-                            break;
-                        case "metro":
-                            number = distance * ov[0];
-                            if (number > ov[1]) {
-                                number = ov[1];
-                            }
-                            break;
-
-                        case "bus":
-                            number = distance * ov[0];
-                            if (number > ov[1]) {
-                                number = ov[1];
-                            }
-                            break;
-                        case   "trein":
-                            number = distance * train[0];
-                            if (number > train[1]) {
-                                number = train[1];
-                            }
-                            break;
-                        case    "elektrische auto":
-                            number = distance * elCar[0];
-                            if (number > elCar[1]) {
-                                number = elCar[1];
-                            }
-                            break;
-                        case "benzine auto":
-                            number = distance * car[0];
-                            if (number > car[1]) {
-                                number = car[1];
-                            }
-                            break;
-                        case "diesel auto":
-                            number = distance * carDiesel[0];
-                            if (number > carDiesel[1]) {
-                                number = carDiesel[1];
-                            }
-                            break;
-                        case "hybride auto":
-                            number = distance * hybrideCar[0];
-
-                            if (number > hybrideCar[1]) {
-                                number = hybrideCar[1];
-                            }
-                            break;
-                        case    "online" || "geen" || "Empty" :
-                            number = distance * online[0]
-                            if (number > online[1]) {
-                                number = online[1];
-                            }
-                            break;
-                    }
-                    return number;
-                }
-
-                let totalPoints = pointCalculator(schedule.transport, schedule.travel_distance);
+                let totalPoints = ScheduleController.#pointCalculator(schedule.transport, schedule.travel_distance);
 
                 schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
                 schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -357,12 +356,6 @@ export class ScheduleController extends Controller {
                     schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
 
                 }
-            }
-        )
-        ;
-
-
+        });
     }
-
-
 }
