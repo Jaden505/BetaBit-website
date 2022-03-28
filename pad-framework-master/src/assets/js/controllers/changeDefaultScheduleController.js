@@ -90,6 +90,15 @@ export class ChangeDefaultScheduleController extends Controller {
     }
 
     /**
+     * Fetches the available options out of the database and adds them to the selectable day types
+     * @author Colin Laan
+     * @private
+     */
+    async #addSelectionFields() {
+
+    }
+
+    /**
      * Fills the input fields with the data that is already present in the database.
      * @authors Jaden van Rijswijk & Colin Laan
      * @private
@@ -124,23 +133,28 @@ export class ChangeDefaultScheduleController extends Controller {
             schedule_day.addEventListener("click", event => {
                 let day_type = schedule_day.querySelector(".day-type").value;
 
+                const start = schedule_day.querySelector(".day-start");
+                const end = schedule_day.querySelector(".day-end");
+                const distance = schedule_day.querySelector(".distance-input");
+                const transport = schedule_day.querySelector(".transport");
+
                 if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
-                    schedule_day.querySelector(".day-start").classList.add("hideOnAtHome");
-                    schedule_day.querySelector(".day-end").classList.add("hideOnAtHome");
-                    schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
-                    schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+                    start.classList.add("hideOnAtHome");
+                    end.classList.add("hideOnAtHome");
+                    distance.classList.add("hideOnAtHome");
+                    transport.classList.add("hideOnAtHome");
 
                 } else if (day_type === "online") {
-                    schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
-                    schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
-                    schedule_day.querySelector(".distance-input").classList.add("hideOnAtHome");
-                    schedule_day.querySelector(".transport").classList.add("hideOnAtHome");
+                    start.classList.remove("hideOnAtHome");
+                    end.classList.remove("hideOnAtHome");
+                    distance.classList.add("hideOnAtHome");
+                    transport.classList.add("hideOnAtHome");
 
                 } else {
-                    schedule_day.querySelector(".day-start").classList.remove("hideOnAtHome");
-                    schedule_day.querySelector(".day-end").classList.remove("hideOnAtHome");
-                    schedule_day.querySelector(".distance-input").classList.remove("hideOnAtHome");
-                    schedule_day.querySelector(".transport").classList.remove("hideOnAtHome");
+                    start.classList.remove("hideOnAtHome");
+                    end.classList.remove("hideOnAtHome");
+                    distance.classList.remove("hideOnAtHome");
+                    transport.classList.remove("hideOnAtHome");
                 }
             })
         });
