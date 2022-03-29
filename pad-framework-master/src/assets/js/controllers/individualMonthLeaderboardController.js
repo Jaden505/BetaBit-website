@@ -32,7 +32,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
         this.#currentMonth();
-        // this.weekCounter(); temp. disabled, until the timer works correctly
+        this.weekCounter();
         await this.#displayIndividualMonthLeaderboard();
     }
 
@@ -62,10 +62,19 @@ export class IndividualMonthLeaderboardController extends Controller {
         const hour = minute * 60;
         const day = hour * 24;
 
+        function getNextDayOfTheWeek(dayName, excludeToday = true, refDate = new Date()) {
+            const dayOfWeek = ["sun","mon","tue","wed","thu","fri","sat"]
+                .indexOf(dayName.slice(0,3).toLowerCase());
+            if (dayOfWeek < 0) return;
+            refDate.setHours(0,0,0,0);
+            refDate.setDate(refDate.getDate() + +!!excludeToday +
+                (dayOfWeek + 7 - refDate.getDay() - +!!excludeToday) % 7);
+            return refDate;
+        }
+
         const countdown = () => {
             this.today = new Date;
-            const nextMon = this.today.getDate() - this.today.getDay();
-            const countDate = new Date(this.today.setDate(nextMon)).setHours(24,0,0,0);
+            const countDate = getNextDayOfTheWeek("Monday", false);
             const gap = countDate - this.today.getTime();
 
             const textDay = Math.floor(gap / day);
