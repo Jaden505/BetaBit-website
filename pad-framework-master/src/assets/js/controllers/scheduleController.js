@@ -187,7 +187,7 @@ export class ScheduleController extends Controller {
      * @private
      * @instance
      */
-    static #pointCalculator(transport, distance) {
+    static pointCalculator(transport, distance) {
         let number
         const transportMethods = ["lopen", "fiets", "elektrische fiets", "scooter", "elektrische scooter", "tram", "metro", "bus", "trein", "elektrische auto", "diesel auto", "hybride auto", "online", "geen", "empty"];
         const pointsPerKM = [150, 75, 70, 30, 35, 25, 25, 25, 20, 7, 6, 5, 6, 0, 0, 0];
@@ -240,7 +240,7 @@ export class ScheduleController extends Controller {
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = ScheduleController.#pointCalculator(schedule.transport, schedule.travel_distance);
+            let totalPoints = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;

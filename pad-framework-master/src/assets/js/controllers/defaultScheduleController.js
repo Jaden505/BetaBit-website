@@ -5,15 +5,16 @@
  * @author Jaden van Rijswijk & Dia Fortmeier & Colin Laan
  */
 
-import { Controller } from "./controller.js";
-import { ScheduleRepository } from "../repositories/scheduleRepository.js";
-import { App } from "../app.js";
+import {Controller} from "./controller.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
+import {ScheduleController} from "./scheduleController.js";
 
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
     #defaultSchedule
     #date = new Date();
-    static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+    static days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
     constructor() {
         super();
@@ -50,7 +51,7 @@ export class DefaultScheduleController extends Controller {
         const expandIcon = this.#defaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
-            expandTab[i].addEventListener("click", function (){
+            expandTab[i].addEventListener("click", function () {
                 expandableContent[i].classList.toggle("acc-active")
                 if (expandIcon[i].style.transform === "rotate(180deg)") {
                     expandIcon[i].style.transform = "rotate(0)"
@@ -101,7 +102,7 @@ export class DefaultScheduleController extends Controller {
 
                 let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-                let punten = 2 * schedule.travel_distance;
+                let punten = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
 
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +
