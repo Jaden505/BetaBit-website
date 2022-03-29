@@ -33,9 +33,14 @@ export class ChangeScheduleController extends Controller{
         //Redirect buttons
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
+        this.#changeScheduleView.querySelector("#roosterRedirectButton")
+            .addEventListener("click", event => App.loadController(App.CONTROLLER_SCHEDULE));
+
     }
 
     async #setSchedule() {
+        let error = document.getElementById('error');
+
         const email = App.sessionManager.get("email");
         const date = this.#changeScheduleView.querySelector(".date").value;
         const day_start = this.#changeScheduleView.querySelector(".day-start").value;
@@ -44,8 +49,20 @@ export class ChangeScheduleController extends Controller{
         const vehicle = this.#changeScheduleView.querySelector(".transport").value;
         const type = this.#changeScheduleView.querySelector(".day-type").value;
 
-        await this.#changeSchedule.updateSchedule(
-            type, day_start, day_end, distance, vehicle, email, date
-        );
+        try {
+            error.style.color = "green"
+            error.innerHTML = "Uw rooster is succevol aangepast";
+
+            await this.#changeSchedule.updateSchedule(
+                type, day_start, day_end, distance, vehicle, email, date
+            );
+        }
+        catch(e) {
+            if (e.code == 400) {
+                // Filled fields are incorrect
+                error.style.color = "red"
+                error.innerHTML = "Velden zijn incorrect ingevuld"
+            }
+        }
     }
 }

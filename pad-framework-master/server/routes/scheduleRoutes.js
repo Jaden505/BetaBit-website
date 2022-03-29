@@ -151,31 +151,34 @@ class ScheduleRoutes {
             const distance = req.body.distance;
             const transport = req.body.vehicle;
 
-            try {
-                await this.#databaseHelper.handleQuery({
-                    query: `INSERT INTO schedules (user_email, date, 
-                                    type, start_time, end_time, travel_distance, transport)
-                            SELECT ?, ?, d.id, ?, ?, ?, t.id
-                            FROM schedules
-                                     INNER JOIN daytypes d on d.name = ?
-                                     INNER JOIN transport t on t.name = ?
+            let data = await this.#databaseHelper.handleQuery({
+                query: `INSERT INTO schedules (user_email, date, 
+                                type, start_time, end_time, travel_distance, transport)
+                        SELECT ?, ?, d.id, ?, ?, ?, t.id
+                        FROM schedules
+                                 INNER JOIN daytypes d on d.name = ?
+                                 INNER JOIN transport t on t.name = ?
 
-                            ON DUPLICATE KEY UPDATE
-                                     user_email = ?,
-                                     date = ?,
-                                     type = d.id,
-                                     start_time = ?,
-                                     end_time = ?,
-                                     travel_distance = ?,
-                                     transport = t.id;
-                    `,
-                    values: [email, date, start_time, end_time, distance,
-                        type, transport,
-                        email, date, start_time, end_time, distance]
-                });
-            } catch (e) {
-                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+                        ON DUPLICATE KEY UPDATE
+                                 user_email = ?,
+                                 date = ?,
+                                 type = d.id,
+                                 start_time = ?,
+                                 end_time = ?,
+                                 travel_distance = ?,
+                                 transport = t.id;
+                `,
+                values: [email, date, start_time, end_time, distance,
+                    type, transport,
+                    email, date, start_time, end_time, distance]
+            });
+
+            if (data.changedRows > 0) {
+                res.status(this.#errorCodes.HTTP_OK_CODE)
+            } else {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
             }
+
         });
     }
 }

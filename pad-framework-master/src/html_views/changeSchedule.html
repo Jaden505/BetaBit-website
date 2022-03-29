@@ -1,14 +1,31 @@
 <div class="container">
-    <br><br><br>
+    <div class="breadcrumbs">
+        <span class="breadcrumbs-icon">
+            <a href="#">
+                <img src="assets/img/dashboard.svg" alt="breadcrumbs dashboard icon">
+            </a>
+        </span>
+        <span class="breadcrumbs-icon direction-icon">
+            <img src="assets/img/arrow.svg" alt="breadcrumbs direction icon">
+        </span>
+        <span class="breadcrumb-text" id="roosterRedirectButton">Rooster</span>
+        <span class="breadcrumbs-icon direction-icon">
+            <img src="assets/img/arrow.svg" alt="breadcrumbs direction icon">
+        </span>
+        <span class="breadcrumb-text">Wijzig</span>
+    </div>
 
-    <div>
-        <div class="default-schedule-edit-items">
+    <br><br>
+
+    <div id="changeScheduleHolder">
+        <div>
             <form>
                 <div class="content-item"><label for="dayStartMon">Datum</label>
-                    <input type="date" class="date" id="date" name="date">
+                    <input type="date" class="date" id="date" name="date" required>
                 </div>
+                <br>
                 <div class="content-item"><label for="dayTypeMon">Type dag</label>
-                    <select class="day-type" name="Type Dag" id="dayTypeMon">
+                    <select class="day-type" name="Type Dag" id="dayTypeMon" required>
                         <option value="Empty">Kies een optie</option>
                         <option value="bij klant">Werk bij de klant</option>
                         <option value="op kantoor">Werk op kantoor</option>
@@ -18,16 +35,16 @@
                     </select>
                 </div>
                 <div class="content-item"><label for="dayStartMon">Starttijd</label>
-                    <input type="time" class="day-start" id="dayStartMon" name="Starttijd">
+                    <input type="time" class="day-start" id="dayStartMon" name="Starttijd" required>
                 </div>
                 <div class="content-item"><label for="dayEndMon">Eindtijd</label>
-                    <input type="time" class="day-end" id="dayEndMon" name="Eindtijd">
+                    <input type="time" class="day-end" id="dayEndMon" name="Eindtijd" required>
                 </div>
                 <div class="content-item"><label for="travelDistanceMon">Reisafstand</label>
-                    <input type="number" class="distance-input" id="travelDistanceMon" name="Reisafstand" placeholder="km" min="1" max="300">
+                    <input type="number" class="distance-input" id="travelDistanceMon" name="Reisafstand" placeholder="km" min="1" max="300" required>
                 </div>
                 <div class="content-item"><label for="wayOfTravellingMon">Vervoer</label>
-                    <select name="Transportation" class="transport" id="wayOfTravellingMon">
+                    <select name="Transportation" class="transport" id="wayOfTravellingMon" required>
                         <option value="Empty">Kies een optie</option>
                         <option value="lopen">Lopen</option>
                         <option value="fiets">Fiets</option>
@@ -48,7 +65,9 @@
                 </div>
             </form>
         </div>
+        <br>
+        <button id="changeScheduleConfirm" class="buttons">Voeg toe/Update</button>
+        <br>
+        <p id="error"></p>
     </div>
-
-    <button id="changeScheduleConfirm">Voeg toe/Update</button>
 </div>
