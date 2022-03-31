@@ -92,6 +92,12 @@ export class IndividualMonthLeaderboardController extends Controller {
         setInterval(countdown, second);
     }
 
+    static createUserHighlight(email, listRank) {
+        if (email === App.sessionManager.get("email")) {
+            listRank.classList.add("list-rank-Highlighted");
+        }
+    }
+
     /**
      * Gets the users and all their current month points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
@@ -118,10 +124,8 @@ export class IndividualMonthLeaderboardController extends Controller {
             const rankPoints = document.createElement("div");
             const pointsLabel = document.createElement("span");
             const pointsTotal = document.createElement("span");
-            const highlightedListRank=document.createElement("div");
 
             listRank.classList.add("list-rank");
-            highlightedListRank.classList.add("list-rank-Highlighted");
             rankPlacement.classList.add("rank-placement");
             rankUser.classList.add("rank-user");
             userImage.classList.add("user-image");
@@ -131,7 +135,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             pointsTotal.classList.add("points-total");
 
             rankPlacementNumber++;
-            rankPlacement.textContent = + rankPlacementNumber.toString();
+            rankPlacement.textContent = +rankPlacementNumber.toString();
             userName.textContent = lu.username;
 
             let nameList = userName.textContent.split(" ").join("+");
@@ -144,10 +148,8 @@ export class IndividualMonthLeaderboardController extends Controller {
             rankPoints.append(pointsLabel, pointsTotal);
             listRank.append(rankPlacement, rankUser, rankPoints);
 
-            if (lu.email === App.sessionManager.get("email")) {
-                highlightedListRank.append(rankPlacement,rankUser,rankPoints);
-                listRank.replaceWith(highlightedListRank)
-            }
+            IndividualMonthLeaderboardController.createUserHighlight(lu.email, listRank);
         });
     }
+
 }
