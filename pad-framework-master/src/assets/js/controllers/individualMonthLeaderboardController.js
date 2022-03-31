@@ -118,9 +118,10 @@ export class IndividualMonthLeaderboardController extends Controller {
             const rankPoints = document.createElement("div");
             const pointsLabel = document.createElement("span");
             const pointsTotal = document.createElement("span");
-
+            const highlightedListRank=document.createElement("div");
 
             listRank.classList.add("list-rank");
+            highlightedListRank.classList.add("list-rank-Highlighted");
             rankPlacement.classList.add("rank-placement");
             rankUser.classList.add("rank-user");
             userImage.classList.add("user-image");
@@ -142,9 +143,12 @@ export class IndividualMonthLeaderboardController extends Controller {
             rankUser.append(userImage, userName);
             rankPoints.append(pointsLabel, pointsTotal);
             listRank.append(rankPlacement, rankUser, rankPoints);
-            const email=App.sessionManager.get("email");
-            if (lu.email === email) {
-                console.log(lu.username)
+
+            if (lu.email === App.sessionManager.get("email")) {
+                highlightedListRank.append(rankPlacement,rankUser,rankPoints);
+                listRank.replaceWith(highlightedListRank)
+
+
             }
         });
     }

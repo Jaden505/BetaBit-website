@@ -23,6 +23,7 @@
 }
 
 .leaderboard-list .list-rank,
+.leaderboard-list .list-rank-Highlighted,
 .leaderboard-list .rank-user  {
     display: flex;
     width: 100%;
@@ -34,9 +35,15 @@
     }
 }
 
-.leaderboard-list .list-rank {
+.leaderboard-list .list-rank,
+.leaderboard-list .list-rank-Highlighted
+{
     margin-bottom: 1rem;
 }
+.leaderboard-list .list-rank-Highlighted{
+    background:  var(--light-gray);
+}
+
 
 .leaderboard-list .rank-user,
 .leaderboard-list .rank-placement  {
