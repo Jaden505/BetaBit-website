@@ -27,14 +27,16 @@ export class ChangeScheduleController extends Controller{
      * @private
      */
     async #setupView() {
+        let popup = document.getElementById("changeSchedulePopup");
+
         //await for when HTML is loaded
-        this.#changeScheduleView = await super.loadHtmlIntoContent("html_views/changeSchedule.html")
+        this.#changeScheduleView = await super.loadHtmlIntoCustomElement("html_views/changeSchedule.html", popup)
 
         //Redirect buttons
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
-        this.#changeScheduleView.querySelector("#roosterRedirectButton")
-            .addEventListener("click", event => App.loadController(App.CONTROLLER_SCHEDULE));
+        this.#changeScheduleView.querySelector("#cancelChangeSchedule")
+            .addEventListener("click", event => popup.innerHTML = "");
 
     }
 

@@ -203,3 +203,11 @@
 #roosterRedirectButton:hover {
     cursor: pointer;
 }
+
+#changeSchedulePopup {
+    position: absolute;
+    left: 41%;
+    width: 20%;
+    background-color: var(--white);
+    outline: var(--light-grey) solid 2px;
+}
