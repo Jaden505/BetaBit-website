@@ -35,6 +35,7 @@ export class ChangeDefaultScheduleController extends Controller {
 
         this.#expandDayView();
         this.#fillChangeFields();
+        this.#addSelectionFields();
         this.#dayTypeContentUpdate();
     }
 
@@ -95,7 +96,19 @@ export class ChangeDefaultScheduleController extends Controller {
      * @private
      */
     async #addSelectionFields() {
+        const option = document.createElement("option");
+        const optionText = document.createTextNode("test");
+        option.appendChild(optionText);
+        option.setAttribute("value", "test");
 
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+
+        default_schedules.forEach(function (schedule) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
+
+            schedule_day.querySelector(".day-type").appendChild(option);
+        });
     }
 
     /**
@@ -156,7 +169,7 @@ export class ChangeDefaultScheduleController extends Controller {
                     distance.classList.remove("hideOnAtHome");
                     transport.classList.remove("hideOnAtHome");
                 }
-            })
+            });
         });
     }
 }
