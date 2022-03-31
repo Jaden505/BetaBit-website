@@ -5,6 +5,7 @@
  */
 
 import {Controller} from "./controller.js";
+<<<<<<< HEAD
 import {ScheduleRepository} from "../repositories/scheduleRepository.js";
 import {App} from "../app.js";
 
@@ -18,6 +19,14 @@ export class ChangeScheduleController extends Controller{
 
         this.#changeSchedule = new ScheduleRepository();
 
+=======
+
+export class ChangeScheduleController extends Controller{
+    #scheduleView
+
+    constructor() {
+        super();
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
         this.#setupView();
     }
 
@@ -27,6 +36,7 @@ export class ChangeScheduleController extends Controller{
      * @private
      */
     async #setupView() {
+<<<<<<< HEAD
         let popup = document.getElementById("changeSchedulePopup");
 
         //await for when HTML is loaded
@@ -66,5 +76,9 @@ export class ChangeScheduleController extends Controller{
                 error.innerHTML = "Velden zijn incorrect ingevuld"
             }
         }
+=======
+        //await for when HTML is loaded
+        this.#scheduleView = await super.loadHtmlIntoContent("html_views/changeSchedule.html")
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     }
 }

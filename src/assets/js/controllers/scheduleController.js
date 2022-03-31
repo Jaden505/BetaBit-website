@@ -4,6 +4,7 @@
  * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
+<<<<<<< HEAD
 import { Controller } from "./controller.js";
 import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import { App } from "../app.js";
@@ -13,6 +14,17 @@ export class ScheduleController extends Controller{
     #schedule
     #date = new Date();
     static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+=======
+import {Controller} from "./controller.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
+
+export class ScheduleController extends Controller {
+    #scheduleView
+    #schedule
+    #date = new Date();
+    static days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     static months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
 
     constructor() {
@@ -35,7 +47,10 @@ export class ScheduleController extends Controller{
         // Redirect buttons
         this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
         this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
@@ -80,12 +95,19 @@ export class ScheduleController extends Controller{
 
             if (date_type === "day") {
                 date = new Date(curr.setDate(first)).toISOString().slice(8, 10);
+<<<<<<< HEAD
             }
             else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
                 date = ScheduleController.months[parseInt(month_decimal)-1];
             }
             else if (date_type === "date") {
+=======
+            } else if (date_type === "month") {
+                let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
+                date = ScheduleController.months[parseInt(month_decimal) - 1];
+            } else if (date_type === "date") {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                 date = new Date(curr.setDate(first)).toISOString().slice(0, 10);
             }
 
@@ -103,7 +125,11 @@ export class ScheduleController extends Controller{
         let current_days = this.#getCurrentDates("day");
         let current_months = this.#getCurrentDates("month");
 
+<<<<<<< HEAD
         for (let i=0; i<7; i++) {
+=======
+        for (let i = 0; i < 7; i++) {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
             let day = day_containers[i];
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
@@ -119,12 +145,21 @@ export class ScheduleController extends Controller{
      * Calculates the current week number of the year.
      */
     #getWeekOfTheYear() {
+<<<<<<< HEAD
         Date.prototype.getWeekNumber = function(){
             let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
             let dayNum = d.getUTCDay() || 7;
             d.setUTCDate(d.getUTCDate() + 4 - dayNum);
             let yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
             return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
+=======
+        Date.prototype.getWeekNumber = function () {
+            let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
+            let dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            let yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
         };
 
         let weekNumber = (new Date().getWeekNumber());
@@ -141,7 +176,11 @@ export class ScheduleController extends Controller{
             node.addEventListener("click", e => {
                 let activeTabs = document.querySelectorAll('.selected-day');
 
+<<<<<<< HEAD
                 activeTabs.forEach(function(tab) {
+=======
+                activeTabs.forEach(function (tab) {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                     tab.className = tab.className.replace('selected-day', '');
                 });
 
@@ -179,6 +218,40 @@ export class ScheduleController extends Controller{
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * calculates how much points you get
+     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
+     * by changing the (x)var variables. With the first number being the amount of points per KM and
+     * the second number being the point cap.
+     * @author Mairo Garf Tzouvelekis
+     * @memberOf ScheduleController
+     * @name pointCalculator
+     * @method
+     * @private
+     * @instance
+     */
+    static pointCalculator(transport, distance) {
+        let number
+        const transportMethods = ["lopen", "fiets", "elektrische fiets", "scooter", "elektrische scooter", "tram", "metro", "bus", "trein", "elektrische auto", "diesel auto", "hybride auto", "online", "geen", "empty"];
+        const pointsPerKM = [150, 75, 70, 30, 35, 25, 25, 25, 20, 7, 6, 5, 6, 0, 0, 0];
+        const maxPoints = [700, 700, 750, 500, 550, 500, 500, 500, 400, 450, 400, 400, 450, 0, 0, 0];
+        let i = 0;
+        while (i < 15) {
+            if (transport === transportMethods[i]) {
+                number = distance * pointsPerKM[i]
+                if (number > maxPoints[i]) {
+                    number = maxPoints[i]
+                }
+            }
+            i++;
+        }
+        return number;
+    }
+
+
+    /**
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
@@ -192,7 +265,11 @@ export class ScheduleController extends Controller{
 
         let day_schedules = schedules.slice(0);
 
+<<<<<<< HEAD
         day_schedules.forEach(function(part, index) {
+=======
+        day_schedules.forEach(function (part, index) {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
             let date = part.date;
             this[index] = ScheduleController.days[new Date(date).getDay()]
         }, day_schedules);
@@ -206,13 +283,21 @@ export class ScheduleController extends Controller{
             if (day_schedules.includes(s.day)) {
                 schedule = schedules[day_schedules.indexOf(s.day)];
                 schedule_day = document.getElementById(ScheduleController.days[new Date(schedule.date).getDay()] + "_detail");
+<<<<<<< HEAD
             }
             else {
+=======
+            } else {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                 schedule = s;
                 schedule_day = document.getElementById(s.day + "_detail");
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
+<<<<<<< HEAD
+=======
+            let totalPoints = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -239,6 +324,11 @@ export class ScheduleController extends Controller{
                 schedule_day.querySelector(".transport").innerHTML =
                     ScheduleController.#getTransportTypeLabel(schedule.transport);
                 schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
+<<<<<<< HEAD
+=======
+                schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
+
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
             }
         });
     }

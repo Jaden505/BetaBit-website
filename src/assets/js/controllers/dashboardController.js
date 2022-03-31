@@ -33,6 +33,10 @@ export class DashboardController extends Controller{
         this.#welcomeView.querySelector("span.name").innerHTML = App.sessionManager.get("username");
 
         //for demonstration a hardcoded room id that exists in the database of the back-end
+<<<<<<< HEAD
+=======
+        console.log("CI/CD werkt hoera!")
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
         this.#fetchRooms(1256);
     }
 
