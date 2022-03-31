@@ -4,9 +4,9 @@
  * @author Dia Fortmeier
  */
 
-import { Controller } from "./controller.js";
-import { MonthLeaderboardRepository } from "../repositories/monthLeaderboardRepository.js";
-import { App } from "../app.js";
+import {Controller} from "./controller.js";
+import {MonthLeaderboardRepository} from "../repositories/monthLeaderboardRepository.js";
+import {App} from "../app.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
@@ -46,7 +46,7 @@ export class IndividualMonthLeaderboardController extends Controller {
      * @instance
      */
     #currentMonth() {
-        let currentMonth = this.today.toLocaleString('default', { month: 'long' });
+        let currentMonth = this.today.toLocaleString('default', {month: 'long'});
         currentMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
         document.querySelector('#leaderboard-month').innerText = currentMonth;
     }
@@ -63,10 +63,10 @@ export class IndividualMonthLeaderboardController extends Controller {
         const day = hour * 24;
 
         function getNextDayOfTheWeek(dayName, excludeToday = true, refDate = new Date()) {
-            const dayOfWeek = ["sun","mon","tue","wed","thu","fri","sat"]
-                .indexOf(dayName.slice(0,3).toLowerCase());
+            const dayOfWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+                .indexOf(dayName.slice(0, 3).toLowerCase());
             if (dayOfWeek < 0) return;
-            refDate.setHours(0,0,0,0);
+            refDate.setHours(0, 0, 0, 0);
             refDate.setDate(refDate.getDate() + +!!excludeToday +
                 (dayOfWeek + 7 - refDate.getDay() - +!!excludeToday) % 7);
             return refDate;
@@ -142,6 +142,10 @@ export class IndividualMonthLeaderboardController extends Controller {
             rankUser.append(userImage, userName);
             rankPoints.append(pointsLabel, pointsTotal);
             listRank.append(rankPlacement, rankUser, rankPoints);
+            const email=App.sessionManager.get("email");
+            if (lu.email === email) {
+                console.log(lu.username)
+            }
         });
     }
 }

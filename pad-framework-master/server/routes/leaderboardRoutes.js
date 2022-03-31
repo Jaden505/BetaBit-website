@@ -34,7 +34,7 @@ class LeaderboardRoutes {
 
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                    query: `SELECT u.username, dp.user, SUM(dp.points) as points
+                    query: `SELECT u.username,u.email, dp.user, SUM(dp.points) as points
                     FROM dailypoints dp
                     INNER JOIN users u on dp.user = u.email
                     GROUP BY dp.user
