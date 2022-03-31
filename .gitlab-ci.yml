@@ -1,0 +1,34 @@
+stages:
+  - deploy
+
+before_script:
+  - apk update
+  - apk add openssh
+  - apk add lftp
+  - apk add wget
+
+deploy_dev:
+  stage: deploy
+  only:
+    - master
+    - main
+    - dev
+  tags:
+    - hva
+  environment: Development
+  script:
+    - lftp -e "set net:max-retries 3; set ssl:verify-certificate no; set ftp:ssl-allow yes; set sftp:auto-confirm yes; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -Rv server/ $FTP_TARGETPATH/app/ --ignore-time --parallel=10"
+    - lftp -e "set net:max-retries 3; set ssl:verify-certificate no; set ftp:ssl-allow yes; set sftp:auto-confirm yes; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -Rv src/ $FTP_TARGETPATH/wwwroot/ --ignore-time --parallel=10"
+    - 'wget --header="Authorization: $API_KEY" https://hbo-ict.cloud/api/Docker/$API_SUBDOMAIN/Restart'
+
+deploy_live:
+  stage: deploy
+  only:
+    - live
+  tags:
+    - hva
+  environment: Live
+  script:
+    - lftp -e "set net:max-retries 3; set ssl:verify-certificate no; set ftp:ssl-allow yes; set sftp:auto-confirm yes; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -Rv server/ $FTP_TARGETPATH/app/ --ignore-time --parallel=10"
+    - lftp -e "set net:max-retries 3; set ssl:verify-certificate no; set ftp:ssl-allow yes; set sftp:auto-confirm yes; open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST; mirror -Rv src/ $FTP_TARGETPATH/wwwroot/ --ignore-time --parallel=10"
+    - 'wget --header="Authorization: $API_KEY" https://hbo-ict.cloud/api/Docker/$API_SUBDOMAIN/Restart'
