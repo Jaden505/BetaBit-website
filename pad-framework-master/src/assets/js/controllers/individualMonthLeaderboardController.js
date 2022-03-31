@@ -135,7 +135,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             pointsTotal.classList.add("points-total");
 
             rankPlacementNumber++;
-            rankPlacement.textContent = +rankPlacementNumber.toString();
+            rankPlacement.textContent = rankPlacementNumber.toString();
             userName.textContent = lu.username;
 
             let nameList = userName.textContent.split(" ").join("+");
