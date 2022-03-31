@@ -74,7 +74,7 @@ export class IndividualMonthLeaderboardController extends Controller {
 
         const countdown = () => {
             this.today = new Date;
-            const countDate = getNextDayOfTheWeek("Monday", false);
+            const countDate = getNextDayOfTheWeek("Sunday", false);
             const gap = countDate - this.today.getTime();
 
             const textDay = Math.floor(gap / day);
