@@ -97,7 +97,9 @@ export class IndividualMonthLeaderboardController extends Controller {
      * if yes, adds extra css to highlight their placement
      * @param email email that gets checked
      * @param listRank classlist that gets changed so that its highlighted
+     * @author Mairo Tzouvelekis
      */
+
     static createUserHighlight(email, listRank) {
         if (email === App.sessionManager.get("email")) {
             listRank.classList.add("list-rank-Highlighted");
