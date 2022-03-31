@@ -92,6 +92,12 @@ export class IndividualMonthLeaderboardController extends Controller {
         setInterval(countdown, second);
     }
 
+    /**
+     * checks if the given email is the same as the email of the user thats logged in
+     * if yes, adds extra css to highlight their placement
+     * @param email email that gets checked
+     * @param listRank classlist that gets changed so that its highlighted
+     */
     static createUserHighlight(email, listRank) {
         if (email === App.sessionManager.get("email")) {
             listRank.classList.add("list-rank-Highlighted");
