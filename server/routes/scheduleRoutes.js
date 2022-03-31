@@ -20,6 +20,10 @@ class ScheduleRoutes {
         this.#getDefaultSchedule()
         this.#getSchedule()
         this.#setDefaultSchedule()
+<<<<<<< HEAD
+        this.#setSchedule()
+=======
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     }
 
     /**
@@ -81,11 +85,18 @@ class ScheduleRoutes {
                                    s.transport AS schedule_transport_id,
                                    d.id        AS daytype_id,
                                    d.name      AS daytype,
+<<<<<<< HEAD
+                                   t.id        AS transport_id,
+                                   t.name      AS transport,
+                                   t.emissions AS transport_emissions,
+                                   t.icon
+=======
                                    d.icon AS type_icon,
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
                                    t.icon AS transport_icon
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
@@ -136,6 +147,54 @@ class ScheduleRoutes {
             }
         });
     }
+<<<<<<< HEAD
+
+    /**
+     * sets a new schedule in the database using json
+     * @private
+     */
+    #setSchedule() {
+        this.#app.put("/schedule/update", async (req, res) => {
+            const email = req.body.email;
+            const date = req.body.date;
+            const type = req.body.day_type;
+            const start_time = req.body.begin_date;
+            const end_time = req.body.end_date;
+            const distance = req.body.distance;
+            const transport = req.body.vehicle;
+
+            let data = await this.#databaseHelper.handleQuery({
+                query: `INSERT INTO schedules (user_email, date, 
+                                type, start_time, end_time, travel_distance, transport)
+                        SELECT ?, ?, d.id, ?, ?, ?, t.id
+                        FROM schedules
+                                 INNER JOIN daytypes d on d.name = ?
+                                 INNER JOIN transport t on t.name = ?
+
+                        ON DUPLICATE KEY UPDATE
+                                 user_email = ?,
+                                 date = ?,
+                                 type = d.id,
+                                 start_time = ?,
+                                 end_time = ?,
+                                 travel_distance = ?,
+                                 transport = t.id;
+                `,
+                values: [email, date, start_time, end_time, distance,
+                    type, transport,
+                    email, date, start_time, end_time, distance]
+            });
+
+            if (data.changedRows > 0) {
+                res.status(this.#errorCodes.HTTP_OK_CODE)
+            } else {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
+            }
+
+        });
+    }
+=======
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 }
 
 module.exports = ScheduleRoutes;

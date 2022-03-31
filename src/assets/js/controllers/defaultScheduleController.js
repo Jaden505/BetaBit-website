@@ -5,16 +5,26 @@
  * @author Jaden van Rijswijk & Dia Fortmeier & Colin Laan
  */
 
+<<<<<<< HEAD
+import { Controller } from "./controller.js";
+import { ScheduleRepository } from "../repositories/scheduleRepository.js";
+import { App } from "../app.js";
+=======
 import {Controller} from "./controller.js";
 import {ScheduleRepository} from "../repositories/scheduleRepository.js";
 import {App} from "../app.js";
 import {ScheduleController} from "./scheduleController.js";
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
     #defaultSchedule
     #date = new Date();
+<<<<<<< HEAD
+    static days = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+=======
     static days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
     constructor() {
         super();
@@ -51,7 +61,11 @@ export class DefaultScheduleController extends Controller {
         const expandIcon = this.#defaultScheduleView.getElementsByClassName("expand-img")
 
         for (let i = 0; i < expandTab.length; i++) {
+<<<<<<< HEAD
+            expandTab[i].addEventListener("click", function (){
+=======
             expandTab[i].addEventListener("click", function () {
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                 expandableContent[i].classList.toggle("acc-active")
                 if (expandIcon[i].style.transform === "rotate(180deg)") {
                     expandIcon[i].style.transform = "rotate(0)"
@@ -102,7 +116,10 @@ export class DefaultScheduleController extends Controller {
 
                 let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
+<<<<<<< HEAD
+=======
                 let punten = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +
@@ -122,9 +139,12 @@ export class DefaultScheduleController extends Controller {
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">CO2 uitstoot</p><p class=\"item-data\">" +
                     totalEmissions + " g</p></div>";
+<<<<<<< HEAD
+=======
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">punten</p><p class=\"item-data\">" +
                     punten + " punten</p></div>";
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
             });
         } catch (e) {
             console.log(e);

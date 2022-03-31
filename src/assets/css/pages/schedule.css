@@ -19,16 +19,28 @@
 }
 
 .schedule-buttons .buttons {
+<<<<<<< HEAD
+    margin-bottom: 1rem;
+=======
     margin: 0 1rem 1rem 0;
 }
 
 .schedule-buttons .buttons:last-of-type {
     margin-right: 0;
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 }
 
 @media (min-width: 992px) {
     .schedule-buttons .buttons {
         margin-bottom: 0;
+<<<<<<< HEAD
+        margin-right: 1rem;
+    }
+
+    .schedule-buttons .buttons:last-of-type {
+        margin-right: 0;
+=======
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     }
 }
 
@@ -188,3 +200,28 @@
 .schedule-container-content .details-data {
     color: var(--black);
 }
+<<<<<<< HEAD
+
+#changeScheduleHolder label {
+    display: block;
+    text-align: center;
+    line-height: 150%;
+}
+
+#changeScheduleHolder {
+    text-align: center;
+}
+
+#roosterRedirectButton:hover {
+    cursor: pointer;
+}
+
+#changeSchedulePopup {
+    position: absolute;
+    left: 41%;
+    width: 20%;
+    background-color: var(--white);
+    outline: var(--light-grey) solid 2px;
+}
+=======
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d

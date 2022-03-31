@@ -7,6 +7,17 @@
  * @author Lennard Fonteijn & Pim Meijer
  */
 
+<<<<<<< HEAD
+import { SessionManager } from "./framework/utils/sessionManager.js"
+import { LoginController } from "./controllers/loginController.js"
+import { NavbarController }  from "./controllers/navbarController.js"
+import { UploadController }  from "./controllers/uploadController.js"
+import { DashboardController }  from "./controllers/dashboardController.js"
+import { ScheduleController }  from "./controllers/scheduleController.js"
+import { ChangeScheduleController }  from "./controllers/changeScheduleController.js"
+import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
+import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
+=======
 import { SessionManager } from "./framework/utils/sessionManager.js";
 import { LoginController } from "./controllers/loginController.js";
 import { NavbarController }  from "./controllers/navbarController.js";
@@ -17,6 +28,7 @@ import { ChangeScheduleController }  from "./controllers/changeScheduleControlle
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js";
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -33,7 +45,10 @@ export class App {
     static CONTROLLER_DEFAULT_SCHEDULE = "default_schedule";
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
     static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
+<<<<<<< HEAD
+=======
     static CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD = "individual_month_leaderboard";
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 
     constructor() {
         //Always load the navigation
@@ -97,10 +112,13 @@ export class App {
             case App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE:
                 App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
                 break;
+<<<<<<< HEAD
+=======
 
             case App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD:
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
                 break;
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
             default:
                 return false;
         }

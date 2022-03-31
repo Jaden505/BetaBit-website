@@ -19,7 +19,11 @@
     "scripts": {
         "start": "nodemon server.js",
         "cy:open": "cypress open",
+<<<<<<< HEAD
+        "cy:run": "cypress run"
+=======
         "cy:run": "cypress run",
         "doc": "jsdoc -c jsdoc.json"
+>>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     }
 }
