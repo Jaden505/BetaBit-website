@@ -88,8 +88,8 @@ export class IndividualMonthLeaderboardController extends Controller {
             document.querySelector('.updateText #second').innerText = textSecond + "s";
         };
 
-        countdown();
-        setInterval(countdown, second);
+        // let timer = setInterval(countdown, second);
+        window.onunload = function () {clearInterval(timer)} // WERKT NIET
     }
 
     /**
@@ -160,4 +160,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         });
     }
 
+    _stop = () => {
+        clearInterval(this.timerId);
+    }
 }
