@@ -20,10 +20,7 @@ class ScheduleRoutes {
         this.#getDefaultSchedule()
         this.#getSchedule()
         this.#setDefaultSchedule()
-<<<<<<< HEAD
         this.#setSchedule()
-=======
->>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
     }
 
     /**
@@ -85,18 +82,14 @@ class ScheduleRoutes {
                                    s.transport AS schedule_transport_id,
                                    d.id        AS daytype_id,
                                    d.name      AS daytype,
-<<<<<<< HEAD
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
-                                   t.icon
-=======
                                    d.icon AS type_icon,
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
                                    t.icon AS transport_icon
->>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
@@ -147,7 +140,6 @@ class ScheduleRoutes {
             }
         });
     }
-<<<<<<< HEAD
 
     /**
      * sets a new schedule in the database using json
@@ -193,8 +185,6 @@ class ScheduleRoutes {
 
         });
     }
-=======
->>>>>>> ddd02b4687867f51b9338fd2e4fc5e36ff04bd2d
 }
 
 module.exports = ScheduleRoutes;
