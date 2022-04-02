@@ -1,7 +1,7 @@
 /**
  * Responsible for handling the actions happening on monthLeaderboard views
  *
- * @author Dia Fortmeier
+ * @author Dia Fortmeier & Jaden van Rijswijk
  */
 
 import {Controller} from "./controller.js";
@@ -31,9 +31,17 @@ export class IndividualMonthLeaderboardController extends Controller {
         //await for when HTML is loaded
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
+        // Search bar on keyup call display function
+        let currentController = this;
+        let searchbar = document.getElementById("searchbar");
+        searchbar.onkeyup = async function () {
+            let users = await currentController.getUsers(searchbar.value);
+            currentController.displayIndividualMonthLeaderboard(users);
+        };
+
         this.#currentMonth();
         this.weekCounter();
-        await this.#displayIndividualMonthLeaderboard();
+        await this.displayIndividualMonthLeaderboard(await this.getUsers());
     }
 
     /**
@@ -89,7 +97,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         };
 
         countdown();
-        setInterval(countdown, second);
+        // setInterval(countdown, second);
     }
 
     /**
@@ -107,21 +115,30 @@ export class IndividualMonthLeaderboardController extends Controller {
     }
 
     /**
+     * @param search_string
+     * @returns users
+     */
+    async getUsers(search_string = "") {
+        if (search_string === "") {return await this.#monthLeaderboard.individualMonthLeaderboard();}
+        else {return await this.#monthLeaderboard.searchUsers(search_string);}
+    }
+
+    /**
      * Gets the users and all their current month points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
      * @author Dia Fortmeier
      * @memberOf IndividualMonthLeaderboardController
      * @name displayIndividualMonthLeaderboard
      * @function
-     * @private
+     * @public
      * @returns {Promise<void>}
      * @instance
      */
-    async #displayIndividualMonthLeaderboard() {
-        const leaderboardUsers = await this.#monthLeaderboard.individualMonthLeaderboard();
+    async displayIndividualMonthLeaderboard(leaderboardUsers) {
         const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");
-        const email = App.sessionManager.get("email");
         let rankPlacementNumber = 0;
+
+        leaderboardContainer.innerHTML = ""
 
         leaderboardUsers.forEach(function (lu) {
             const listRank = document.createElement("div");
