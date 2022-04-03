@@ -146,7 +146,7 @@ class ScheduleRoutes {
      * @private
      */
     #setSchedule() {
-        this.#app.put("/schedule/update", async (req, res) => {
+        this.#app.post("/schedule/update", async (req, res) => {
             const email = req.body.email;
             const date = req.body.date;
             const type = req.body.day_type;
@@ -177,7 +177,7 @@ class ScheduleRoutes {
                     email, date, start_time, end_time, distance]
             });
 
-            if (data.changedRows > 0) {
+            if (data.affectedRows > 0) {
                 res.status(this.#errorCodes.HTTP_OK_CODE)
             } else {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});

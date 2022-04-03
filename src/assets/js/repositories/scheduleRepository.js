@@ -50,7 +50,7 @@ export class ScheduleRepository {
      * Async function that posts schedule data to network manager which will send it to our database
      */
     async updateSchedule(day_type, begin_date, end_date, distance, vehicle, email, date) {
-        return await this.#networkManager.doRequest(`${this.#route}/update`, "PUT",
+        return await this.#networkManager.doRequest(`${this.#route}/update`, "POST",
             {"begin_date": begin_date, "end_date": end_date, "email": email,
                 "distance": distance, "vehicle": vehicle, "day_type": day_type, "date": date});
     }

@@ -44,26 +44,55 @@ export class ChangeScheduleController extends Controller{
 
         const email = App.sessionManager.get("email");
         const date = this.#changeScheduleView.querySelector(".date").value;
-        const day_start = this.#changeScheduleView.querySelector(".day-start").value;
-        const day_end = this.#changeScheduleView.querySelector(".day-end").value;
-        const distance = this.#changeScheduleView.querySelector(".distance-input").value;
+        let day_start = this.#changeScheduleView.querySelector(".day-start").value;
+        let day_end = this.#changeScheduleView.querySelector(".day-end").value;
+        let distance = this.#changeScheduleView.querySelector(".distance-input").value;
         const vehicle = this.#changeScheduleView.querySelector(".transport").value;
         const type = this.#changeScheduleView.querySelector(".day-type").value;
 
-        try {
-            error.style.color = "green"
-            error.innerHTML = "Uw rooster is succevol aangepast";
+        function checkFields() {
+            let fields = [date, day_start, day_end, distance, vehicle, type];
 
-            await this.#changeSchedule.updateSchedule(
-                type, day_start, day_end, distance, vehicle, email, date
-            );
-        }
-        catch(e) {
-            if (e.code == 400) {
-                // Filled fields are incorrect
-                error.style.color = "red"
-                error.innerHTML = "Velden zijn incorrect ingevuld"
+            // Moet altijd ingevuld worden
+            if (type === "Empty" || date === "") {return false;}
+
+            // Alles moet ingevuld zijn bij deze types
+            if (type === "bij klant" || type === "op kantoor") {
+                return fields.every(o => (o !== "" && o !== "Empty"));
             }
+
+            // Alleen tijden moeten ook ingevuld worden
+            if (type === "online") {
+                return day_start !== "" && day_end !== "";
+            }
+
+            // Set to null if empty
+            if (day_start === "") {day_start = null;}
+            if (day_end === "") {day_end = null;}
+            if (distance === "") {distance = null;}
+
+            return true;
+        }
+
+        if (checkFields()) {
+            try {
+                error.style.color = "green"
+                error.innerHTML = "Uw rooster is succevol aangepast";
+
+                await this.#changeSchedule.updateSchedule(
+                    type, day_start, day_end, distance, vehicle, email, date
+                );
+            } catch (e) {
+                if (e.code == 400) {
+                    // Filled fields are incorrect
+                    error.style.color = "red"
+                    error.innerHTML = "Velden zijn incorrect ingevuld"
+                }
+            }
+        } else {
+            // Filled fields are incorrect
+            error.style.color = "red"
+            error.innerHTML = "Velden zijn incorrect ingevuld"
         }
     }
 }
