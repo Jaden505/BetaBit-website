@@ -44,4 +44,8 @@ export class ScheduleRepository {
     async Schedule(begin_date, end_date, email) {
         return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"begin_date": begin_date, "end_date": end_date, "email": email});
     }
+
+    async getDayTypes(email) {
+        return await this.#networkManager.doRequest(`${this.#route}/daytypes`, "POST")
+    }
 }

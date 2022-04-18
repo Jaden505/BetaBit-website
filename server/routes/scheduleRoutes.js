@@ -20,6 +20,7 @@ class ScheduleRoutes {
         this.#getDefaultSchedule()
         this.#getSchedule()
         this.#setDefaultSchedule()
+        this.#getDayTypes()
     }
 
     /**
@@ -131,6 +132,31 @@ class ScheduleRoutes {
                             AND day = ?;`,
                     values: [type, transport, begin_date, end_date, distance, email, day]
                 });
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+
+    /**
+     * Gets all the day types present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getDayTypes() {
+        this.#app.post("/schedule/daytypes", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT d.id        AS daytype_id,
+                                   d.name      AS daytype,
+                                   d.icon      AS type_icon
+                            FROM daytypes d`
+                });
+
+                // returns schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }

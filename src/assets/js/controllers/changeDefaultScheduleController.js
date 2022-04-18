@@ -90,30 +90,50 @@ export class ChangeDefaultScheduleController extends Controller {
         });
     }
 
+    #getSiblings(elem) {
+
+        // Setup siblings array and get the first sibling
+        let siblings = [];
+        let sibling = elem.parentNode.firstChild;
+
+        // Loop through each sibling and push to the array
+        while (sibling) {
+            if (sibling.nodeType === 1 && sibling !== elem) {
+                siblings.push(sibling);
+            }
+            sibling = sibling.nextSibling
+        }
+
+        return siblings;
+    };
     /**
      * Fetches the available options out of the database and adds them to the selectable day types
      * @author Colin Laan
      * @private
      */
     async #addSelectionFields() {
-        const option = document.createElement("option");
-        const optionText = document.createTextNode("test");
-        option.appendChild(optionText);
-        option.setAttribute("value", "test");
 
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+        const day_types = await this.#changeDefaultSchedule.getDayTypes();
+        console.log(day_types);
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
+            day_types.forEach(function (daytype) {
+                const listOption = document.createElement("option");
+                listOption.value = daytype.daytype;
+                listOption.innerText = daytype.daytype;
 
-            schedule_day.querySelector(".day-type").appendChild(option);
+                console.log(schedule_day.querySelector(".day-type").parentNode)
+                schedule_day.querySelector(".day-type").appendChild(listOption);
+            });
         });
     }
 
     /**
      * Fills the input fields with the data that is already present in the database.
-     * @authors Jaden van Rijswijk & Colin Laan
+     * @author Jaden van Rijswijk, Colin Laan
      * @private
      */
     async #fillChangeFields() {
@@ -143,33 +163,29 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-            schedule_day.addEventListener("click", event => {
-                let day_type = schedule_day.querySelector(".day-type").value;
+            schedule_day.addEventListener("change", function() {
+                // let day_type = schedule_day.querySelector(".day-type").value;
 
-                const start = schedule_day.querySelector(".day-start");
-                const end = schedule_day.querySelector(".day-end");
-                const distance = schedule_day.querySelector(".distance-input");
-                const transport = schedule_day.querySelector(".transport");
+                let siblings = this.#getSiblings(schedule_day);
 
-                if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
-                    start.classList.add("hideOnAtHome");
-                    end.classList.add("hideOnAtHome");
-                    distance.classList.add("hideOnAtHome");
-                    transport.classList.add("hideOnAtHome");
-
-                } else if (day_type === "online") {
-                    start.classList.remove("hideOnAtHome");
-                    end.classList.remove("hideOnAtHome");
-                    distance.classList.add("hideOnAtHome");
-                    transport.classList.add("hideOnAtHome");
-
+                if (this.value === "Empty" || this.value === "geen werk" || this.value === "ziek") {
+                    this.#hideElements(siblings);
                 } else {
-                    start.classList.remove("hideOnAtHome");
-                    end.classList.remove("hideOnAtHome");
-                    distance.classList.remove("hideOnAtHome");
-                    transport.classList.remove("hideOnAtHome");
+                    this.#showElements(siblings);
                 }
             });
+        });
+    }
+
+    #hideElements(elems) {
+        elems.forEach((e) => {
+            e.classList.add("hideOnAtHome");
+        });
+    }
+
+    #showElements(elems) {
+        elems.forEach((e) => {
+            e.classList.remove("hideOnAtHome");
         });
     }
 }
