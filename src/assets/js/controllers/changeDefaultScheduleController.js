@@ -78,6 +78,7 @@ export class ChangeDefaultScheduleController extends Controller {
         const containers = document.querySelectorAll(".default-schedule-container-content")
         let cds = this.#changeDefaultSchedule;
 
+
         containers.forEach(async function (container) {
             let day_start = container.querySelector(".day-start").value
             let day_end = container.querySelector(".day-end").value
@@ -86,11 +87,18 @@ export class ChangeDefaultScheduleController extends Controller {
             let type = container.querySelector(".day-type").value
             let day = (container.id).substring(0, container.id.length - 6);
 
+            if (type === "geen werk" || type === "ziek") {
+                day_start = "00:00";
+                day_end = "00:00";
+                vehicle = "Vrije dag";
+                distance = 0;
+            }
+
             await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
         });
     }
 
-    #getSiblings(elem) {
+    static #getSiblings(elem) {
 
         // Setup siblings array and get the first sibling
         let siblings = [];
@@ -116,7 +124,6 @@ export class ChangeDefaultScheduleController extends Controller {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
         const day_types = await this.#changeDefaultSchedule.getDayTypes();
-        console.log(day_types);
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
@@ -125,7 +132,6 @@ export class ChangeDefaultScheduleController extends Controller {
                 listOption.value = daytype.daytype;
                 listOption.innerText = daytype.daytype;
 
-                console.log(schedule_day.querySelector(".day-type").parentNode)
                 schedule_day.querySelector(".day-type").appendChild(listOption);
             });
         });
@@ -166,24 +172,24 @@ export class ChangeDefaultScheduleController extends Controller {
             schedule_day.addEventListener("change", function() {
                 // let day_type = schedule_day.querySelector(".day-type").value;
 
-                let siblings = this.#getSiblings(schedule_day);
-
-                if (this.value === "Empty" || this.value === "geen werk" || this.value === "ziek") {
-                    this.#hideElements(siblings);
+                let siblings = ChangeDefaultScheduleController.#getSiblings(schedule_day);
+                console.log(siblings)
+                if (siblings === "Empty" || siblings[0] === "geen werk" || siblings[0] === "ziek") {
+                    ChangeDefaultScheduleController.#hideElements(siblings);
                 } else {
-                    this.#showElements(siblings);
+                    ChangeDefaultScheduleController.#showElements(siblings);
                 }
             });
         });
     }
 
-    #hideElements(elems) {
+    static #hideElements(elems) {
         elems.forEach((e) => {
             e.classList.add("hideOnAtHome");
         });
     }
 
-    #showElements(elems) {
+    static #showElements(elems) {
         elems.forEach((e) => {
             e.classList.remove("hideOnAtHome");
         });
