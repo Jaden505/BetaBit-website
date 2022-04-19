@@ -21,6 +21,7 @@ class ScheduleRoutes {
         this.#getSchedule()
         this.#setDefaultSchedule()
         this.#getDayTypes()
+        this.#getTransportationOptions()
     }
 
     /**
@@ -153,6 +154,31 @@ class ScheduleRoutes {
                                    d.name      AS daytype,
                                    d.icon      AS type_icon
                             FROM daytypes d`
+                });
+
+                // returns schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Gets all the transportation options present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getTransportationOptions() {
+        this.#app.post("/schedule/transportation", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT t.id        AS transportation_id,
+                                   t.name      AS transportation_name,
+                                   t.icon      AS transport_icon,
+                                   t.emissions AS emissions
+                            FROM transport t`
                 });
 
                 // returns schedules

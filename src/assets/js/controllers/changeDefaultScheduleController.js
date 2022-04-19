@@ -36,6 +36,7 @@ export class ChangeDefaultScheduleController extends Controller {
         this.#expandDayView();
         this.#fillChangeFields();
         this.#addSelectionFields();
+        this.#addTransportationSelectionFields();
         this.#dayTypeContentUpdate();
     }
 
@@ -117,6 +118,29 @@ export class ChangeDefaultScheduleController extends Controller {
                 listOption.innerText = daytype.daytype;
 
                 schedule_day.querySelector(".day-type").appendChild(listOption);
+            });
+        });
+    }
+
+    /**
+     * Fetches the available options out of the database and adds them to the selectable transportation options
+     * @author Colin Laan
+     * @private
+     */
+    async #addTransportationSelectionFields() {
+        const email = App.sessionManager.get("email");
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+        const transport_options = await this.#changeDefaultSchedule.getTransportationOptions();
+
+        default_schedules.forEach(function (schedule) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
+            console.log(transport_options)
+            transport_options.forEach(function (transportation) {
+                const listOption = document.createElement("option");
+                listOption.value = transportation.transportation_name;
+                listOption.innerText = transportation.transportation_name;
+
+                schedule_day.querySelector(".transport").appendChild(listOption);
             });
         });
     }
