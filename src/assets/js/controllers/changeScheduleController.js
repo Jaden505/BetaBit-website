@@ -77,7 +77,7 @@ export class ChangeScheduleController extends Controller{
         if (checkFields()) {
             try {
                 error.style.color = "green"
-                error.innerHTML = "Uw rooster is succevol aangepast";
+                error.innerHTML = "Uw rooster is succesvol aangepast";
 
                 await this.#changeSchedule.updateSchedule(
                     type, day_start, day_end, distance, vehicle, email, date
