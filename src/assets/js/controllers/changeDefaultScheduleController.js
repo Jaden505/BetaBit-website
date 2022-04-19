@@ -88,11 +88,14 @@ export class ChangeDefaultScheduleController extends Controller {
             let type = container.querySelector(".day-type").value
             let day = (container.id).substring(0, container.id.length - 6);
 
-            if (type === "geen werk" || type === "ziek") {
-                day_start = "00:00";
-                day_end = "00:00";
-                vehicle = "Vrije dag";
+            if (type === "geen werk" || type === "ziek" || type === "online") {
+                vehicle = "geen";
                 distance = 0;
+
+                if (type !== "online") {
+                    day_start = "00:00";
+                    day_end = "00:00";
+                }
             }
 
             await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
@@ -181,9 +184,12 @@ export class ChangeDefaultScheduleController extends Controller {
                 let day_type = schedule_day.querySelector(".day-type").value;
 
                 let siblings = ChangeDefaultScheduleController.#getSiblings(schedule_day);
+                let onlineSiblings = ChangeDefaultScheduleController.#getOnlineSiblings(schedule_day);
 
                 if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
                     ChangeDefaultScheduleController.#hideElements(siblings);
+                } else if (day_type === "online") {
+                    ChangeDefaultScheduleController.#hideElements(onlineSiblings);
                 } else {
                     ChangeDefaultScheduleController.#showElements(siblings);
                 }
@@ -197,6 +203,22 @@ export class ChangeDefaultScheduleController extends Controller {
         // Setup siblings array and get the first sibling
         let siblings = [];
         let sibling = elem.getElementsByTagName("div")[2];
+
+        // Loop through each sibling and push to the array
+        while (sibling) {
+            if (sibling.nodeType === 1 && sibling !== elem) {
+                siblings.push(sibling);
+            }
+            sibling = sibling.nextSibling;
+        }
+        return siblings;
+    }
+
+    static #getOnlineSiblings(elem) {
+
+        // Setup siblings array and get the 5th sibling
+        let siblings = [];
+        let sibling = elem.getElementsByTagName("div")[4];
 
         // Loop through each sibling and push to the array
         while (sibling) {
