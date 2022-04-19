@@ -98,22 +98,6 @@ export class ChangeDefaultScheduleController extends Controller {
         });
     }
 
-    static #getSiblings(elem) {
-
-        // Setup siblings array and get the first sibling
-        let siblings = [];
-        let sibling = elem.parentNode.firstChild;
-
-        // Loop through each sibling and push to the array
-        while (sibling) {
-            if (sibling.nodeType === 1 && sibling !== elem) {
-                siblings.push(sibling);
-            }
-            sibling = sibling.nextSibling
-        }
-
-        return siblings;
-    };
     /**
      * Fetches the available options out of the database and adds them to the selectable day types
      * @author Colin Laan
@@ -169,18 +153,35 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-            schedule_day.addEventListener("change", function() {
-                // let day_type = schedule_day.querySelector(".day-type").value;
+            schedule_day.addEventListener("change", function () {
+                let day_type = schedule_day.querySelector(".day-type").value;
 
                 let siblings = ChangeDefaultScheduleController.#getSiblings(schedule_day);
-                console.log(siblings)
-                if (siblings === "Empty" || siblings[0] === "geen werk" || siblings[0] === "ziek") {
+
+                if (day_type === "Empty" || day_type === "geen werk" || day_type === "ziek") {
                     ChangeDefaultScheduleController.#hideElements(siblings);
                 } else {
                     ChangeDefaultScheduleController.#showElements(siblings);
                 }
             });
         });
+    }
+
+
+    static #getSiblings(elem) {
+
+        // Setup siblings array and get the first sibling
+        let siblings = [];
+        let sibling = elem.getElementsByTagName("div")[2];
+
+        // Loop through each sibling and push to the array
+        while (sibling) {
+            if (sibling.nodeType === 1 && sibling !== elem) {
+                siblings.push(sibling);
+            }
+            sibling = sibling.nextSibling;
+        }
+        return siblings;
     }
 
     static #hideElements(elems) {
