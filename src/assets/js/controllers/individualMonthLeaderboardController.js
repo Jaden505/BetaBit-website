@@ -5,7 +5,7 @@
  */
 
 import {Controller} from "./controller.js";
-import {MonthLeaderboardRepository} from "../repositories/monthLeaderboardRepository.js";
+import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
@@ -16,7 +16,7 @@ export class IndividualMonthLeaderboardController extends Controller {
     constructor() {
         super();
 
-        this.#monthLeaderboard = new MonthLeaderboardRepository();
+        this.#monthLeaderboard = new LeaderboardRepository();
         this.today = new Date;
 
         this.#setupView();
