@@ -92,7 +92,9 @@ class ScheduleRoutes {
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
-                                   t.icon AS transport_icon
+                                   t.icon AS transport_icon,
+                                   t.pointsMax AS points_max,
+                                   t.pointsPerKm AS points_factor
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
