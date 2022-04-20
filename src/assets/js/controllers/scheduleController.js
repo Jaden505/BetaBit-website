@@ -82,10 +82,9 @@ export class ScheduleController extends Controller {
 
             if (date_type === "day") {
                 date = new Date(curr.setDate(first)).toISOString().slice(8, 10);
-            }
-            else if (date_type === "month") {
+            } else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-                date = ScheduleController.months[parseInt(month_decimal)-1];
+                date = ScheduleController.months[parseInt(month_decimal) - 1];
             } else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
                 date = ScheduleController.months[parseInt(month_decimal) - 1];
@@ -123,7 +122,7 @@ export class ScheduleController extends Controller {
      * Calculates the current week number of the year.
      */
     #getWeekOfTheYear() {
-            Date.prototype.getWeekNumber = function () {
+        Date.prototype.getWeekNumber = function () {
             let d = new Date(Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()));
             let dayNum = d.getUTCDay() || 7;
             d.setUTCDate(d.getUTCDate() + 4 - dayNum);
@@ -185,7 +184,7 @@ export class ScheduleController extends Controller {
     /**
      * calculates how much points you get
      * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
-     * by changing the (x)var variables. With the first number being the amount of points per KM and
+     * by changing the (x)var variables in the database. With the first number being the amount of points per KM and
      * the second number being the point cap.
      * @author Mairo Garf Tzouvelekis
      * @memberOf ScheduleController
@@ -194,20 +193,12 @@ export class ScheduleController extends Controller {
      * @private
      * @instance
      */
-    static pointCalculator(transport, distance) {
+    static pointCalculator(distance,points_factor ,points_Max ) {
         let number
-        const transportMethods = ["lopen", "fiets", "elektrische fiets", "scooter", "elektrische scooter", "tram", "metro", "bus", "trein", "elektrische auto", "diesel auto", "hybride auto", "online", "geen", "empty"];
-        const pointsPerKM = [150, 75, 70, 30, 35, 25, 25, 25, 20, 7, 6, 5, 6, 0, 0, 0];
-        const maxPoints = [700, 700, 750, 500, 550, 500, 500, 500, 400, 450, 400, 400, 450, 0, 0, 0];
-        let i = 0;
-        while (i < 15) {
-            if (transport === transportMethods[i]) {
-                number = distance * pointsPerKM[i]
-                if (number > maxPoints[i]) {
-                    number = maxPoints[i]
-                }
-            }
-            i++;
+        number = distance * points_factor;
+        if (number > points_Max) {
+            console.log(number);
+            number = points_Max;
         }
         return number;
     }
@@ -247,7 +238,7 @@ export class ScheduleController extends Controller {
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
+            let totalPoints = ScheduleController.pointCalculator(schedule.travel_distance, schedule.points_factor, schedule.points_max);
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;

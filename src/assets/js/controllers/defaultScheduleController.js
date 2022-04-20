@@ -102,7 +102,7 @@ export class DefaultScheduleController extends Controller {
 
                 let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-                let punten = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
+                let punten = ScheduleController.pointCalculator(schedule.travel_distance, schedule.points_factor, schedule.points_max);
 
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +
