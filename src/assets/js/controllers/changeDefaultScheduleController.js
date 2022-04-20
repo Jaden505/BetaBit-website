@@ -33,11 +33,11 @@ export class ChangeDefaultScheduleController extends Controller {
         this.#changeDefaultScheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
         this.#changeDefaultScheduleView.querySelector("#saveDefaultSchedule").addEventListener("click", event => this.#updateDefaultScheduleData());
 
-        this.#expandDayView();
-        this.#fillChangeFields();
-        this.#addSelectionFields();
-        this.#addTransportationSelectionFields();
-        this.#dayTypeContentUpdate();
+        await this.#expandDayView();
+        await this.#addSelectionFields();
+        await this.#addTransportationSelectionFields();
+        await this.#fillChangeFields();
+        await this.#dayTypeContentUpdate();
     }
 
     /**
@@ -76,19 +76,21 @@ export class ChangeDefaultScheduleController extends Controller {
      */
     async #updateDefaultScheduleData() {
         const email = App.sessionManager.get("email");
-        const containers = document.querySelectorAll(".default-schedule-container-content")
+        const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
         let cds = this.#changeDefaultSchedule;
 
 
-        containers.forEach(async function (container) {
-            let day_start = container.querySelector(".day-start").value
-            let day_end = container.querySelector(".day-end").value
-            let distance = container.querySelector(".distance-input").value
-            let vehicle = container.querySelector(".transport").value
-            let type = container.querySelector(".day-type").value
-            let day = (container.id).substring(0, container.id.length - 6);
+        for (const schedule of default_schedules) {
+            let schedule_day = document.getElementById(schedule.day + "_field");
 
-            if (type === "geen werk" || type === "ziek" || type === "online") {
+            let day_start = schedule_day.querySelector(".day-start").value
+            let day_end = schedule_day.querySelector(".day-end").value
+            let distance = schedule_day.querySelector(".distance-input").value
+            let vehicle = schedule_day.querySelector(".transport").value
+            let type = schedule_day.querySelector(".day-type").value
+            let day = (schedule_day.id).substring(0, schedule_day.id.length - 6);
+
+            if (type === "Empty" || type === "geen werk" || type === "ziek" || type === "online") {
                 vehicle = "geen";
                 distance = 0;
 
@@ -96,10 +98,15 @@ export class ChangeDefaultScheduleController extends Controller {
                     day_start = "00:00";
                     day_end = "00:00";
                 }
+
+                if (vehicle === "Empty") {
+                    vehicle = "geen";
+                }
             }
 
             await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
-        });
+        }
+        App.loadController(App.CONTROLLER_DASHBOARD);
     }
 
     /**
@@ -115,8 +122,14 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
+            const listOption = document.createElement("option");
+            listOption.value = "Empty";
+            listOption.innerText = "Kies een optie";
+            schedule_day.querySelector(".day-type").appendChild(listOption);
+
             day_types.forEach(function (daytype) {
                 const listOption = document.createElement("option");
+
                 listOption.value = daytype.daytype;
                 listOption.innerText = daytype.daytype;
 
@@ -137,7 +150,11 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-            console.log(transport_options)
+            const listOption = document.createElement("option");
+            listOption.value = "Empty";
+            listOption.innerText = "Kies een optie";
+            schedule_day.querySelector(".transport").appendChild(listOption);
+
             transport_options.forEach(function (transportation) {
                 const listOption = document.createElement("option");
                 listOption.value = transportation.transportation_name;
@@ -159,13 +176,17 @@ export class ChangeDefaultScheduleController extends Controller {
 
         default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-
             schedule_day.querySelector(".day-type").value = schedule.daytype;
             schedule_day.querySelector(".day-start").value = schedule.start_time.slice(0, 5);
             schedule_day.querySelector(".day-end").value = schedule.end_time.slice(0, 5);
 
             schedule_day.querySelector(".distance-input").value = schedule.travel_distance;
             schedule_day.querySelector(".transport").value = schedule.transport;
+
+            if (schedule.daytype === null|| schedule.transport === null) {
+                schedule_day.querySelector(".day-type").value = "Kies een optie";
+                schedule_day.querySelector(".transport").value = "Kies een optie";
+            }
         });
     }
 
