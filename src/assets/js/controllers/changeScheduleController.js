@@ -36,9 +36,12 @@ export class ChangeScheduleController extends Controller{
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
         this.#changeScheduleView.querySelector("#cancelChangeSchedule")
-            .addEventListener("click", event => popupOverlay.style.display = 'none');
+            .addEventListener("click", () => {
+                popupOverlay.style.display = 'none';
+                App.loadController(App.CONTROLLER_SCHEDULE);
+            });
 
-        this.#loadScheduleOptions();
+        await this.#loadScheduleOptions();
     }
 
     async #loadScheduleOptions() {
