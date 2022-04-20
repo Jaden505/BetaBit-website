@@ -40,7 +40,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         };
 
         this.#currentMonth();
-        this.weekCounter();
+        // this.weekCounter();
         await this.displayIndividualMonthLeaderboard(await this.getUsers());
         this.createTopThreeLeaderboardIcons();
     }
