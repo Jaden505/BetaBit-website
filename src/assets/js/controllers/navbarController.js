@@ -30,6 +30,35 @@ export class NavbarController extends Controller{
 
         //set click listener on each anchor
         anchors.forEach(anchor => anchor.addEventListener("click", (event) => this.#handleClickNavigationItem(event)))
+
+        this.#removeLoginOrLogout();
+    }
+
+    /**
+     * Removes logout from nav when not logged in.
+     * Removes login from nac when logged in.
+     * @author Dia Fortmeier
+     * @memberOf NavbarController
+     * @name removeLoginOrLogout
+     * @method
+     * @private
+     * @instance
+     */
+    #removeLoginOrLogout() {
+        const navLogin = this.#navbarView.querySelector("#nav-login");
+        const navLogout = this.#navbarView.querySelector("#nav-logout");
+
+        function loggedIn() {
+            navLogin.style.display = "none";
+            navLogout.style.display = "block";
+        }
+
+        function loggedOut() {
+            navLogout.style.display = "none";
+            navLogin.style.display = "block";
+        }
+
+        App.isLoggedIn(() => loggedIn(), () => loggedOut());
     }
 
     /**

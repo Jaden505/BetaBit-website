@@ -160,6 +160,7 @@ export class App {
 
         //go to login screen
         App.loadController(App.CONTROLLER_LOGIN);
+        location.reload();
     }
 }
 

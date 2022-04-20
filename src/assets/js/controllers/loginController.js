@@ -50,6 +50,8 @@ export class LoginController extends Controller{
             App.sessionManager.set("email", user.email);
             App.sessionManager.set("username", user.username);
             App.sessionManager.set("role", user.role);
+
+            location.reload();
             App.loadController(App.CONTROLLER_DASHBOARD);
         } catch(error) {
             //if unauthorized error code, show error message to the user
