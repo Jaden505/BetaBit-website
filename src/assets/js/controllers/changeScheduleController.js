@@ -26,7 +26,8 @@ export class ChangeScheduleController extends Controller{
      * @private
      */
     async #setupView() {
-        let popup = document.getElementById("changeSchedulePopup");
+        let popupOverlay = document.querySelector("#popupOverlay");
+        let popup = document.querySelector("#changeSchedulePopup");
 
         //await for when HTML is loaded
         this.#changeScheduleView = await super.loadHtmlIntoCustomElement("html_views/changeSchedule.html", popup)
@@ -35,7 +36,7 @@ export class ChangeScheduleController extends Controller{
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
         this.#changeScheduleView.querySelector("#cancelChangeSchedule")
-            .addEventListener("click", event => popup.style.display = 'none');
+            .addEventListener("click", event => popupOverlay.style.display = 'none');
 
         this.#loadScheduleOptions();
     }
