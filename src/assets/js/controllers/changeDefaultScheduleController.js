@@ -80,7 +80,7 @@ export class ChangeDefaultScheduleController extends Controller {
         let cds = this.#changeDefaultSchedule;
 
 
-        for (const schedule of default_schedules) {
+        default_schedules.forEach(async function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
 
             let day_start = schedule_day.querySelector(".day-start").value
@@ -105,8 +105,9 @@ export class ChangeDefaultScheduleController extends Controller {
             }
 
             await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
-        }
-        App.loadController(App.CONTROLLER_DASHBOARD);
+        });
+
+        App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE);
     }
 
     /**
