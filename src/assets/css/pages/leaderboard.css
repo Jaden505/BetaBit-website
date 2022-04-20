@@ -68,6 +68,38 @@
     margin: auto;
 }
 
+@media (min-width: 992px) {
+    .leaderboard-list .rank-placement  {
+        margin: 0;
+    }
+}
+
+.leaderboard-list .rank-placement:before {
+    content: "{";
+    visibility: hidden;
+    font-size: 1.5em;
+}
+
+.leaderboard-list .rank-placement:after {
+    content: "}";
+    visibility: hidden;
+    font-size: 1.5em;
+}
+
+@media (min-width: 992px) {
+    .leaderboard-list .rank-placement {
+        font-size: 1.5em;
+    }
+
+    .leaderboard-list .rank-placement:before {
+        margin-right: .1em;
+    }
+
+    .leaderboard-list .rank-placement:after {
+        margin-left: .1em;
+    }
+}
+
 .leaderboard-list .rank-user .user-image {
     width: 45px;
     margin: 0 .5rem;

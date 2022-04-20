@@ -42,6 +42,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         this.#currentMonth();
         this.weekCounter();
         await this.displayIndividualMonthLeaderboard(await this.getUsers());
+        this.createTopThreeLeaderboardIcons();
     }
 
     /**
@@ -125,6 +126,37 @@ export class IndividualMonthLeaderboardController extends Controller {
         else {return await this.#monthLeaderboard.searchUsers(search_string);}
     }
 
+    createTopThreeLeaderboardIcons() {
+        const rankOne = [1, "#FFD700"];
+        const rankTwo = [2, "#C0C0C0"];
+        const rankThree = [3, "#D7995B"];
+
+        let styleElem = document.head.appendChild(document.createElement("style"));
+        for (let i = 1; i <= rankThree[0]; i++) {
+            styleElem.innerHTML += `
+                     #placement_${i}:before {visibility: visible;}
+                     #placement_${i}:after {visibility: visible;}
+                 `;
+
+            if (i === rankOne[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankOne[1]};}
+                     #placement_${i}:after {color: ${rankOne[1]};}
+                 `;
+            } else if (i === rankTwo[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankTwo[1]};}
+                     #placement_${i}:after {color: ${rankTwo[1]};}
+                 `;
+            } else if (i === rankThree[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankThree[1]};}
+                     #placement_${i}:after {color: ${rankThree[1]};}
+                 `;
+            }
+        }
+    }
+
     /**
      * Gets the users and all their current month points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
@@ -162,6 +194,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             pointsTotal.classList.add("points-total");
 
             rankPlacementNumber++;
+            rankPlacement.id = `placement_${rankPlacementNumber.toString()}`;
             rankPlacement.textContent = rankPlacementNumber.toString();
             userName.textContent = lu.username;
 
