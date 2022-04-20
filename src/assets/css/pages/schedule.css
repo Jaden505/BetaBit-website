@@ -195,14 +195,26 @@
     color: var(--black);
 }
 
+#changeScheduleHolder {
+    text-align: center;
+}
+
+#changeScheduleHolder .content-item {
+    margin-top: .5em;
+}
+
+#changeScheduleHolder .content-item:first-of-type {
+    margin-top: 0;
+}
+
 #changeScheduleHolder label {
     display: block;
-    text-align: center;
+    text-align: left;
     line-height: 150%;
 }
 
-#changeScheduleHolder {
-    text-align: center;
+#changeScheduleHolder .content-item .popup-input {
+    width: 100%;
 }
 
 #roosterRedirectButton:hover {
