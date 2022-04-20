@@ -6,6 +6,7 @@
 import {Controller} from "./controller.js";
 import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
+import {SessionManager} from "../framework/utils/sessionManager.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
@@ -168,6 +169,19 @@ export class IndividualMonthLeaderboardController extends Controller {
     }
 
     /**
+     * Creates a info card at the top of the leaderboard that shows your personal rank info.
+     * @public
+     * @author Dia Fortmeier
+     */
+    static createSessionUserPlacement(rank, rankId, username, userImage, points) {
+        document.querySelector(".leaderboard-me .rank-placement").textContent = rank.toString();
+        document.querySelector(".leaderboard-me .rank-placement").id = rankId;
+        document.querySelector("#me-image").src = userImage;
+        document.querySelector("#me-name").textContent = username;
+        document.querySelector("#me-points-total").textContent = points;
+    }
+
+    /**
      * Gets the users and all their current month points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
      * @author Dia Fortmeier
@@ -212,6 +226,12 @@ export class IndividualMonthLeaderboardController extends Controller {
             userImage.src = `https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`;
             pointsLabel.textContent = "Punten";
             pointsTotal.textContent = lu.points;
+
+            if (App.sessionManager.get("username") === lu.username) {
+                IndividualMonthLeaderboardController.createSessionUserPlacement(rankPlacementNumber, rankPlacement.id,
+                    lu.username,`https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`,
+                    lu.points);
+            }
 
             leaderboardContainer.appendChild(listRank);
             rankUser.append(userImage, userName);
