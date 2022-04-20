@@ -21,6 +21,7 @@ class ScheduleRoutes {
         this.#getSchedule()
         this.#setDefaultSchedule()
         this.#setSchedule()
+        this.#getOptions()
     }
 
     /**
@@ -91,7 +92,9 @@ class ScheduleRoutes {
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
-                                   t.icon AS transport_icon
+                                   t.icon AS transport_icon,
+                                   t.pointsMax AS points_max,
+                                   t.pointsPerKm AS points_factor
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
@@ -185,6 +188,22 @@ class ScheduleRoutes {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
             }
 
+        });
+    }
+
+    #getOptions() {
+        this.#app.post("/schedule/options", async (req, res) => {
+            let table = req.body.table;
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT name FROM ${table};`});
+
+                // returns options
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
         });
     }
 }

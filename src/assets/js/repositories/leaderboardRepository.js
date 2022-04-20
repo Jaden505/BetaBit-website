@@ -6,7 +6,7 @@
 
 import { NetworkManager } from "../framework/utils/networkManager.js";
 
-export class MonthLeaderboardRepository {
+export class LeaderboardRepository {
     //# is a private field in Javascript
     #route
     #networkManager

@@ -26,7 +26,8 @@ export class ChangeScheduleController extends Controller{
      * @private
      */
     async #setupView() {
-        let popup = document.getElementById("changeSchedulePopup");
+        let popupOverlay = document.querySelector("#popupOverlay");
+        let popup = document.querySelector("#changeSchedulePopup");
 
         //await for when HTML is loaded
         this.#changeScheduleView = await super.loadHtmlIntoCustomElement("html_views/changeSchedule.html", popup)
@@ -35,8 +36,34 @@ export class ChangeScheduleController extends Controller{
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
         this.#changeScheduleView.querySelector("#cancelChangeSchedule")
-            .addEventListener("click", event => popup.innerHTML = "");
+            .addEventListener("click", () => {
+                popupOverlay.style.display = 'none';
+                App.loadController(App.CONTROLLER_SCHEDULE);
+            });
 
+        await this.#loadScheduleOptions();
+    }
+
+    async #loadScheduleOptions() {
+        const daytype_holder = document.getElementById('dayType');
+        const transport_holder = document.getElementById('wayOfTravelling');
+
+        const daytypes = await this.#changeSchedule.getOptions('daytypes');
+        const transport_types = await this.#changeSchedule.getOptions('transport');
+
+        Object.values(daytypes).forEach(function (day) {
+            let opt = document.createElement('option');
+            opt.value = day['name'];
+            opt.innerHTML = day['name'];
+            daytype_holder.appendChild(opt);
+        })
+
+        Object.values(transport_types).forEach(function (transport) {
+            let opt = document.createElement('option');
+            opt.value = transport['name'];
+            opt.innerHTML = transport['name'];
+            transport_holder.appendChild(opt);
+        })
     }
 
     async #setSchedule() {

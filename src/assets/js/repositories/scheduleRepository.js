@@ -54,4 +54,8 @@ export class ScheduleRepository {
             {"begin_date": begin_date, "end_date": end_date, "email": email,
                 "distance": distance, "vehicle": vehicle, "day_type": day_type, "date": date});
     }
+
+    async getOptions(table) {
+        return await this.#networkManager.doRequest(`${this.#route}/options`, "POST", {"table": table})
+    }
 }

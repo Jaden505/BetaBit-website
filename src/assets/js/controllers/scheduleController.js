@@ -33,7 +33,9 @@ export class ScheduleController extends Controller {
         this.#scheduleView = await super.loadHtmlIntoContent("html_views/schedule.html")
 
         // Redirect buttons
-        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
+        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", function () {
+            document.querySelector("#popupOverlay").style.display = 'block';
+            App.loadController(App.CONTROLLER_CHANGE_SCHEDULE)});
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#displaySchedule();
@@ -201,7 +203,6 @@ export class ScheduleController extends Controller {
         return number;
     }
 
-
     /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
@@ -221,7 +222,7 @@ export class ScheduleController extends Controller {
             this[index] = ScheduleController.days[new Date(date).getDay()]
         }, day_schedules);
 
-        default_schedules.forEach(function (s) {
+            default_schedules.forEach(function (s) {
             const noTransportDays = [3, 4, 5];
             const noWorkTimeDays = [4, 5];
             let schedule;
