@@ -21,6 +21,7 @@ class ScheduleRoutes {
         this.#getSchedule()
         this.#setDefaultSchedule()
         this.#setSchedule()
+        this.#getOptions()
     }
 
     /**
@@ -183,6 +184,22 @@ class ScheduleRoutes {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
             }
 
+        });
+    }
+
+    #getOptions() {
+        this.#app.post("/schedule/options", async (req, res) => {
+            let table = req.body.table;
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT name FROM ${table};`});
+
+                // returns options
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
         });
     }
 }

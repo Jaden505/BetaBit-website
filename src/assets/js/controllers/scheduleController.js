@@ -33,7 +33,9 @@ export class ScheduleController extends Controller {
         this.#scheduleView = await super.loadHtmlIntoContent("html_views/schedule.html")
 
         // Redirect buttons
-        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
+        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", function () {
+            document.querySelector("#changeSchedulePopup").style.display = 'block';
+            App.loadController(App.CONTROLLER_CHANGE_SCHEDULE)});
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
         this.#displaySchedule();

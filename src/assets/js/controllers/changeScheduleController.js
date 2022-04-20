@@ -35,8 +35,31 @@ export class ChangeScheduleController extends Controller{
         this.#changeScheduleView.querySelector("#changeScheduleConfirm").
         addEventListener("click", event => this.#setSchedule());
         this.#changeScheduleView.querySelector("#cancelChangeSchedule")
-            .addEventListener("click", event => popup.innerHTML = "");
+            .addEventListener("click", event => popup.style.display = 'none');
 
+        this.#loadScheduleOptions();
+    }
+
+    async #loadScheduleOptions() {
+        const daytype_holder = document.getElementById('dayType');
+        const transport_holder = document.getElementById('wayOfTravelling');
+
+        const daytypes = await this.#changeSchedule.getOptions('daytypes');
+        const transport_types = await this.#changeSchedule.getOptions('transport');
+
+        Object.values(daytypes).forEach(function (day) {
+            let opt = document.createElement('option');
+            opt.value = day['name'];
+            opt.innerHTML = day['name'];
+            daytype_holder.appendChild(opt);
+        })
+
+        Object.values(transport_types).forEach(function (transport) {
+            let opt = document.createElement('option');
+            opt.value = transport['name'];
+            opt.innerHTML = transport['name'];
+            transport_holder.appendChild(opt);
+        })
     }
 
     async #setSchedule() {
