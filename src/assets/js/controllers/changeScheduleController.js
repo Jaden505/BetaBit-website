@@ -1,7 +1,6 @@
 /**
  * Responsible for changing an event of the current week
  *
- * @author Jaden van Rijswijk
  */
 
 import {Controller} from "./controller.js";
@@ -23,7 +22,11 @@ export class ChangeScheduleController extends Controller{
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf ChangeScheduleController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         let popupOverlay = document.querySelector("#popupOverlay");
@@ -44,6 +47,15 @@ export class ChangeScheduleController extends Controller{
         await this.#loadScheduleOptions();
     }
 
+    /**
+     * Fills the transport, and dayType select lists.
+     * @author Jaden Rijswijk
+     * @memberOf ChangeScheduleController
+     * @name loadScheduleOptions
+     * @function
+     * @private
+     * @instance
+     */
     async #loadScheduleOptions() {
         const daytype_holder = document.getElementById('dayType');
         const transport_holder = document.getElementById('wayOfTravelling');
@@ -66,6 +78,15 @@ export class ChangeScheduleController extends Controller{
         })
     }
 
+    /**
+     * Updates schedule day with given input data.
+     * @author Jaden Rijswijk
+     * @memberOf ChangeScheduleController
+     * @name setSchedule
+     * @function
+     * @private
+     * @instance
+     */
     async #setSchedule() {
         let error = document.getElementById('error');
 

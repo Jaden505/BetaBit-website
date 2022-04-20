@@ -19,7 +19,11 @@ export class NavbarController extends Controller{
     /**
      * Loads contents of desired HTML file into the index.html .navigation div
      * @returns {Promise<void>}
+     * @memberOf NavbarController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is
@@ -65,7 +69,12 @@ export class NavbarController extends Controller{
      * Reads data attribute on each .nav-link and then when clicked navigates to specific controller
      * @param event - clicked anchor event
      * @returns {boolean} - to prevent reloading
+     * @author Jaden Rijswijk
+     * @memberOf NavbarController
+     * @name handleClickNavigationItem
+     * @method
      * @private
+     * @instance
      */
     #handleClickNavigationItem(event) {
         //Get the data-controller from the clicked element (this)

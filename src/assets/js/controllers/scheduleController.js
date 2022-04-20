@@ -1,7 +1,6 @@
 /**
  * Responsible for handling the actions happening on schedule view
  *
- * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
 import {Controller} from "./controller.js";
@@ -26,7 +25,11 @@ export class ScheduleController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf ScheduleController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
@@ -49,6 +52,12 @@ export class ScheduleController extends Controller {
 
     /**
      * Checks which day is equal to today and highlights it.
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name highlightDay
+     * @function
+     * @private
+     * @instance
      */
     #highlightDay() {
         let day_containers = Array.from(document.getElementById("days_holder").children)
@@ -71,6 +80,12 @@ export class ScheduleController extends Controller {
      * Gets the current dates for all seven days of the week.
      * @param date_type it can either be 'day', 'month' or 'date'
      * @returns {*[]}
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name getCurrentDates
+     * @function
+     * @private
+     * @instance
      */
     #getCurrentDates(date_type) {
         let curr = new Date;
@@ -100,6 +115,12 @@ export class ScheduleController extends Controller {
 
     /**
      * Displays the current dates for all seven days of the week, and also uses the first and last days of the week.
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name displayCurrentDates
+     * @function
+     * @private
+     * @instance
      */
     #displayCurrentDates() {
         let day_containers = document.getElementById("days_holder").children
@@ -120,6 +141,12 @@ export class ScheduleController extends Controller {
 
     /**
      * Calculates the current week number of the year.
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name getWeekOfTheYear
+     * @function
+     * @private
+     * @instance
      */
     #getWeekOfTheYear() {
         Date.prototype.getWeekNumber = function () {
@@ -137,6 +164,12 @@ export class ScheduleController extends Controller {
 
     /**
      * Creates tabs for each schedule day.
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name createScheduleTabs
+     * @function
+     * @private
+     * @instance
      */
     #createScheduleTabs() {
         const items = document.querySelectorAll(".schedule-item");
@@ -161,8 +194,13 @@ export class ScheduleController extends Controller {
      * Checks if the transport has an type added to it.
      * If it does then it returns the type.
      * If it doesn't then it returns the full transport
-     *
      * @param transport transport of the day
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name getTransportTypeLabel
+     * @function
+     * @private
+     * @instance
      */
     static #getTransportTypeLabel(transport) {
         let transportLabel;
@@ -207,8 +245,13 @@ export class ScheduleController extends Controller {
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
-     *
      * @returns {Promise<void>}
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name displaySchedule
+     * @function
+     * @private
+     * @instance
      */
     async #displaySchedule() {
         const email = App.sessionManager.get("email");

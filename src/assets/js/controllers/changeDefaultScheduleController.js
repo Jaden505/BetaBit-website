@@ -1,7 +1,6 @@
 /**
  * Responsible for altering events in the default schedule
  *
- * @author Colin Laan
  */
 
 import {Controller} from "./controller.js";
@@ -23,7 +22,11 @@ export class ChangeDefaultScheduleController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf ChangeDefaultScheduleController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
@@ -39,6 +42,12 @@ export class ChangeDefaultScheduleController extends Controller {
 
     /**
      * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
+     * @author Colin Laan
+     * @memberOf ChangeDefaultScheduleController
+     * @name expandDayView
+     * @function
+     * @private
+     * @instance
      */
     #expandDayView() {
         const expandTab = this.#changeDefaultScheduleView.getElementsByClassName("default-schedule-item")
@@ -63,6 +72,15 @@ export class ChangeDefaultScheduleController extends Controller {
         }
     }
 
+    /**
+     * Updates the default schedule with the new inputs.
+     * @author Colin Laan
+     * @memberOf ChangeDefaultScheduleController
+     * @name updateDefaultScheduleData
+     * @function
+     * @private
+     * @instance
+     */
     async #updateDefaultScheduleData() {
         const email = App.sessionManager.get("email");
         const containers = document.querySelectorAll(".default-schedule-container-content")
@@ -80,6 +98,15 @@ export class ChangeDefaultScheduleController extends Controller {
         });
     }
 
+    /**
+     * Fills all input fields with the correct data from the db.
+     * @author Colin Laan
+     * @memberOf ChangeDefaultScheduleController
+     * @name fillChangeFields
+     * @function
+     * @private
+     * @instance
+     */
     async #fillChangeFields() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);

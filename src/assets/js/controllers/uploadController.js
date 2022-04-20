@@ -20,7 +20,11 @@ export class UploadController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .main div
      * @returns {Promise<void>}
+     * @memberOf UploadController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded

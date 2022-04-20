@@ -1,7 +1,6 @@
 /**
  * Responsible for handling the actions happening on monthLeaderboard views
  *
- * @author Dia Fortmeier & Jaden van Rijswijk
  */
 
 import {Controller} from "./controller.js";
@@ -25,7 +24,11 @@ export class IndividualMonthLeaderboardController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf IndividualMonthLeaderboardController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
@@ -63,7 +66,7 @@ export class IndividualMonthLeaderboardController extends Controller {
     /**
      * Counter that checks and displays how long until Monday of next week
      * @public
-     * @author Dennis Bleeker, Dia Fortmeier
+     * @author Dennis Bleeker
      */
     weekCounter() {
         const second = 1000;
@@ -118,14 +121,21 @@ export class IndividualMonthLeaderboardController extends Controller {
     }
 
     /**
-     * @param search_string
-     * @returns users
+     * Gets the users based on the search_string
+     * @param search_string input of searchbar
+     * @returns users users that match search_string
+     * @author Jaden Rijswijk
      */
     async getUsers(search_string = "") {
         if (search_string === "") {return await this.#monthLeaderboard.individualMonthLeaderboard();}
         else {return await this.#monthLeaderboard.searchUsers(search_string);}
     }
 
+    /**
+     * Adds three different icons for the top three on the leaderboard
+     * @public
+     * @author Amir Suleimani
+     */
     createTopThreeLeaderboardIcons() {
         const rankOne = [1, "#FFD700"];
         const rankTwo = [2, "#C0C0C0"];

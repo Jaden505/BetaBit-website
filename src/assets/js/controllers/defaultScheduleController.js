@@ -2,7 +2,6 @@
  * Responsible for creating and editing the users personal default schedule.
  * The default schedule gets repeated every week and can be changed using changeDefaultScheduleController.
  *
- * @author Jaden van Rijswijk & Dia Fortmeier & Colin Laan
  */
 
 import { Controller } from "./controller.js";
@@ -27,7 +26,11 @@ export class DefaultScheduleController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf DefaultScheduleController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
@@ -44,6 +47,12 @@ export class DefaultScheduleController extends Controller {
 
     /**
      * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
+     * @author Colin Laan
+     * @memberOf DefaultScheduleController
+     * @name expandDayView
+     * @function
+     * @private
+     * @instance
      */
     #expandDayView() {
         const expandTab = this.#defaultScheduleView.getElementsByClassName("default-schedule-item")
@@ -71,6 +80,12 @@ export class DefaultScheduleController extends Controller {
 
     /**
      * Checks which day it is today, and opens that accordion
+     * @author Dia Fortmeier
+     * @memberOf DefaultScheduleController
+     * @name openCurrentDay
+     * @function
+     * @private
+     * @instance
      */
     #openCurrentDay() {
         let defaultDayContainers = Array.from(document.getElementById("defaultScheduleList").children);
@@ -90,8 +105,13 @@ export class DefaultScheduleController extends Controller {
     /**
      * Gets the default schedule from the db,
      * and then displays the schedule in the corresponding html fields.
-     *
      * @returns {Promise<void>}
+     * @author Dia Fortmeier
+     * @memberOf DefaultScheduleController
+     * @name displaySchedule
+     * @function
+     * @private
+     * @instance
      */
     async #displaySchedule() {
         try {
