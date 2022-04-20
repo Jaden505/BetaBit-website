@@ -2,7 +2,6 @@
  * This class contains ExpressJS routes specific for the users schedule
  * this file is automatically loaded in app.js
  *
- * @author Jaden van Rijswijk & Dia Fortmeier
  */
 class ScheduleRoutes {
     #errorCodes = require("../framework/utils/httpErrorCodes")
@@ -26,7 +25,12 @@ class ScheduleRoutes {
 
     /**
      * Gets default schedule from database and returns to frontend in json
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleRoutes
+     * @name getDefaultSchedule
+     * @function
      * @private
+     * @instance
      */
     #getDefaultSchedule() {
         this.#app.post("/schedule/default", async (req, res) => {
@@ -67,7 +71,12 @@ class ScheduleRoutes {
 
     /**
      * Gets schedule from database and returns to frontend in json
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleRoutes
+     * @name getSchedule
+     * @function
      * @private
+     * @instance
      */
     #getSchedule() {
         this.#app.post("/schedule", async (req, res) => {
@@ -114,7 +123,12 @@ class ScheduleRoutes {
 
     /**
      * sets a new default schedule in the database using json
+     * @author Colin Laan
+     * @memberOf ScheduleRoutes
+     * @name setDefaultSchedule
+     * @function
      * @private
+     * @instance
      */
     #setDefaultSchedule() {
         this.#app.put("/schedule/update/default", async (req, res) => {
@@ -148,7 +162,12 @@ class ScheduleRoutes {
 
     /**
      * sets a new schedule in the database using json
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleRoutes
+     * @name setSchedule
+     * @function
      * @private
+     * @instance
      */
     #setSchedule() {
         this.#app.post("/schedule/update", async (req, res) => {

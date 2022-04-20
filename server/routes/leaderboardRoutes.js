@@ -49,6 +49,15 @@ class LeaderboardRoutes {
         });
     }
 
+    /**
+     * Searches for users based on searchbar input
+     * @author Jaden Rijswijk
+     * @memberOf LeaderboardRoutes
+     * @name searchUsers
+     * @function
+     * @private
+     * @instance
+     */
     #searchUsers() {
         this.#app.post("/monthLeaderboard/search", async (req, res) => {
             const search_string = "%" + req.body.search_string + "%";
