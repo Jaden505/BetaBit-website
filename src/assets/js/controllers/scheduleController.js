@@ -222,11 +222,7 @@ export class ScheduleController extends Controller {
      * by changing the (x)var variables in the database. With the first number being the amount of points per KM and
      * the second number being the point cap.
      * @author Mairo Garf Tzouvelekis
-     * @memberOf ScheduleController
-     * @name pointCalculator
-     * @method
-     * @private
-     * @instance
+     * @public
      */
     static pointCalculator(distance,points_factor ,points_Max ) {
         let number
