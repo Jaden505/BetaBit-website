@@ -172,3 +172,14 @@
         font-size: 2rem;
     }
 }
+
+.leaderboard-searchbar {
+    padding: .5em;
+    border: 1px solid var(--gray);
+    border-left: 0;
+    border-right: 0;
+}
+
+.leaderboard-searchbar:focus {
+    outline: 1px solid var(--red);
+}
