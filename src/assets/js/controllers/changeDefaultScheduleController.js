@@ -75,39 +75,47 @@ export class ChangeDefaultScheduleController extends Controller {
      * @private
      */
     async #updateDefaultScheduleData() {
+        await this.#sendUpdateRequest(await this.#gatherDataForUpdate())
+    }
+
+    async #gatherDataForUpdate() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
-        let cds = this.#changeDefaultSchedule;
 
-
-        default_schedules.forEach(async function (schedule) {
+        default_schedules.forEach(function (schedule) {
             let schedule_day = document.getElementById(schedule.day + "_field");
-
             let day_start = schedule_day.querySelector(".day-start").value
             let day_end = schedule_day.querySelector(".day-end").value
             let distance = schedule_day.querySelector(".distance-input").value
             let vehicle = schedule_day.querySelector(".transport").value
             let type = schedule_day.querySelector(".day-type").value
-            let day = (schedule_day.id).substring(0, schedule_day.id.length - 6);
 
+            let day = (schedule_day.id).substring(0, schedule_day.id.length - 6);
             if (type === "Empty" || type === "geen werk" || type === "ziek" || type === "online") {
                 vehicle = "geen";
-                distance = 0;
 
+                distance = 0;
                 if (type !== "online") {
                     day_start = "00:00";
                     day_end = "00:00";
-                }
 
+                }
                 if (vehicle === "Empty") {
                     vehicle = "geen";
                 }
             }
-
-            await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
+            return [type, day_start, day_end, distance, vehicle, email, day];
         });
 
         App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE);
+
+    }
+
+    async #sendUpdateRequest(type, day_start, day_end, distance, vehicle, email, day) {
+        let cds = this.#changeDefaultSchedule;
+
+        await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
+
     }
 
     /**
@@ -184,7 +192,7 @@ export class ChangeDefaultScheduleController extends Controller {
             schedule_day.querySelector(".distance-input").value = schedule.travel_distance;
             schedule_day.querySelector(".transport").value = schedule.transport;
 
-            if (schedule.daytype === null|| schedule.transport === null) {
+            if (schedule.daytype === null || schedule.transport === null) {
                 schedule_day.querySelector(".day-type").value = "Kies een optie";
                 schedule_day.querySelector(".transport").value = "Kies een optie";
             }
