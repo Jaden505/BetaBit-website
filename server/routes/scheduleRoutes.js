@@ -21,6 +21,8 @@ class ScheduleRoutes {
         this.#setDefaultSchedule()
         this.#setSchedule()
         this.#getOptions()
+        this.#getDayTypes()
+        this.#getTransportationOptions()
     }
 
     /**
@@ -219,6 +221,55 @@ class ScheduleRoutes {
                     query: `SELECT name FROM ${table};`});
 
                 // returns options
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Gets all the day types present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getDayTypes() {
+        this.#app.post("/schedule/daytypes", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT d.id        AS daytype_id,
+                                   d.name      AS daytype,
+                                   d.icon      AS type_icon
+                            FROM daytypes d`
+                });
+
+                // returns schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Gets all the transportation options present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getTransportationOptions() {
+        this.#app.post("/schedule/transportation", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT t.id        AS transportation_id,
+                                   t.name      AS transportation_name,
+                                   t.icon      AS transport_icon,
+                                   t.emissions AS emissions
+                            FROM transport t`
+                });
+
+                // returns schedules
                 res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});

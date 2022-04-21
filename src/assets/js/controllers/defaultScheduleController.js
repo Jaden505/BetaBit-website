@@ -2,17 +2,18 @@
  * Responsible for creating and editing the users personal default schedule.
  * The default schedule gets repeated every week and can be changed using changeDefaultScheduleController.
  *
+ * @author Jaden van Rijswijk & Dia Fortmeier & Colin Laan
  */
 
-import { Controller } from "./controller.js";
-import { ScheduleRepository } from "../repositories/scheduleRepository.js";
-import { App } from "../app.js";
+import {Controller} from "./controller.js";
+import {ScheduleRepository} from "../repositories/scheduleRepository.js";
+import {App} from "../app.js";
+import {ScheduleController} from "./scheduleController.js";
 
 export class DefaultScheduleController extends Controller {
     #defaultScheduleView
     #defaultSchedule
     #date = new Date();
-
     static days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
     constructor() {
@@ -26,11 +27,7 @@ export class DefaultScheduleController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
-     * @memberOf DefaultScheduleController
-     * @name setupView
-     * @function
      * @private
-     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
@@ -47,12 +44,6 @@ export class DefaultScheduleController extends Controller {
 
     /**
      * Expands and retracts the detailed view of a day on the default schedule when the tab of it is clicked.
-     * @author Colin Laan
-     * @memberOf DefaultScheduleController
-     * @name expandDayView
-     * @function
-     * @private
-     * @instance
      */
     #expandDayView() {
         const expandTab = this.#defaultScheduleView.getElementsByClassName("default-schedule-item")
@@ -80,12 +71,6 @@ export class DefaultScheduleController extends Controller {
 
     /**
      * Checks which day it is today, and opens that accordion
-     * @author Dia Fortmeier
-     * @memberOf DefaultScheduleController
-     * @name openCurrentDay
-     * @function
-     * @private
-     * @instance
      */
     #openCurrentDay() {
         let defaultDayContainers = Array.from(document.getElementById("defaultScheduleList").children);
@@ -105,13 +90,8 @@ export class DefaultScheduleController extends Controller {
     /**
      * Gets the default schedule from the db,
      * and then displays the schedule in the corresponding html fields.
+     *
      * @returns {Promise<void>}
-     * @author Dia Fortmeier
-     * @memberOf DefaultScheduleController
-     * @name displaySchedule
-     * @function
-     * @private
-     * @instance
      */
     async #displaySchedule() {
         try {
@@ -122,7 +102,7 @@ export class DefaultScheduleController extends Controller {
 
                 let schedule_day = document.querySelector("#" + schedule.day + " .default-schedule-container-content");
                 let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-                let punten = ScheduleController.pointCalculator(schedule.travel_distance, schedule.points_factor, schedule.points_max);
+                let punten = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
 
                 schedule_day.innerHTML +=
                     "<div class=\"content-item\"><p class=\"item-label\">Dag type</p><p class=\"item-data\">" +

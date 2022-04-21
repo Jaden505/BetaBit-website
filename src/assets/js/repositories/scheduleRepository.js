@@ -58,4 +58,12 @@ export class ScheduleRepository {
     async getOptions(table) {
         return await this.#networkManager.doRequest(`${this.#route}/options`, "POST", {"table": table})
     }
+
+    async getDayTypes() {
+        return await this.#networkManager.doRequest(`${this.#route}/daytypes`, "POST")
+    }
+
+    async getTransportationOptions() {
+        return await this.#networkManager.doRequest(`${this.#route}/transportation`, "POST")
+    }
 }
