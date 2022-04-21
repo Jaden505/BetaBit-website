@@ -1,7 +1,6 @@
 /**
  * Responsible for altering events in the default schedule
  *
- * @author Colin Laan
  */
 
 import {Controller} from "./controller.js";
