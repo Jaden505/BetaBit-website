@@ -196,7 +196,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");
         let rankPlacementNumber = 0;
 
-        leaderboardContainer.innerHTML = ""
+        leaderboardContainer.innerHTML = "";
 
         leaderboardUsers.forEach(function (lu) {
             const listRank = document.createElement("div");
