@@ -100,9 +100,6 @@ export class ScheduleController extends Controller {
             } else if (date_type === "month") {
                 let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
                 date = ScheduleController.months[parseInt(month_decimal) - 1];
-            } else if (date_type === "month") {
-                let month_decimal = new Date(curr.setDate(first)).toISOString().slice(5, 7)
-                date = ScheduleController.months[parseInt(month_decimal) - 1];
             } else if (date_type === "date") {
                 date = new Date(curr.setDate(first)).toISOString().slice(0, 10);
             }
@@ -265,7 +262,7 @@ export class ScheduleController extends Controller {
             this[index] = ScheduleController.days[new Date(date).getDay()]
         }, day_schedules);
 
-            default_schedules.forEach(function (s) {
+        default_schedules.forEach(function (s) {
             const noTransportDays = [3, 4, 5];
             const noWorkTimeDays = [4, 5];
             let schedule;
