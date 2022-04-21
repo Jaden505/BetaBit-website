@@ -1,4 +1,5 @@
-
-pad-framework-master/.idea/discord.xml
-
-pad-framework-master/.idea/active-tab-highlighter.xml
+.idea
+.idea/workspace.xml
+node_modules
+package-lock.json
+.DS_Store
