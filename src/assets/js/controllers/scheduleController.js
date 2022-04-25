@@ -217,24 +217,6 @@ export class ScheduleController extends Controller {
     }
 
     /**
-     * calculates how much points you get
-     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
-     * by changing the (x)var variables in the database. With the first number being the amount of points per KM and
-     * the second number being the point cap.
-     * @author Mairo Garf Tzouvelekis
-     * @public
-     */
-    static pointCalculator(distance,points_factor ,points_Max ) {
-        let number
-        number = distance * points_factor;
-        if (number > points_Max) {
-            console.log(number);
-            number = points_Max;
-        }
-        return number;
-    }
-
-    /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
@@ -273,7 +255,7 @@ export class ScheduleController extends Controller {
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = ScheduleController.pointCalculator(schedule.travel_distance, schedule.points_factor, schedule.points_max);
+            let totalPoints = schedule.points_max;
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -301,7 +283,6 @@ export class ScheduleController extends Controller {
                     ScheduleController.#getTransportTypeLabel(schedule.transport);
                 schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
                 schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
-
             }
         });
     }
