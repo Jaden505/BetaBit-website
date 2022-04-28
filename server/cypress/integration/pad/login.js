@@ -11,7 +11,7 @@ describe("Login",  () => {
     //Test: Validate login form
     it("Valid login form", () => {
         //Find the field for the username, check if it exists.
-        cy.get("#exampleInputUsername").should("exist");
+        cy.get("#exampleInputEmail").should("exist");
 
         //Find the field for the password, check if it exists.
         cy.get("#exampleInputPassword").should("exist");
@@ -35,8 +35,8 @@ describe("Login",  () => {
             body: mockedResponse,
         }).as('login');
 
-        //Find the field for the username and type the text "test".
-        cy.get("#exampleInputUsername").type("test");
+        //Find the field for the email and type the text "test@gmail.com".
+        cy.get("#exampleInputEmail").type("test@gmail.com");
 
         //Find the field for the password and type the text "test".
         cy.get("#exampleInputPassword").type("test");
@@ -52,14 +52,14 @@ describe("Login",  () => {
         cy.get("@login").should((xhr) => {
             //The username should match what we typed earlier
             const body = xhr.request.body;
-            expect(body.username).equals("test");
+            expect(body.email).equals("test@gmail.com");
 
             //The password should match what we typed earlier
             expect(body.password).equals("test");
         });
 
-        //After a successful login, the URL should now contain #welcome.
-        cy.url().should("contain", "#welcome");
+        //After a successful login, the URL should now contain #dashboard.
+        cy.url().should("contain", "#dashboard");
     });
 
     //Test: Failed login
@@ -81,11 +81,11 @@ describe("Login",  () => {
         }).as('login');
 
 
-        //Find the field for the username and type the text "test".
-        cy.get("#exampleInputUsername").type("test");
+        //Find the field for the username and type the text "test@gmail.com".
+        cy.get("#exampleInputEmail").type("test@gmail.com");
 
         //Find the field for the password and type the text "test".
-        cy.get("#exampleInputPassword").type("test");
+        cy.get("#exampleInputPassword").type("geenTest");
 
         //Find the button to login and click it.
         cy.get(".login-form button").click();
