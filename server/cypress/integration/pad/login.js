@@ -27,6 +27,8 @@ describe("Login",  () => {
 
 
         const mockedResponse = {
+            email: "test@gmail.com",
+            password: "geenTest",
             reason: "ERROR"
         };
 
@@ -40,10 +42,10 @@ describe("Login",  () => {
 
 
         //Find the field for the username and type the text "test@gmail.com".
-        cy.get("#exampleInputEmail").type("test@gmail.com");
+        cy.get("#exampleInputEmail").type(mockedResponse.email);
 
         //Find the field for the password and type the text "test".
-        cy.get("#exampleInputPassword").type("geenTest");
+        cy.get("#exampleInputPassword").type(mockedResponse.password);
 
         //Find the button to login and click it.
         cy.get(".login-form button").click();
@@ -52,7 +54,7 @@ describe("Login",  () => {
         cy.wait("@login");
 
         //After a failed login, an element containing our error-message should be shown.
-        cy.get(".error").should("exist").should("contain", "ERROR");
+        cy.get(".error").should("exist").should("contain", mockedResponse.reason);
     });
 
     //Test: Successful login
@@ -60,7 +62,10 @@ describe("Login",  () => {
         //Start a fake server
         cy.server();
 
-        const mockedResponse = {"email": "test@gmail.com", "password": "test"};
+        const mockedResponse = {
+            email: "test@gmail.com",
+            password: "test"
+        };
 
         //Add a stub with the URL /users/login as a POST
         //Respond with a JSON-object when requested
