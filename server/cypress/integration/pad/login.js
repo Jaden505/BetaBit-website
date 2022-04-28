@@ -20,48 +20,6 @@ describe("Login",  () => {
         cy.get(".login-form button").should("exist");
     });
 
-    //Test: Successful login
-    it("Successful login",  () => {
-        //Start a fake server
-        cy.server();
-
-        const mockedResponse = {"username": "test"};
-
-        //Add a stub with the URL /users/login as a POST
-        //Respond with a JSON-object when requested
-        //Give the stub the alias: @login
-        cy.intercept('POST', '/users/login', {
-            statusCode: 200,
-            body: mockedResponse,
-        }).as('login');
-
-        //Find the field for the email and type the text "test@gmail.com".
-        cy.get("#exampleInputEmail").type("test@gmail.com");
-
-        //Find the field for the password and type the text "test".
-        cy.get("#exampleInputPassword").type("test");
-
-        //Find the button to login and click it
-        console.log(cy.get(".login-form button"));
-        cy.get(".login-form button").click();
-
-        //Wait for the @login-stub to be called by the click-event.
-        cy.wait("@login");
-
-        //The @login-stub is called, check the contents of the incoming request.
-        cy.get("@login").should((xhr) => {
-            //The username should match what we typed earlier
-            const body = xhr.request.body;
-            expect(body.email).equals("test@gmail.com");
-
-            //The password should match what we typed earlier
-            expect(body.password).equals("test");
-        });
-
-        //After a successful login, the URL should now contain #dashboard.
-        cy.url().should("contain", "#dashboard");
-    });
-
     //Test: Failed login
     it("Failed login",  () => {
         //Start a fake server
@@ -95,5 +53,47 @@ describe("Login",  () => {
 
         //After a failed login, an element containing our error-message should be shown.
         cy.get(".error").should("exist").should("contain", "ERROR");
+    });
+
+    //Test: Successful login
+    it("Successful login",  () => {
+        //Start a fake server
+        cy.server();
+
+        const mockedResponse = {"email": "test@gmail.com", "password": "test"};
+
+        //Add a stub with the URL /users/login as a POST
+        //Respond with a JSON-object when requested
+        //Give the stub the alias: @login
+        cy.intercept('POST', '/users/login', {
+            statusCode: 200,
+            body: mockedResponse,
+        }).as('login');
+
+        //Find the field for the email and type the text "test@gmail.com".
+        cy.get("#exampleInputEmail").type(mockedResponse.email);
+
+        //Find the field for the password and type the text "test".
+        cy.get("#exampleInputPassword").type(mockedResponse.password);
+
+        //Find the button to login and click it
+        console.log(cy.get(".login-form button"));
+        cy.get(".login-form button").click();
+
+        //Wait for the @login-stub to be called by the click-event.
+        cy.wait("@login");
+
+        //The @login-stub is called, check the contents of the incoming request.
+        cy.get("@login").should((xhr) => {
+            //The username should match what we typed earlier
+            const body = xhr.request.body;
+            expect(body.email).equals("test@gmail.com");
+
+            //The password should match what we typed earlier
+            expect(body.password).equals("test");
+        });
+
+        //After a successful login, the URL should now contain #dashboard.
+        cy.url().should("contain", "#dashboard");
     });
 });
