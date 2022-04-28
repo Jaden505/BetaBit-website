@@ -79,25 +79,31 @@ export class App {
                 break;
 
             case App.CONTROLLER_UPLOAD:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new UploadController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_DEFAULT_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new DefaultScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_CHANGE_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
                 break;
             case App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
                 break;
             default:
