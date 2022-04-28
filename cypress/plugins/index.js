@@ -12,14 +12,6 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const express = require("express");
-const app = express();
-
-app.use(express.static("../src"));
-app.listen(8080);
-
-console.log("Server running on port 8080");
-
 /**
  * @type {Cypress.PluginConfig}
  */
