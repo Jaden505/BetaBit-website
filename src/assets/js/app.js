@@ -17,6 +17,7 @@ import { ChangeScheduleController }  from "./controllers/changeScheduleControlle
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
+import { createUsersController } from "./controllers/createUsersController.js";
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -34,6 +35,7 @@ export class App {
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
     static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
     static CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD = "individual_month_leaderboard";
+    static CONTROLLER_CREATE_USERS = "create_users";
 
     constructor() {
         //Always load the navigation
@@ -106,6 +108,10 @@ export class App {
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
                 break;
+            case App.CONTROLLER_CREATE_USERS:
+                App.setCurrentController(name);
+                App.isLoggedInAdmin(() => new createUsersController(),() => new LoginController());
+                break;
             default:
                 return false;
         }
@@ -152,6 +158,19 @@ export class App {
      */
     static isLoggedIn(whenYes, whenNo) {
         if (App.sessionManager.get("email")) {
+            whenYes();
+        } else {
+            whenNo();
+        }
+    }
+
+    /**
+     * Convenience functions to handle logged-in-admin states
+     * @param whenYes - function when user is logged in admin
+     * @param whenNo - function when user isn't
+     */
+    static isLoggedInAdmin(whenYes, whenNo) {
+        if (App.sessionManager.get("email") && App.sessionManager.get("role") === 1) {
             whenYes();
         } else {
             whenNo();

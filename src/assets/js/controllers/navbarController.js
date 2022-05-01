@@ -36,6 +36,7 @@ export class NavbarController extends Controller{
         anchors.forEach(anchor => anchor.addEventListener("click", (event) => this.#handleClickNavigationItem(event)))
 
         this.#removeLoginOrLogout();
+        this.#adminTabsNavbar();
     }
 
     /**
@@ -63,6 +64,20 @@ export class NavbarController extends Controller{
         }
 
         App.isLoggedIn(() => loggedIn(), () => loggedOut());
+    }
+
+    #adminTabsNavbar() {
+        const navCreateUsers = this.#navbarView.querySelector("#nav_create_users");
+
+        function loggedInAdmin() {
+            navCreateUsers.style.display = "block";
+        }
+
+        function loggedOutNoAdmin() {
+            navCreateUsers.style.display = "none";
+        }
+
+        App.isLoggedInAdmin(() => loggedInAdmin(), () => loggedOutNoAdmin())
     }
 
     /**
