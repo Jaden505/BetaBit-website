@@ -4,9 +4,8 @@
  * @author Lennard Fonteijn & Pim Meijer
  */
 
-import { App } from "../app.js";
-import {AdminsRepository} from "../repositories/adminsRepository.js";
-import {Controller} from "./controller.js";
+import { AdminsRepository } from "../repositories/adminsRepository.js";
+import { Controller } from "./controller.js";
 
 export class createUsersController extends Controller {
     #createUsersView
@@ -36,12 +35,22 @@ export class createUsersController extends Controller {
     }
 
     async #sendUserData() {
+        let errorHolder = document.getElementById('displayErrorCreateUsers');
+
         const email = document.getElementById("userEmail").value
         const name = document.getElementById("userName").value
-        const role = document.getElementById("userRole").value
+        let role = document.getElementById("userRole").value
         const password = document.getElementById("userPassword").value
 
-        if (role === 'admin') {this.#createUsers.addUser(email, name, 1, password)}
-        else {await this.#createUsers.addUser(email, name, 2, password)}
+        role === 'admin' ? role = 1 : role = 2;
+
+        if (email === "" || name === "" || password === "") {return errorHolder.innerHTML = "Vul alle velden in";}
+
+        try {
+            const data = await this.#createUsers.addUser(email, name, role, password);
+        }
+        catch(error) {
+            errorHolder.innerHTML = error.reason
+        }
     }
 }

@@ -31,23 +31,32 @@ class AdminsRoutes {
      */
     #createUser() {
         this.#app.post("/admin/create/user", async (req, res) => {
-        const email = req.body.email;
-        const name = req.body.name;
-        const role = req.body.role;
+            try {
+                const email = req.body.email;
+                const name = req.body.name;
+                const role = req.body.role;
 
-        //TODO: You shouldn't save a password unencrypted!! Improve this by using this.#cryptoHelper functions :)
-        const password = req.body.password;
+                //TODO: You shouldn't save a password unencrypted!! Improve this by using this.#cryptoHelper functions :)
+                const password = req.body.password;
 
-            const data = await this.#databaseHelper.handleQuery({
-                query: "INSERT INTO Users (email, username, role, password) VALUES (?, ?, ?, ?);",
-                values: [email, name, role, password]
-            });
+                const data = await this.#databaseHelper.handleQuery({
+                    query: "INSERT INTO Users (email, username, role, password) VALUES (?, ?, ?, ?);",
+                    values: [email, name, role, password]
+                });
 
-            // If it is inserted
-            if (data.affectedRows > 0) {
-                res.status(this.#errorCodes.HTTP_OK_CODE)
-            } else {
-                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
+                if (data.affectedRows > 0) {res.status(this.#errorCodes.HTTP_OK_CODE)}
+                else {
+                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
+                }
+            }
+            catch (e) {
+                // If duplicate entry
+                if (e.code === 'ER_DUP_ENTRY') {
+                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "A user with this email-address already exists"});
+                }
+                else {
+                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Er is iets fout gegaan"});
+                }
             }
         });
     }
