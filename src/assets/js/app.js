@@ -17,6 +17,7 @@ import { ChangeScheduleController }  from "./controllers/changeScheduleControlle
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
+import { DateController } from "./controllers/dateController.js";
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -34,6 +35,7 @@ export class App {
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
     static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
     static CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD = "individual_month_leaderboard";
+    static CONTROLLER_DATE = "date";
 
     constructor() {
         //Always load the navigation
@@ -102,6 +104,11 @@ export class App {
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
                 break;
+
+            case App.CONTROLLER_DATE:
+                App.isLoggedIn(() => new DateController(),() => new LoginController());
+                break;
+
             case App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD:
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
