@@ -72,7 +72,7 @@ class ScheduleRoutes {
 
     /**
      * Gets schedule from database and returns to frontend in json
-     * @author Jaden Rijswijk
+     * @author Dia Fortmeier
      * @memberOf ScheduleRoutes
      * @name getSchedule
      * @function
