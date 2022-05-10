@@ -6,6 +6,7 @@
 import {Controller} from "./controller.js";
 import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
+import {DateController} from "./dateController.js";
 import {SessionManager} from "../framework/utils/sessionManager.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
@@ -46,9 +47,9 @@ export class IndividualMonthLeaderboardController extends Controller {
         };
 
         this.#currentMonth();
-        // this.weekCounter();
         await this.displayIndividualMonthLeaderboard(await this.getUsers());
         this.createTopThreeLeaderboardIcons();
+        this.dateController.weekCounter();
     }
 
     /**
