@@ -6,18 +6,21 @@
 
 import {Controller} from "./controller.js";
 import {MonthLeaderboardRepository} from "../repositories/monthLeaderboardRepository.js";
+import {DateController} from "./dateController.js";
 import {App} from "../app.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
     #monthLeaderboard
     today
+    dateController
 
     constructor() {
         super();
 
         this.#monthLeaderboard = new MonthLeaderboardRepository();
         this.today = new Date;
+        this.dateController = new DateController();
 
         this.#setupView();
     }
@@ -31,8 +34,11 @@ export class IndividualMonthLeaderboardController extends Controller {
         //await for when HTML is loaded
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
+
         this.#currentMonth();
+        this.dateController.weekCounter();
         await this.#displayIndividualMonthLeaderboard();
+
     }
 
     /**

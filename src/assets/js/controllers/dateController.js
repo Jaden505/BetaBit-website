@@ -8,7 +8,7 @@ import {Controller} from "./controller.js";
 import {MonthLeaderboardRepository} from "../repositories/monthLeaderboardRepository.js";
 import {App} from "../app.js";
 
-export class leaderboardUpdateController extends Controller {
+export class DateController extends Controller {
     #monthLeaderboardView
     #monthLeaderboard
     today
@@ -30,10 +30,6 @@ export class leaderboardUpdateController extends Controller {
     async #setupView() {
         //await for when HTML is loaded
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
-
-        this.#currentMonth();
-        this.weekCounter();
-        await this.#displayIndividualMonthLeaderboard();
     }
 
 /**
