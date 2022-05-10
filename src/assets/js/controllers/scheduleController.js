@@ -60,7 +60,7 @@ export class ScheduleController extends Controller {
      * @instance
      */
     #highlightDay() {
-        let day_containers = Array.from(document.getElementById("days_holder").children)
+        let day_containers = Array.from(this.#scheduleView.querySelector("#days_holder").children)
         let today = ScheduleController.days[this.#date.getDay()];
 
         for (let day of day_containers) {
@@ -70,7 +70,7 @@ export class ScheduleController extends Controller {
 
                 if (screen.width < 992) {
                     day.classList.add("selected-day");
-                    document.querySelector("#" + day.id + "_detail").classList.add("selected-day");
+                    this.#scheduleView.querySelector("#" + day.id + "_detail").classList.add("selected-day");
                 }
             }
         }
@@ -120,7 +120,7 @@ export class ScheduleController extends Controller {
      * @instance
      */
     #displayCurrentDates() {
-        let day_containers = document.getElementById("days_holder").children
+        let day_containers = this.#scheduleView.querySelector("#days_holder").children
         let current_days = this.#getCurrentDates("day");
         let current_months = this.#getCurrentDates("month");
 
@@ -129,9 +129,9 @@ export class ScheduleController extends Controller {
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
 
-            document.querySelector("#first-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#first-weekDay").innerHTML =
                 "maandag " + current_days[0] + " " + current_months[i] + " " + new Date().getFullYear();
-            document.querySelector("#last-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#last-weekDay").innerHTML =
                 "zondag " + current_days[6] + " " + current_months[i] + " " + new Date().getFullYear();
         }
     }
@@ -156,7 +156,7 @@ export class ScheduleController extends Controller {
 
         let weekNumber = (new Date().getWeekNumber());
 
-        document.querySelector("#schedule-week").innerHTML = weekNumber.toString();
+        this.#scheduleView.querySelector("#schedule-week").innerHTML = weekNumber.toString();
     }
 
     /**
