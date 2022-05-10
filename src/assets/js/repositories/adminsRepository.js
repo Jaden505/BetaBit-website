@@ -24,4 +24,13 @@ export class AdminsRepository {
         return await this.#networkManager.doRequest(`${this.#route}/create/user`, "POST",
             {"email": email, "name": name, "role": role, "password": password});
     }
+
+    /**
+     * Async function that get all users from database
+     *
+     * GET request, because no given data is needed
+     */
+    async getUsers() {
+        return await this.#networkManager.doRequest(`${this.#route}/get/users`, "GET");
+    }
 }

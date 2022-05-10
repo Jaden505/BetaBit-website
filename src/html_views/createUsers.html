@@ -1,24 +1,44 @@
 <div class="container">
+    <br>
+
+    <div id="users"></div>
+
+    <div class="label-input-holder">
     <label for="userEmail">Email:</label>
-    <input id="userEmail" type="email">
+    <input id="userEmail" type="email" class="add-user-input">
+    <br>
+    </div>
+
     <br>
 
+    <div class="label-input-holder">
     <label for="userName">Naam:</label>
-    <input type="text" id="userName">
+    <input type="text" id="userName" class="add-user-input">
+    <br>
+    </div>
+
     <br>
 
+    <div class="label-input-holder">
     <label for="userRole">Type account</label>
-    <select id="userRole" name="roles">
+    <select id="userRole" name="roles" class="add-user-input">
         <option value="user">Gebruiker</option>
         <option value="admin">Admin</option>
     </select>
     <br>
+    </div>
 
-    <label for="userPassword">Wachtwoord:</label>
-    <input id="userPassword" type="password">
     <br>
 
-    <button id="submitCreateUser">Voeg account toe</button>
+    <div class="label-input-holder">
+    <label for="userPassword">Wachtwoord:</label>
+    <input id="userPassword" type="password" class="add-user-input">
+    <br>
+    </div>
+
+    <br>
+
+    <button id="submitCreateUser" class="buttons">Voeg account toe</button>
 
     <br>
     <p id="displayErrorCreateUsers"></p>

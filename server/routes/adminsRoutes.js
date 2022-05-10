@@ -19,6 +19,7 @@ class AdminsRoutes {
 
         //call method per route for the users entity
         this.#createUser()
+        this.#getUsers()
     }
 
     /**
@@ -44,7 +45,7 @@ class AdminsRoutes {
                     values: [email, name, role, password]
                 });
 
-                if (data.affectedRows > 0) {res.status(this.#errorCodes.HTTP_OK_CODE)}
+                if (data.affectedRows > 0) {res.status(this.#errorCodes.HTTP_OK_CODE).json("Sent ok ")}
                 else {
                     res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
                 }
@@ -57,6 +58,31 @@ class AdminsRoutes {
                 else {
                     res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Er is iets fout gegaan"});
                 }
+            }
+        });
+    }
+
+    /**
+     * Gets users from database
+     * @memberOf AdminsRoutes
+     * @name getUsers
+     * @function
+     * @private
+     * @instance
+     */
+    #getUsers() {
+        this.#app.get("/admin/get/users", async (req, res) => {
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: "SELECT * FROM Users;"});
+
+                if (data.length >= 1) {res.status(this.#errorCodes.HTTP_OK_CODE).json(data)}
+                else {
+                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "There are no users yet"});
+                }
+            }
+            catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Er is iets fout gegaan"});
             }
         });
     }
