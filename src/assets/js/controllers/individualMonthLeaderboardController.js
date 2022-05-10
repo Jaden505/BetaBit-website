@@ -32,7 +32,6 @@ export class IndividualMonthLeaderboardController extends Controller {
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
         this.#currentMonth();
-        this.weekCounter();
         await this.#displayIndividualMonthLeaderboard();
     }
 
