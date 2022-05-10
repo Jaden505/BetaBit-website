@@ -2,7 +2,6 @@
  * This class contains ExpressJS routes specific for the users schedule
  * this file is automatically loaded in app.js
  *
- * @author Jaden van Rijswijk & Dia Fortmeier
  */
 class ScheduleRoutes {
     #errorCodes = require("../framework/utils/httpErrorCodes")
@@ -20,11 +19,20 @@ class ScheduleRoutes {
         this.#getDefaultSchedule()
         this.#getSchedule()
         this.#setDefaultSchedule()
+        this.#setSchedule()
+        this.#getOptions()
+        this.#getDayTypes()
+        this.#getTransportationOptions()
     }
 
     /**
      * Gets default schedule from database and returns to frontend in json
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleRoutes
+     * @name getDefaultSchedule
+     * @function
      * @private
+     * @instance
      */
     #getDefaultSchedule() {
         this.#app.post("/schedule/default", async (req, res) => {
@@ -45,7 +53,8 @@ class ScheduleRoutes {
                             t.id AS transport_id,
                             t.name AS transport,
                             t.emissions AS transport_emissions,
-                            t.icon AS transport_icon
+                            t.icon AS transport_icon,
+                            t.pointsMax AS points_max
                         FROM defaultschedules ds
                                  INNER JOIN daytypes d on ds.type = d.id
                                  INNER JOIN transport t on ds.transport = t.id
@@ -63,7 +72,12 @@ class ScheduleRoutes {
 
     /**
      * Gets schedule from database and returns to frontend in json
+     * @author Dia Fortmeier
+     * @memberOf ScheduleRoutes
+     * @name getSchedule
+     * @function
      * @private
+     * @instance
      */
     #getSchedule() {
         this.#app.post("/schedule", async (req, res) => {
@@ -81,11 +95,15 @@ class ScheduleRoutes {
                                    s.transport AS schedule_transport_id,
                                    d.id        AS daytype_id,
                                    d.name      AS daytype,
+                                   t.id        AS transport_id,
+                                   t.name      AS transport,
+                                   t.emissions AS transport_emissions,
                                    d.icon AS type_icon,
                                    t.id        AS transport_id,
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
-                                   t.icon AS transport_icon
+                                   t.icon AS transport_icon,
+                                   t.pointsMax AS points_max
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id
@@ -105,7 +123,12 @@ class ScheduleRoutes {
 
     /**
      * sets a new default schedule in the database using json
+     * @author Colin Laan
+     * @memberOf ScheduleRoutes
+     * @name setDefaultSchedule
+     * @function
      * @private
+     * @instance
      */
     #setDefaultSchedule() {
         this.#app.put("/schedule/update/default", async (req, res) => {
@@ -131,6 +154,121 @@ class ScheduleRoutes {
                             AND day = ?;`,
                     values: [type, transport, begin_date, end_date, distance, email, day]
                 });
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * sets a new schedule in the database using json
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleRoutes
+     * @name setSchedule
+     * @function
+     * @private
+     * @instance
+     */
+    #setSchedule() {
+        this.#app.post("/schedule/update", async (req, res) => {
+            const email = req.body.email;
+            const date = req.body.date;
+            const type = req.body.day_type;
+            const start_time = req.body.begin_date;
+            const end_time = req.body.end_date;
+            const distance = req.body.distance;
+            const transport = req.body.vehicle;
+
+            let data = await this.#databaseHelper.handleQuery({
+                query: `INSERT INTO schedules (user_email, date, 
+                                type, start_time, end_time, travel_distance, transport)
+                        SELECT ?, ?, d.id, ?, ?, ?, t.id
+                        FROM schedules
+                                 INNER JOIN daytypes d on d.name = ?
+                                 INNER JOIN transport t on t.name = ?
+
+                        ON DUPLICATE KEY UPDATE
+                                 user_email = ?,
+                                 date = ?,
+                                 type = d.id,
+                                 start_time = ?,
+                                 end_time = ?,
+                                 travel_distance = ?,
+                                 transport = t.id;
+                `,
+                values: [email, date, start_time, end_time, distance,
+                    type, transport,
+                    email, date, start_time, end_time, distance]
+            });
+
+            if (data.affectedRows > 0) {
+                res.status(this.#errorCodes.HTTP_OK_CODE)
+            } else {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "Fields filled incorrectly"});
+            }
+
+        });
+    }
+
+    #getOptions() {
+        this.#app.post("/schedule/options", async (req, res) => {
+            let table = req.body.table;
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT name FROM ${table};`});
+
+                // returns options
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Gets all the day types present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getDayTypes() {
+        this.#app.post("/schedule/daytypes", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT d.id        AS daytype_id,
+                                   d.name      AS daytype,
+                                   d.icon      AS type_icon
+                            FROM daytypes d`
+                });
+
+                // returns schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Gets all the transportation options present in the database
+     * @private
+     * @author Colin Laan
+     */
+    #getTransportationOptions() {
+        this.#app.post("/schedule/transportation", async (req, res) => {
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT t.id        AS transportation_id,
+                                   t.name      AS transportation_name,
+                                   t.icon      AS transport_icon,
+                                   t.emissions AS emissions
+                            FROM transport t`
+                });
+
+                // returns schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }

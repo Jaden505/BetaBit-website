@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>768</x>
+      <y>64</y>
+      <w>200</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;database&gt;&gt;
+MySQL database
+schema: pad_bbi_8_dev
+--
+tables:
+- users
+- roles
+- defaultSchedules
+- schedules
+- dayTypes
+- transport
+- dailyPoints
+
+Zie EER voor databasemodel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>672</x>
+      <y>432</y>
+      <w>360</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;client&gt;&gt;
+Font-end
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>104</x>
+      <y>64</y>
+      <w>480</w>
+      <h>544</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;server&gt;&gt;
+Back-end
+PAD BBI Team 8
+https://dev-bbi-8.hbo-ict.cloud/
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>112</x>
+      <y>136</y>
+      <w>136</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;server application&gt;&gt;
+Chrome V8 Engine
+--
+NodeJS
+ExpressJS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>144</x>
+      <y>240</y>
+      <w>160</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;api endpoints&gt;&gt;
+scheduleRoutes.js
+--
+POST /schedule/default
+POST /schedule
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>408</x>
+      <y>136</y>
+      <w>160</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;dependencies&gt;&gt;
+package.json
+--
+body-parser
+express
+express-fileupload
+morgan
+multer
+mysql</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>168</y>
+      <w>184</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>210.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>200</y>
+      <w>48</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;90.0;10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>144</x>
+      <y>320</y>
+      <w>160</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;api endpoints&gt;&gt;
+usersRoutes.js
+--
+POST /users/login
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>264</y>
+      <w>48</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;110.0;10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>144</x>
+      <y>392</y>
+      <w>160</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;api endpoints&gt;&gt;
+uploadFileRoute.js
+--
+POST /upload
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>336</y>
+      <w>48</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;110.0;10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>680</x>
+      <y>584</y>
+      <w>120</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;MVC applicatie&gt;&gt;
+PAD Framework
+--
+HTML, CSS en JS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>680</x>
+      <y>480</y>
+      <w>88</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Web browser</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>880</x>
+      <y>480</y>
+      <w>136</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;externe scripts&gt;&gt;
+index.html
+--
+bootstrap
+fontawesome</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>712</x>
+      <y>512</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>520</y>
+      <w>104</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>168</y>
+      <w>208</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>600</y>
+      <w>256</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>300.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>144</x>
+      <y>464</y>
+      <w>200</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;api endpoints&gt;&gt;
+leaderboardRoutes.js
+--
+POST /monthLeaderboard/individual
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>416</y>
+      <w>48</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

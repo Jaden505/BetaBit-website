@@ -1,2 +1,48 @@
 <div class="container">
+    <div class="breadcrumbs">
+        <span class="breadcrumbs-icon">
+            <a href="#">
+                <img src="assets/img/cancel.svg" alt="breadcrumbs dashboard icon" width="160%" id="cancelChangeSchedule">
+            </a>
+        </span>
+    </div>
+
+    <div id="changeScheduleHolder">
+        <div>
+            <form>
+                <div class="content-item">
+                    <label for="dayStart">Datum</label>
+                    <input type="date" class="popup-input date" id="date" name="date">
+                </div>
+                <div class="content-item">
+                    <label for="dayType">Type dag</label>
+                    <select class="popup-input day-type" name="Type Dag" id="dayType">
+                        <option value="Empty" selected>Kies een optie</option>
+                    </select>
+                </div>
+                <div class="content-item">
+                    <label for="dayStart">Starttijd</label>
+                    <input type="time" class="popup-input day-start" id="dayStart" name="Starttijd">
+                </div>
+                <div class="content-item">
+                    <label for="dayEnd">Eindtijd</label>
+                    <input type="time" class="popup-input day-end" id="dayEnd" name="Eindtijd">
+                </div>
+                <div class="content-item">
+                    <label for="travelDistance">Reisafstand</label>
+                    <input type="number" class="popup-input distance-input" id="travelDistance" name="Reisafstand" placeholder="km" min="1" max="300">
+                </div>
+                <div class="content-item">
+                    <label for="wayOfTravelling">Vervoer</label>
+                    <select name="Transportation" class="popup-input transport" id="wayOfTravelling">
+                        <option value="geen" selected>Kies een optie</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <br>
+        <button id="changeScheduleConfirm" class="buttons">Voeg toe/Update</button>
+        <br>
+        <p id="error"></p>
+    </div>
 </div>

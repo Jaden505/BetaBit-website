@@ -139,6 +139,10 @@
     width: 1.2rem;
 }
 
+.breadcrumbs-icon img {
+    vertical-align: sub;
+}
+
 .breadcrumbs .direction-icon img {
     transform: rotate(180deg);
 }
@@ -157,6 +161,7 @@ h1 {
 .buttons, .small-btn {
     display: inline-block;
     position: relative;
+    z-index: 1;
     font-size: 1em;
     padding: 1rem 1.5rem;
     border: none;

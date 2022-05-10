@@ -19,7 +19,11 @@ export class NavbarController extends Controller{
     /**
      * Loads contents of desired HTML file into the index.html .navigation div
      * @returns {Promise<void>}
+     * @memberOf NavbarController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is
@@ -30,13 +34,47 @@ export class NavbarController extends Controller{
 
         //set click listener on each anchor
         anchors.forEach(anchor => anchor.addEventListener("click", (event) => this.#handleClickNavigationItem(event)))
+
+        this.#removeLoginOrLogout();
+    }
+
+    /**
+     * Removes logout from nav when not logged in.
+     * Removes login from nac when logged in.
+     * @author Dia Fortmeier
+     * @memberOf NavbarController
+     * @name removeLoginOrLogout
+     * @method
+     * @private
+     * @instance
+     */
+    #removeLoginOrLogout() {
+        const navLogin = this.#navbarView.querySelector("#nav-login");
+        const navLogout = this.#navbarView.querySelector("#nav-logout");
+
+        function loggedIn() {
+            navLogin.style.display = "none";
+            navLogout.style.display = "block";
+        }
+
+        function loggedOut() {
+            navLogout.style.display = "none";
+            navLogin.style.display = "block";
+        }
+
+        App.isLoggedIn(() => loggedIn(), () => loggedOut());
     }
 
     /**
      * Reads data attribute on each .nav-link and then when clicked navigates to specific controller
      * @param event - clicked anchor event
      * @returns {boolean} - to prevent reloading
+     * @author Jaden Rijswijk
+     * @memberOf NavbarController
+     * @name handleClickNavigationItem
+     * @method
      * @private
+     * @instance
      */
     #handleClickNavigationItem(event) {
         //Get the data-controller from the clicked element (this)

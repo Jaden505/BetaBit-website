@@ -1,7 +1,6 @@
 /**
  * Responsible for handling the actions happening on schedule view
  *
- * @author Jaden van Rijswijk & Dia Fortmeier
  */
 
 import {Controller} from "./controller.js";
@@ -26,15 +25,22 @@ export class ScheduleController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf ScheduleController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
         this.#scheduleView = await super.loadHtmlIntoContent("html_views/schedule.html")
 
         // Redirect buttons
-        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_CHANGE_SCHEDULE));
+        this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", function () {
+            document.querySelector("#popupOverlay").style.display = 'block';
+            App.loadController(App.CONTROLLER_CHANGE_SCHEDULE)});
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
+
         this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
@@ -46,9 +52,15 @@ export class ScheduleController extends Controller {
 
     /**
      * Checks which day is equal to today and highlights it.
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name highlightDay
+     * @function
+     * @private
+     * @instance
      */
     #highlightDay() {
-        let day_containers = Array.from(document.getElementById("days_holder").children)
+        let day_containers = Array.from(this.#scheduleView.querySelector("#days_holder").children)
         let today = ScheduleController.days[this.#date.getDay()];
 
         for (let day of day_containers) {
@@ -58,7 +70,7 @@ export class ScheduleController extends Controller {
 
                 if (screen.width < 992) {
                     day.classList.add("selected-day");
-                    document.querySelector("#" + day.id + "_detail").classList.add("selected-day");
+                    this.#scheduleView.querySelector("#" + day.id + "_detail").classList.add("selected-day");
                 }
             }
         }
@@ -68,6 +80,12 @@ export class ScheduleController extends Controller {
      * Gets the current dates for all seven days of the week.
      * @param date_type it can either be 'day', 'month' or 'date'
      * @returns {*[]}
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name getCurrentDates
+     * @function
+     * @private
+     * @instance
      */
     #getCurrentDates(date_type) {
         let curr = new Date;
@@ -94,9 +112,15 @@ export class ScheduleController extends Controller {
 
     /**
      * Displays the current dates for all seven days of the week, and also uses the first and last days of the week.
+     * @author Jaden Rijswijk
+     * @memberOf ScheduleController
+     * @name displayCurrentDates
+     * @function
+     * @private
+     * @instance
      */
     #displayCurrentDates() {
-        let day_containers = document.getElementById("days_holder").children
+        let day_containers = this.#scheduleView.querySelector("#days_holder").children
         let current_days = this.#getCurrentDates("day");
         let current_months = this.#getCurrentDates("month");
 
@@ -105,15 +129,21 @@ export class ScheduleController extends Controller {
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
 
-            document.querySelector("#first-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#first-weekDay").innerHTML =
                 "maandag " + current_days[0] + " " + current_months[i] + " " + new Date().getFullYear();
-            document.querySelector("#last-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#last-weekDay").innerHTML =
                 "zondag " + current_days[6] + " " + current_months[i] + " " + new Date().getFullYear();
         }
     }
 
     /**
      * Calculates the current week number of the year.
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name getWeekOfTheYear
+     * @function
+     * @private
+     * @instance
      */
     #getWeekOfTheYear() {
         Date.prototype.getWeekNumber = function () {
@@ -126,11 +156,17 @@ export class ScheduleController extends Controller {
 
         let weekNumber = (new Date().getWeekNumber());
 
-        document.querySelector("#schedule-week").innerHTML = weekNumber.toString();
+        this.#scheduleView.querySelector("#schedule-week").innerHTML = weekNumber.toString();
     }
 
     /**
      * Creates tabs for each schedule day.
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name createScheduleTabs
+     * @function
+     * @private
+     * @instance
      */
     #createScheduleTabs() {
         const items = document.querySelectorAll(".schedule-item");
@@ -155,8 +191,13 @@ export class ScheduleController extends Controller {
      * Checks if the transport has an type added to it.
      * If it does then it returns the type.
      * If it doesn't then it returns the full transport
-     *
      * @param transport transport of the day
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name getTransportTypeLabel
+     * @function
+     * @private
+     * @instance
      */
     static #getTransportTypeLabel(transport) {
         let transportLabel;
@@ -176,42 +217,16 @@ export class ScheduleController extends Controller {
     }
 
     /**
-     * calculates how much points you get
-     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
-     * by changing the (x)var variables. With the first number being the amount of points per KM and
-     * the second number being the point cap.
-     * @author Mairo Garf Tzouvelekis
-     * @memberOf ScheduleController
-     * @name pointCalculator
-     * @method
-     * @private
-     * @instance
-     */
-    static pointCalculator(transport, distance) {
-        let number
-        const transportMethods = ["lopen", "fiets", "elektrische fiets", "scooter", "elektrische scooter", "tram", "metro", "bus", "trein", "elektrische auto", "diesel auto", "hybride auto", "online", "geen", "empty"];
-        const pointsPerKM = [150, 75, 70, 30, 35, 25, 25, 25, 20, 7, 6, 5, 6, 0, 0, 0];
-        const maxPoints = [700, 700, 750, 500, 550, 500, 500, 500, 400, 450, 400, 400, 450, 0, 0, 0];
-        let i = 0;
-        while (i < 15) {
-            if (transport === transportMethods[i]) {
-                number = distance * pointsPerKM[i]
-                if (number > maxPoints[i]) {
-                    number = maxPoints[i]
-                }
-            }
-            i++;
-        }
-        return number;
-    }
-
-
-    /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
-     *
      * @returns {Promise<void>}
+     * @author Dia Fortmeier
+     * @memberOf ScheduleController
+     * @name displaySchedule
+     * @function
+     * @private
+     * @instance
      */
     async #displaySchedule() {
         const email = App.sessionManager.get("email");
@@ -240,7 +255,7 @@ export class ScheduleController extends Controller {
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = ScheduleController.pointCalculator(schedule.transport, schedule.travel_distance);
+            let totalPoints = schedule.points_max;
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -268,7 +283,6 @@ export class ScheduleController extends Controller {
                     ScheduleController.#getTransportTypeLabel(schedule.transport);
                 schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
                 schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
-
             }
         });
     }

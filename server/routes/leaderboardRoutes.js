@@ -2,7 +2,6 @@
  * This class contains ExpressJS routes specific for the leaderboards
  * this file is automatically loaded in app.js
  *
- * @author Dia Fortmeier
  */
 class LeaderboardRoutes {
     #errorCodes = require("../framework/utils/httpErrorCodes")
@@ -18,6 +17,7 @@ class LeaderboardRoutes {
 
         //call method per route for the users entity
         this.#getIndividualMonthLeaderboard();
+        this.#searchUsers();
     }
 
     /**
@@ -39,6 +39,38 @@ class LeaderboardRoutes {
                     INNER JOIN users u on dp.user = u.email
                     GROUP BY dp.user
                     ORDER BY points DESC;`
+                });
+
+                // returns individual monthly leaderboard
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+            } catch (e) {
+                res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
+            }
+        });
+    }
+
+    /**
+     * Searches for users based on searchbar input
+     * @author Jaden Rijswijk
+     * @memberOf LeaderboardRoutes
+     * @name searchUsers
+     * @function
+     * @private
+     * @instance
+     */
+    #searchUsers() {
+        this.#app.post("/monthLeaderboard/search", async (req, res) => {
+            const search_string = "%" + req.body.search_string + "%";
+
+            try {
+                const data = await this.#databaseHelper.handleQuery({
+                    query: `SELECT u.username,u.email, dp.user, SUM(dp.points) as points
+                    FROM dailypoints dp
+                    INNER JOIN users u on dp.user = u.email
+                    WHERE u.username LIKE ?
+                    GROUP BY dp.user
+                    ORDER BY points DESC;`,
+                    values: [search_string]
                 });
 
                 // returns individual monthly leaderboard

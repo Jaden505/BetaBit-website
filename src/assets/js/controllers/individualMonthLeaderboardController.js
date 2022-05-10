@@ -1,13 +1,12 @@
 /**
  * Responsible for handling the actions happening on monthLeaderboard views
  *
- * @author Dia Fortmeier
  */
 
 import {Controller} from "./controller.js";
-import {MonthLeaderboardRepository} from "../repositories/monthLeaderboardRepository.js";
-import {DateController} from "./dateController.js";
+import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
+import {SessionManager} from "../framework/utils/sessionManager.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
@@ -18,7 +17,7 @@ export class IndividualMonthLeaderboardController extends Controller {
     constructor() {
         super();
 
-        this.#monthLeaderboard = new MonthLeaderboardRepository();
+        this.#monthLeaderboard = new LeaderboardRepository();
         this.today = new Date;
         this.dateController = new DateController();
 
@@ -28,17 +27,28 @@ export class IndividualMonthLeaderboardController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
+     * @memberOf IndividualMonthLeaderboardController
+     * @name setupView
+     * @function
      * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded
         this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
 
+        // Search bar on keyup call display function
+        let currentController = this;
+        let searchbar = document.getElementById("searchbar");
+        searchbar.onkeyup = async function () {
+            let users = await currentController.getUsers(searchbar.value);
+            currentController.displayIndividualMonthLeaderboard(users);
+        };
 
         this.#currentMonth();
-        this.dateController.weekCounter();
-        await this.#displayIndividualMonthLeaderboard();
-
+        // this.weekCounter();
+        await this.displayIndividualMonthLeaderboard(await this.getUsers());
+        this.createTopThreeLeaderboardIcons();
     }
 
     /**
@@ -72,21 +82,81 @@ export class IndividualMonthLeaderboardController extends Controller {
     }
 
     /**
+     * Gets the users based on the search_string
+     * @param search_string input of searchbar
+     * @returns users users that match search_string
+     * @author Jaden Rijswijk
+     */
+    async getUsers(search_string = "") {
+        if (search_string === "") {return await this.#monthLeaderboard.individualMonthLeaderboard();}
+        else {return await this.#monthLeaderboard.searchUsers(search_string);}
+    }
+
+    /**
+     * Adds three different icons for the top three on the leaderboard
+     * @public
+     * @author Amir Suleimani
+     */
+    createTopThreeLeaderboardIcons() {
+        const rankOne = [1, "#FFD700"];
+        const rankTwo = [2, "#C0C0C0"];
+        const rankThree = [3, "#D7995B"];
+
+        let styleElem = document.head.appendChild(document.createElement("style"));
+        for (let i = 1; i <= rankThree[0]; i++) {
+            styleElem.innerHTML += `
+                     #placement_${i}:before {visibility: visible;}
+                     #placement_${i}:after {visibility: visible;}
+                 `;
+
+            if (i === rankOne[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankOne[1]};}
+                     #placement_${i}:after {color: ${rankOne[1]};}
+                 `;
+            } else if (i === rankTwo[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankTwo[1]};}
+                     #placement_${i}:after {color: ${rankTwo[1]};}
+                 `;
+            } else if (i === rankThree[0]) {
+                styleElem.innerHTML += `
+                     #placement_${i}:before {color: ${rankThree[1]};}
+                     #placement_${i}:after {color: ${rankThree[1]};}
+                 `;
+            }
+        }
+    }
+
+    /**
+     * Creates a info card at the top of the leaderboard that shows your personal rank info.
+     * @public
+     * @author Dia Fortmeier
+     */
+    static createSessionUserPlacement(rank, rankId, username, userImage, points) {
+        document.querySelector(".leaderboard-me .rank-placement").textContent = rank.toString();
+        document.querySelector(".leaderboard-me .rank-placement").id = rankId;
+        document.querySelector("#me-image").src = userImage;
+        document.querySelector("#me-name").textContent = username;
+        document.querySelector("#me-points-total").textContent = points;
+    }
+
+    /**
      * Gets the users and all their current month points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
      * @author Dia Fortmeier
      * @memberOf IndividualMonthLeaderboardController
      * @name displayIndividualMonthLeaderboard
      * @function
-     * @private
+     * @public
      * @returns {Promise<void>}
      * @instance
      */
-    async #displayIndividualMonthLeaderboard() {
-        const leaderboardUsers = await this.#monthLeaderboard.individualMonthLeaderboard();
+    async displayIndividualMonthLeaderboard(leaderboardUsers) {
         const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");
-        const email = App.sessionManager.get("email");
         let rankPlacementNumber = 0;
+
+        leaderboardContainer.innerHTML = "";
 
         leaderboardUsers.forEach(function (lu) {
             const listRank = document.createElement("div");
@@ -108,6 +178,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             pointsTotal.classList.add("points-total");
 
             rankPlacementNumber++;
+            rankPlacement.id = `placement_${rankPlacementNumber.toString()}`;
             rankPlacement.textContent = rankPlacementNumber.toString();
             userName.textContent = lu.username;
 
@@ -115,6 +186,12 @@ export class IndividualMonthLeaderboardController extends Controller {
             userImage.src = `https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`;
             pointsLabel.textContent = "Punten";
             pointsTotal.textContent = lu.points;
+
+            if (App.sessionManager.get("username") === lu.username) {
+                IndividualMonthLeaderboardController.createSessionUserPlacement(rankPlacementNumber, rankPlacement.id,
+                    lu.username,`https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`,
+                    lu.points);
+            }
 
             leaderboardContainer.appendChild(listRank);
             rankUser.append(userImage, userName);
@@ -125,4 +202,7 @@ export class IndividualMonthLeaderboardController extends Controller {
         });
     }
 
+    _stop = () => {
+        clearInterval(this.timerId);
+    }
 }

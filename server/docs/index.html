@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>PAD framework</h1>
+<h2>Wat zit er in het framework?</h2>
+<p><strong>Back-end(server)</strong></p>
+<ul>
+<li>Opzet standaard webserver met Express.JS en NodeJS.
+<ul>
+<li>API: Hierbij zit een  <code>users/login</code>  en <code>/rooms_example/:id</code> route. Deze worden al aangesproken in de front-end</li>
+<li>Connectie met een MySQL database. Deze database staat net als bij FYS ergens op een server binnen de HvA.</li>
+</ul>
+</li>
+<li>Enkele crypto helper functions voor bijv. het hashen van een wachtwoord</li>
+<li>Standaard logging met foutmeldingen en andere informatie.</li>
+</ul>
+<p><strong>Front-end(HTML, CSS, JS(ES6+))</strong></p>
+<ul>
+<li>Met Bootstrap 5 gestylde voorbeeldpagina's</li>
+<li>&quot;MVC&quot; setup met twee voorbeeldflows: De login en het welkom scherm met een stukje data uit de database
+<ul>
+<li><code>html_views</code> bevat de HTML pagina's</li>
+<li><code>assets/js/controllers</code> bevat controllers - de schakeling tussen de views en de data</li>
+<li><code>assets/js/repositories</code> omdat we in Javascript(ES6) geen expliciete types hebben is er geen model. Een repository bevat/haalt data op en geeft het terug aan een controller.</li>
+</ul>
+</li>
+<li><code>sessionManager.js</code> voor het beheren van sessies in de local storage browser</li>
+<li><code>networkManager.js</code> voor het uitvoeren van netwerk request(AJAX) naar de API(NodeJS/ExpressJS)</li>
+</ul>
+<h3>Changelog v2.0 - Februari 2021</h3>
+<p><strong>Back-end(server)</strong></p>
+<ul>
+<li>Omgezet naar het gebruik van ES6 classes en <code>async/await</code>. Alle routes per entiteit(bijv. users) staan in een aparte class i.p.v. in <code>app.js</code>. Er is nieuwe logica in <code>app.js</code> toegevoegd die ervoor zorgt
+dat alle files in de folder <code>server/routes</code> automatisch worden ingeladen en geïnstantieerd.</li>
+<li>Voorbeeld endpoint voor het uploaden van files is uitgebreid.</li>
+<li>Verbeterde logging</li>
+<li>Verbeterde JSDoc</li>
+<li>Dependencies geüpdatet
+<ul>
+<li>Cypress(voor tests) gemigreerd naar de nieuwste versie</li>
+</ul>
+</li>
+</ul>
+<p><strong>Front-end(HTML, CSS, JS(ES6+))</strong></p>
+<ul>
+<li>Alle jQuery logica is omgezet naar vanilla JS - jQuery verwijderd als dependency</li>
+<li>Alle .js files worden niet meer los ingeladen maar als modules</li>
+<li>Voorkant is &quot;meer OOP&quot; d.m.v. het gebruik van ES6+ features. Private fields en functions bijv. Ook is er een parent class voor <code>Controller</code> beschikbaar
+die helpt met het inladen van HTML-files.</li>
+<li><code>networkManager.js</code>
+<ul>
+<li>Nu support voor <code>GET</code> én <code>POST</code> requests. Ook is er een methode toegevoegd voor het versturen van <code>FormData</code>.</li>
+<li>Uitgebreidere logging</li>
+</ul>
+</li>
+<li>File uploads voorbeeld uitgebreid</li>
+<li>Verbeterde JSDoc</li>
+<li>Bootstrap 4 naar Boostrap 5 gemigreerd</li>
+</ul>
+<h2>Setup</h2>
+<h3>Dependencies - vooraf installeren!</h3>
+<ul>
+<li>MySQL (Workbench)</li>
+<li>NodeJS - https://nodejs.org/en/download/ - Neem de LTS(Long Term Support) versie - <code>16.13.0</code></li>
+<li>Git</li>
+<li>IntelliJ Ultimate Edition</li>
+</ul>
+<h3>Stappen om het framework voor het eerst te draaien</h3>
+<ol>
+<li>Clone of download het project naar je computer. <strong>Al download je het project als .zip zorg dan dat je de uitgepakte folder
+hernoemt naar <code>pad-framework</code></strong>, anders krijg je later problemen bij het open van html in de browser</li>
+<li>File -&gt; Open de geclonede  folder in IntelliJ.</li>
+<li>Met het project geopend, open nu linksonderin het tabje &gt;_Terminal. Voor je cursor moet het pad staan van het framework. Bijv. <code>C:\Users\pmeijer\projects\pad-framework</code></li>
+<li>Typ <code>cd server</code> en druk op enter. Dit verandert het pad naar de <code>..pad-framework/server</code> folder.</li>
+<li>Typ nu het commando <code>npm install</code>. Dit installeert de packages uit <code>package.json</code> zoals bijv. de <code>mySQL</code> package voor NodeJS. Al krijg je de melding dat npm niet gevonden kan worden
+zorg dan dat je nogmaals controleert of NodeJS geïnstalleerd is en dat je deze via Start(Windows) een keer hebt uitgevoerd. Start vervolgens IntellIJ
+nog een keer op en probeer het opnieuw.
+<ul>
+<li>Dit kan eventueel ook vanuit IntelliJ door rechts te klikken op de <code>package.json</code> en te kiezen voor <code>Run 'npm install'</code>.</li>
+</ul>
+</li>
+<li>Als laatste zou het fijn zijn als onze server automatisch herstart bij een code wijziging. Typ hiervoor het command <code>npm install nodemon -g</code> en druk op enter. Dit
+commando installeert nodemon globaal(-g) zodat je het bij elk project zou kunnen gebruiken.</li>
+<li>Typ nu  <code>npm start</code> - enter. Dit start de server, nodemon zorgt ervoor dat de server automatisch opnieuw opstart bij wijzigingen
+Je kunt ook in IntelliJ rechts klikken op <code>package.json</code> en kiezen voor <code>Show npm Scripts</code>. Dubbelklik vervolgens op <code>start</code>.</li>
+<li>Nu zul je een melding krijgen over dat <code>server/config/config.local.json</code> niet is geconfigureerd. Open dit bestand en vul hier de gegevens in
+van de database van jullie team. Deze kunnen jullie vinden op: https://hbo-ict.cloud/. In de folder waar dit bestand inzit vind je meerdere config bestanden, de <code>local</code> variant bevat configuratie voor
+de verbinding naar een database als het PAD-framework draait op jouw computer, de andere twee zijn voor als het framework draait op HBO ICT Cloud. Deze hoef je voor nu niet in te vullen!</li>
+</ol>
+<p><strong>Voorbeeld</strong> van ingevulde <code>config.local.json</code>:</p>
+<pre class="prettyprint source"><code> {
+     &quot;database&quot;: {
+         &quot;host&quot;: &quot;db.hbo-ict.cloud&quot;, //Geen port
+         &quot;timeout&quot;: 30000,
+         &quot;username&quot;: &quot;pad_oba_10&quot;,
+         &quot;password&quot;: &quot;&lt;wachtwoord>&quot;,
+         &quot;database&quot;: &quot;pad_oba_10_dev&quot; //Dev of Live
+     }
+ }
+</code></pre>
+<p><em>Al krijg je de connectie om wat voor reden dan ook niet werkend, gebruik dan even een lokale database. Je maakt een
+nieuw schema aan in MySQL Workbench, deze vul je in bij <code>&quot;database&quot;</code>. Als <code>&quot;host&quot;</code> vul je in localhost. Gebruikersnaam en
+wachtwoord heb je zelf ingesteld bij MySQL Workbench. Het kan zijn dat inloggen met <code>root</code> niet werkt, en dat je error code 1251 krijgt in de terminal.
+Maak dan even een nieuwe user aan specifiek voor dit &quot;scheme&quot; in MySQL Workbench.</em></p>
+<ol start="10">
+<li>In de root van het project(<code>/pad-framework</code>) vind je een bestandje <code>testdata.sql</code>. Vul eerst het goede schema in bovenaan: bijv. <code>pad_oba_10_dev</code>. Zorg dan dat
+één van de teamleden deze SQL een keer heeft uitgevoerd in jullie database. Dit script maakt een <code>users</code> en een <code>rooms_example</code> tabel aan.</li>
+<li>Draai nu nogmaals <code>npm start</code>. Nu zou de foutmelding moeten zijn verdwenen.</li>
+<li>Test of de front-end een connectie kan maken met de server die we nu hebben draaien.
+Open <code>src/index.html</code> in IntelliJ. Lanceer 🚀 deze in de browser, je kunt hiervoor op het Chrome(of andere browser) icoontje rechtsbovenin de file klikken. Als je het goed
+hebt gedaan krijg je nu een inlog scherm te zien! Zorg dat je het altijd op deze manier doet om CORS errors te voorkomen.</li>
+<li>Log in met <code>test</code> en <code>test</code>. Als je op de welkompagina komt betekent dit dat de database goed is opgezet en dat je ready-to-code bent!</li>
+</ol>
+<h2>Front en back-end in één project</h2>
+<p>In de <code>server</code> folder vind je alles wat met de back-end/server te maken heeft, voor nu houden we het op de naamgeving server.
+Door middel van het draaien van <code>npm start</code> komt de server te draaien op een poort(bijv. <code>localhost:3000</code>)</p>
+<p>In de folder <code>src</code> vind je alle HTML/CSS en JS, ook wel de front-end. Vanuit deze front-end kun je dus een request doen naar hierboven genoemde server.
+Bij FYS hoefde je niet zelf de server te beheren en kon je een request doen naar de FYSCloud API. Bij PAD ga je dit dus ook zelf doen, je gaat dus je eigen
+server beheren die je eigen API bevat voor je eigen front-end</p>
+<p>Weet je niet helemaal meer hoe het zat met Server, Client, GET, POST, query parameters en URL's? Doe les 1 van de course Client-Server Communication:</p>
+<p>https://classroom.udacity.com/courses/ud897/</p>
+<h2>Voorbeeld van een flow(Welcome scherm)</h2>
+<img src="readme_assets_gitlab/architecture_pad.png" width="700" height="450" alt="architecture overview">
+<p><strong>Front-end</strong></p>
+<p><code>pad-framework/src</code></p>
+<ol>
+<li><code>src/assets/js/app.js</code> is het startpunt van de front-end applicatie. Deze laadt altijd de <code>navBarController.js</code> welke verantwoordelijk is
+voor de navigatie binnen de website. Deze controller vangt een klik af op een link en vraagt via <code>app.js</code> een andere controller op voor de betreffende pagina.
+In dit voorbeeld is dit de <code>welcomeController.js</code>.</li>
+<li>De <code>welcomeController.js</code> laadt de pagina <code>html_views/welcome.html</code></li>
+<li>Deze controller maakt ook een instantie van <code>roomsExampleRepostitory.js</code>.</li>
+<li>Via deze repository(komt nog aan bod bij OOP2) wordt er data(rooms) opgevraagd: <code>const roomData = await this.roomsExampleRepository.get(roomId);</code>.
+Door middel van het gebruik van <code>async/await</code> hoeven we geen callbacks te gebruiken. De repository spreekt de <code>networkManager.js</code> aan welke uitendelijk
+een <code>fetch</code>(AJAX) request doet naar de server.</li>
+<li>De <code>networkManager</code> gaat dus een request doen naar jullie API op jullie server. Hier wordt via de url meegegeven welke roomId moet worden opgevraagd.
+Je ziet dit in de console:
+<code>Doing GET request to http://localhost:3000/rooms_example/1256 Sent JSON: &lt;none&gt;</code></li>
+</ol>
+<p>We sturen geen JSON mee omdat bij een GET request de data in de url wordt meegestuurd. Zie voor een voorbeeld van een <code>POST</code> request
+de login functionaliteit.</p>
+<p><strong>Server</strong></p>
+<p><code>pad-framework/server</code></p>
+<ol start="6">
+<li>De server draait bijv. op port 3000. Op deze poort luistert de API of er requests binnen komen. Per entitieit(denk aan databases) maak je een aparte file/class aan
+in <code>server/routes</code> waarin staat naar welke endpoints requests kunnen worden gemaakt. Specifiek kijken we hier naar <code>roomsExampleRoutes.js</code>.</li>
+<li>In dit geval zal de volgende route getriggered worden: <code>this.#app.get(&quot;/rooms_example/:roomId&quot;, async (req, res) =&gt; { .. }</code>. Dit is een stukje code dat gebruik
+maakt van <code>Express.JS</code>. De <code>app</code> variabele wordt automatisch meegegeven aan deze class, hier registreer je de endpoint op.
+In de course over NodeJS(zie studiehandleiding en onderop deze pagina) vind je meer over Express.JS.</li>
+<li>Zoals je ziet verwachten we hier een <code>GET</code> request. In de URL wordt de id meegegeven vanuit de front-end(:roomId).<br>
+Via <code>req.params.id</code> kunnen we dit id opvragen.</li>
+<li>Binnen deze route kunnen we gebruik maken van <code>databaseHelper.js</code>. Dit script beheert de connectie naar de MySQL database. De functie <code>handleQuery(..)</code>
+kan een stukje data ophalen uit de database.</li>
+<li>De laatste stap is om binnen deze route in <code>roomsExampleRoutes.js</code> de data in JSON formaat terug te geven aan
+de front-end: <code>res.status(this.#errorCodes.HTTP_OK_CODE).json(data);</code>
+Let ook op dat je ook altijd wat terug moet geven als het fout gaat: <code>(err) =&gt; res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: err})</code></li>
+</ol>
+<p>Zie verder in de <code>welcomeController.js</code> hoe deze data dan weer op het sc~~~~herm getoond wordt. Let wel op dat dit asynchroon(<code>async</code>) gebeurt.</p>
+<h2>Links/E-learning</h2>
+<h3>NodeJS/Express/NPM</h3>
+<ul>
+<li>Learning Node.js https://www.linkedin.com/learning/learning-node-js-2
+<ul>
+<li>Chapter 1, 2 en 4 → Dit zijn de essentials binnen het NodeJS ecosysteem die je nodig hebt tijdens het project. Hier leer je
+meer over de basis van NodeJS, NPM(packages.json) en Express.JS.</li>
+<li>Chapter 7,8 en 9 → Deze hoofdstukken gaan in op de wat moeilijkere concepten zoals asynchrone code, software testen en error handling.</li>
+</ul>
+</li>
+</ul>
+<h3>Client-Server Communication</h3>
+<p>https://classroom.udacity.com/courses/ud897/</p>
+<p>In ieder geval les 1 is belangrijk. Les 5 over security is ook interessant, hier kom je ook meer te weten over wat CORS(<code>server/utils/corsConfigHelper.js</code>) is.</p>
+<h3>ES6</h3>
+<ul>
+<li>ES6 – Een nieuwe versie van Javascript die in de front-end gebruiken https://classroom.udacity.com/courses/ud356
+<ul>
+<li>Lesson 1: 1tm5 + 10tm13 → Dit is het minimum van les 1, de rest is zeker ook interessant!</li>
+<li>Lesson 2: 1tm9 + 12tm21 → Classes en Inheritance, nieuwe manier van functies schrijven t.o.v. FYS en het gebruik van het “this” keyword</li>
+</ul>
+</li>
+</ul>
+<h3>Bootstrap 5 - layout toolkit voor HTML/CSS en JS</h3>
+<p>Hoe richt ik mijn layout in?</p>
+<p>https://getbootstrap.com/docs/5.0/layout/grid/</p>
+<p>Hoe verander ik padding/marging?</p>
+<p>https://getbootstrap.com/docs/5.0/utilities/spacing/</p>
+<p>Hoe verander ik kleuren?</p>
+<p>https://getbootstrap.com/docs/5.0/utilities/colors/</p>
+<p>Teksten</p>
+<p>https://getbootstrap.com/docs/5.0/utilities/text</p>
+<p>Er kan nog veel meer met Bootstrap. De bovenstaande links zijn een aantal voorbeelden van de documentatie.</p>
+<h2>Troubleshooting</h2>
+<p><em>Bij het runnen van de server krijg ik de melding port already in use:</em></p>
+<p>Eindig het proces node in taakbeheer en draai de server nog een keer.</p>
+<p><em>Ik krijg errors in de console:</em></p>
+<p><img src="readme_assets_gitlab/error_example_client.png" alt="Client error"></p>
+<p>Het is hierbij van belang dat je goed kijkt wat er misgaat. Het kan namelijk zoals in dit geval zo zijn dat er
+ook iets in het servergedeelte niet goed staat:</p>
+<p><img src="readme_assets_gitlab/error_example_server.png" alt="Server error"></p>
+<p><em>Connection limit error:</em></p>
+<p>https://www.youtube.com/watch?v=e8psB6jmDYs&amp;list=PLvltGXy557e6KYqvUltMopI5udp8i6GaK&amp;index=7&amp;ab_channel=HBO-ICT</p>
+<h2>Deployen naar PAD Cloud</h2>
+<ul>
+<li>https://www.youtube.com/watch?v=g38Nh6JWrGc&amp;list=PLvltGXy557e6KYqvUltMopI5udp8i6GaK&amp;index=6&amp;ab_channel=HBO-ICT</li>
+<li>Nooit <code>node_modules</code> uploaden!</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CryptoHelper.html">CryptoHelper</a></li><li><a href="DatabaseHelper.html">DatabaseHelper</a></li><li><a href="LeaderboardRoutes.html">LeaderboardRoutes</a></li><li><a href="RoomsExampleRoutes.html">RoomsExampleRoutes</a></li><li><a href="ScheduleRoutes.html">ScheduleRoutes</a></li><li><a href="UploadFileRoute.html">UploadFileRoute</a></li><li><a href="UsersRoutes.html">UsersRoutes</a></li></ul><h3>Global</h3><ul><li><a href="global.html#errorCodes">errorCodes</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#HTTP_OK_CODE">HTTP_OK_CODE</a></li><li><a href="global.html#SERVER_ENVIRONMENT_LOCAL">SERVER_ENVIRONMENT_LOCAL</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Apr 21 2022 01:51:46 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

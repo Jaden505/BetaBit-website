@@ -7,14 +7,14 @@
  * @author Lennard Fonteijn & Pim Meijer
  */
 
-import { SessionManager } from "./framework/utils/sessionManager.js";
-import { LoginController } from "./controllers/loginController.js";
-import { NavbarController }  from "./controllers/navbarController.js";
-import { UploadController }  from "./controllers/uploadController.js";
-import { DashboardController }  from "./controllers/dashboardController.js";
-import { ScheduleController }  from "./controllers/scheduleController.js";
-import { ChangeScheduleController }  from "./controllers/changeScheduleController.js";
-import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js";
+import { SessionManager } from "./framework/utils/sessionManager.js"
+import { LoginController } from "./controllers/loginController.js"
+import { NavbarController }  from "./controllers/navbarController.js"
+import { UploadController }  from "./controllers/uploadController.js"
+import { DashboardController }  from "./controllers/dashboardController.js"
+import { ScheduleController }  from "./controllers/scheduleController.js"
+import { ChangeScheduleController }  from "./controllers/changeScheduleController.js"
+import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
 import { DateController } from "./controllers/dateController.js";
@@ -81,22 +81,27 @@ export class App {
                 break;
 
             case App.CONTROLLER_UPLOAD:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new UploadController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_DEFAULT_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new DefaultScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_CHANGE_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeScheduleController(),() => new LoginController());
                 break;
 
             case App.CONTROLLER_CHANGE_DEFAULT_SCHEDULE:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
                 break;
 
@@ -105,6 +110,7 @@ export class App {
                 break;
 
             case App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD:
+                App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
                 break;
             default:
@@ -167,6 +173,7 @@ export class App {
 
         //go to login screen
         App.loadController(App.CONTROLLER_LOGIN);
+        location.reload();
     }
 }
 

@@ -42,6 +42,28 @@ export class ScheduleRepository {
      * POST request, because given data is needed
      */
     async Schedule(begin_date, end_date, email) {
-        return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"begin_date": begin_date, "end_date": end_date, "email": email});
+        return await this.#networkManager.doRequest(`${this.#route}`, "POST",
+            {"begin_date": begin_date, "end_date": end_date, "email": email});
+    }
+
+    /**
+     * Async function that posts schedule data to network manager which will send it to our database
+     */
+    async updateSchedule(day_type, begin_date, end_date, distance, vehicle, email, date) {
+        return await this.#networkManager.doRequest(`${this.#route}/update`, "POST",
+            {"begin_date": begin_date, "end_date": end_date, "email": email,
+                "distance": distance, "vehicle": vehicle, "day_type": day_type, "date": date});
+    }
+
+    async getOptions(table) {
+        return await this.#networkManager.doRequest(`${this.#route}/options`, "POST", {"table": table})
+    }
+
+    async getDayTypes() {
+        return await this.#networkManager.doRequest(`${this.#route}/daytypes`, "POST")
+    }
+
+    async getTransportationOptions() {
+        return await this.#networkManager.doRequest(`${this.#route}/transportation`, "POST")
     }
 }

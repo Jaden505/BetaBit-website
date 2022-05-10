@@ -23,7 +23,11 @@ class UsersRoutes {
 
     /**
      * Checks if passed username and password are found in db, if so let the front-end know
+     * @memberOf UsersRoutes
+     * @name login
+     * @function
      * @private
+     * @instance
      */
     #login() {
         this.#app.post("/users/login", async (req, res) => {
@@ -38,7 +42,7 @@ class UsersRoutes {
                     values: [email, password]
                 });
 
-                //if we founnd one record we know the user exists in users table
+                //if we found one record we know the user exists in users table
                 if (data.length === 1) {
                     //return just the username for now, never send password back!
                     res.status(this.#errorCodes.HTTP_OK_CODE).json({

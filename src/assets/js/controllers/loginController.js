@@ -22,6 +22,11 @@ export class LoginController extends Controller{
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<void>}
+     * @memberOf LoginController
+     * @name setupView
+     * @function
+     * @private
+     * @instance
      */
     async #setupView() {
         //await for when HTML is loaded, never skip this method call in a controller
@@ -34,6 +39,11 @@ export class LoginController extends Controller{
     /**
      * Async function that does a login request via repository
      * @param event
+     * @memberOf LoginController
+     * @name handleLogin
+     * @function
+     * @private
+     * @instance
      */
     async #handleLogin(event) {
         //prevent actual submit and page refresh
@@ -50,6 +60,8 @@ export class LoginController extends Controller{
             App.sessionManager.set("email", user.email);
             App.sessionManager.set("username", user.username);
             App.sessionManager.set("role", user.role);
+
+            location.reload();
             App.loadController(App.CONTROLLER_DASHBOARD);
         } catch(error) {
             //if unauthorized error code, show error message to the user

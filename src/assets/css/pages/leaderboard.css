@@ -1,14 +1,14 @@
 .leaderboard-container {
     display: flex;
     flex-direction: column;
-    padding: .5rem 0;
+    padding: 0 0 .5rem 0;
     border: 2px solid var(--gray);
 }
 
 @media (min-width: 992px) {
     .leaderboard-container {
         margin-top: 1.5rem;
-        padding: 1rem 0;
+        padding: 0 0 1rem 0;
     }
 }
 
@@ -22,6 +22,8 @@
     color: var(--grey);
 }
 
+.leaderboard-me,
+.leaderboard-me .rank-user,
 .leaderboard-list .list-rank,
 .leaderboard-list .list-rank-Highlighted,
 .leaderboard-list .rank-user  {
@@ -30,11 +32,18 @@
 }
 
 @media (min-width: 992px) {
+    .leaderboard-me .rank-user,
     .leaderboard-list .rank-user  {
         width: 85%;
     }
 }
 
+.leaderboard-me,
+.leaderboard-list {
+    margin-top: 1rem;
+}
+
+.leaderboard-me,
 .leaderboard-list .list-rank,
 .leaderboard-list .list-rank-Highlighted
 {
@@ -43,6 +52,7 @@
 }
 
 @media (min-width: 992px) {
+    .leaderboard-me,
     .leaderboard-list .list-rank,
     .leaderboard-list .list-rank-Highlighted
     {
@@ -62,29 +72,72 @@
     }
 }
 
-
+.leaderboard-me .rank-user,
+.leaderboard-me .rank-placement,
 .leaderboard-list .rank-user,
 .leaderboard-list .rank-placement  {
     margin: auto;
 }
 
+@media (min-width: 992px) {
+    .leaderboard-me .rank-placement,
+    .leaderboard-list .rank-placement  {
+        margin: 0;
+    }
+}
+
+.leaderboard-me .rank-placement:before,
+.leaderboard-list .rank-placement:before {
+    content: "{";
+    visibility: hidden;
+    font-size: 1.5em;
+}
+
+.leaderboard-me .rank-placement:after,
+.leaderboard-list .rank-placement:after {
+    content: "}";
+    visibility: hidden;
+    font-size: 1.5em;
+}
+
+@media (min-width: 992px) {
+    .leaderboard-me .rank-placement,
+    .leaderboard-list .rank-placement {
+        font-size: 1.5em;
+    }
+
+    .leaderboard-me .rank-placement:before,
+    .leaderboard-list .rank-placement:before {
+        margin-right: .1em;
+    }
+
+    .leaderboard-me .rank-placement:before,
+    .leaderboard-list .rank-placement:after {
+        margin-left: .1em;
+    }
+}
+
+.leaderboard-me .rank-user .user-image,
 .leaderboard-list .rank-user .user-image {
     width: 45px;
     margin: 0 .5rem;
 }
 
 @media (min-width: 992px) {
+    .leaderboard-me .rank-user .user-image,
     .leaderboard-list .rank-user .user-image {
         width: 65px;
         margin: 0 1rem 0 2rem;
     }
 }
 
+.leaderboard-me .rank-user .user-name,
 .leaderboard-list .rank-user .user-name {
     width: 75%;
     margin: auto 0;
 }
 
+.leaderboard-me .rank-points,
 .leaderboard-list .rank-points  {
     display: flex;
     flex-direction: column;
@@ -93,6 +146,7 @@
 }
 
 @media (min-width: 992px) {
+    .leaderboard-me .rank-points,
     .leaderboard-list .rank-points  {
         width: 15%;
         flex-direction: row;
@@ -100,18 +154,32 @@
         margin: auto 0;
     }
 
+    .leaderboard-me .rank-points .points-label,
     .leaderboard-list .rank-points .points-label {
         margin: auto 0;
     }
 }
 
+.leaderboard-me .rank-points .points-total,
 .leaderboard-list .rank-points .points-total {
     color: var(--red);
     font-weight: bold;
 }
 
 @media (min-width: 992px) {
+    .leaderboard-me .rank-points .points-total,
     .leaderboard-list .rank-points .points-total {
         font-size: 2rem;
     }
+}
+
+.leaderboard-searchbar {
+    padding: .5em;
+    border: 1px solid var(--gray);
+    border-left: 0;
+    border-right: 0;
+}
+
+.leaderboard-searchbar:focus {
+    outline: 1px solid var(--red);
 }
