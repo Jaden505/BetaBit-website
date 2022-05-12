@@ -74,14 +74,27 @@ export class ChangeDefaultScheduleController extends Controller {
      * @private
      */
     async #updateDefaultScheduleData() {
-        await this.#sendUpdateRequest(await this.#gatherDataForUpdate())
+        let dataMultiArray = await this.#gatherDataForUpdate();
+        await Promise.all(
+            dataMultiArray.map(async (i) => {
+                console.log(i)
+                await this.#sendUpdateRequest(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
+            })
+        )
+        // This is for fetching the individual values of the multidimensional array one by one
+        // for (const data of dataMultiArray) {
+        //     data.map((i) => {
+        //         console.log(i)
+        //     })
+        // }
     }
 
     async #gatherDataForUpdate() {
         const email = App.sessionManager.get("email");
         const default_schedules = await this.#changeDefaultSchedule.defaultSchedule(email);
+        const multiArray = [];
 
-        default_schedules.forEach(function (schedule) {
+        for (const schedule of default_schedules) {
             let schedule_day = document.getElementById(schedule.day + "_field");
             let day_start = schedule_day.querySelector(".day-start").value
             let day_end = schedule_day.querySelector(".day-end").value
@@ -92,29 +105,25 @@ export class ChangeDefaultScheduleController extends Controller {
             let day = (schedule_day.id).substring(0, schedule_day.id.length - 6);
             if (type === "Empty" || type === "geen werk" || type === "ziek" || type === "online") {
                 vehicle = "geen";
-
                 distance = 0;
+
                 if (type !== "online") {
                     day_start = "00:00";
                     day_end = "00:00";
-
                 }
                 if (vehicle === "Empty") {
                     vehicle = "geen";
                 }
             }
-            return [type, day_start, day_end, distance, vehicle, email, day];
-        });
-
-        App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE);
-
+            multiArray.push([type, day_start, day_end, distance, vehicle, email, day])
+        }
+        return multiArray;
     }
 
     async #sendUpdateRequest(type, day_start, day_end, distance, vehicle, email, day) {
         let cds = this.#changeDefaultSchedule;
 
         await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
-
     }
 
     /**
