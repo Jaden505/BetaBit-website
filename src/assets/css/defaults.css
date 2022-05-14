@@ -209,3 +209,7 @@ label {
     overflow:scroll;
     height: 600px;
 }
+
+hr {
+    width: 60%;
+}

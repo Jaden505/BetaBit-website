@@ -6,18 +6,21 @@
 import {Controller} from "./controller.js";
 import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
+import {DateController} from "./dateController.js";
 import {SessionManager} from "../framework/utils/sessionManager.js";
 
 export class IndividualMonthLeaderboardController extends Controller {
     #monthLeaderboardView
     #monthLeaderboard
     today
+    dateController
 
     constructor() {
         super();
 
         this.#monthLeaderboard = new LeaderboardRepository();
         this.today = new Date;
+        this.dateController = new DateController();
 
         this.#setupView();
     }
@@ -44,9 +47,9 @@ export class IndividualMonthLeaderboardController extends Controller {
         };
 
         this.#currentMonth();
-        // this.weekCounter();
         await this.displayIndividualMonthLeaderboard(await this.getUsers());
         this.createTopThreeLeaderboardIcons();
+        this.dateController.weekCounter();
     }
 
     /**
@@ -64,48 +67,6 @@ export class IndividualMonthLeaderboardController extends Controller {
         document.querySelector('#leaderboard-month').innerText = currentMonth;
     }
 
-    /**
-     * Counter that checks and displays how long until Monday of next week
-     * @public
-     * @author Dennis Bleeker
-     */
-    weekCounter() {
-        const second = 1000;
-        const minute = second * 60;
-        const hour = minute * 60;
-        const day = hour * 24;
-
-        function getNextDayOfTheWeek(dayName, excludeToday = true, refDate = new Date()) {
-            const dayOfWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
-                .indexOf(dayName.slice(0, 3).toLowerCase());
-            if (dayOfWeek < 0) return;
-            refDate.setHours(0, 0, 0, 0);
-            refDate.setDate(refDate.getDate() + +!!excludeToday +
-                (dayOfWeek + 7 - refDate.getDay() - +!!excludeToday) % 7);
-            return refDate;
-        }
-
-        const countdown = () => {
-            this.today = new Date;
-            const countDate = getNextDayOfTheWeek("Monday", false);
-            const gap = countDate - this.today.getTime();
-
-            const textDay = Math.floor(gap / day);
-            const textHour = Math.floor((gap % day) / hour);
-            const textMinute = Math.floor((gap % hour) / minute);
-            const textSecond = Math.floor((gap % minute) / second);
-
-            document.querySelector('.updateText #day').innerText = textDay + "d";
-            document.querySelector('.updateText #hour').innerText = textHour + "u";
-            document.querySelector('.updateText #minute').innerText = textMinute + "m";
-            document.querySelector('.updateText #second').innerText = textSecond + "s";
-        };
-
-        // let timer = setInterval(countdown, second);
-        window.onunload = function () {clearInterval(timer)} // WERKT NIET
-        countdown();
-        // setInterval(countdown, second);
-    }
 
     /**
      * checks if the given email is the same as the email of the user thats logged in

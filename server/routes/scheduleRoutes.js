@@ -54,8 +54,7 @@ class ScheduleRoutes {
                             t.name AS transport,
                             t.emissions AS transport_emissions,
                             t.icon AS transport_icon,
-                            t.pointsMax AS points_max,
-                            t.pointsPerKm AS points_factor
+                            t.pointsMax AS points_max
                         FROM defaultschedules ds
                                  INNER JOIN daytypes d on ds.type = d.id
                                  INNER JOIN transport t on ds.transport = t.id
@@ -73,7 +72,7 @@ class ScheduleRoutes {
 
     /**
      * Gets schedule from database and returns to frontend in json
-     * @author Jaden Rijswijk
+     * @author Dia Fortmeier
      * @memberOf ScheduleRoutes
      * @name getSchedule
      * @function
@@ -104,8 +103,7 @@ class ScheduleRoutes {
                                    t.name      AS transport,
                                    t.emissions AS transport_emissions,
                                    t.icon AS transport_icon,
-                                   t.pointsMax AS points_max,
-                                   t.pointsPerKm AS points_factor
+                                   t.pointsMax AS points_max
                             FROM schedules s
                                      INNER JOIN daytypes d on s.type = d.id
                                      INNER JOIN transport t on s.transport = t.id

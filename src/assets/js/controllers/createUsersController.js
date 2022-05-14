@@ -33,6 +33,7 @@ export class createUsersController extends Controller {
 
         this.#createUsersView.querySelector("#submitCreateUser").addEventListener("click", this.#sendUserData.bind(this))
 
+        this.#displayUsersAmount();
         this.#displayUsers();
     }
 
@@ -52,10 +53,23 @@ export class createUsersController extends Controller {
             await this.#createUsers.addUser(email, name, role, password);
 
             this.#displayUsers();
+            this.#displayUsersAmount();
+
+            errorHolder.style.color = 'green';
+            errorHolder.innerHTML = "Gebruiker is succesvol toegevoegd";
         }
         catch(error) {
+            errorHolder.style.color = 'red';
             errorHolder.innerHTML = error.reason
         }
+    }
+
+    async #displayUsersAmount() {
+        const users = await this.#createUsers.getUsers();
+        const amount = users.length;
+        const user_amount_holder = document.getElementById('amount_users');
+
+        user_amount_holder.innerHTML = amount;
     }
 
     async #displayUsers() {
@@ -67,7 +81,7 @@ export class createUsersController extends Controller {
 
             let elem = document.createElement('p');
 
-            if (ind % 2 === 0) {elem.style.backgroundColor = 'lightgrey'}
+            if (ind % 2 === 0) {elem.style.backgroundColor = '#ebebeb'}
 
             elem.innerText = user['username'] + "\n" + user['email'];
 
