@@ -15,6 +15,9 @@ export class teamsRepository {
         this.#route = "/admin/teams"
         this.#networkManager = new NetworkManager();
     }
-
+    async postTeam(naam) {
+        console.log(naam)
+        return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"naam" : naam})
+    }
 
 }

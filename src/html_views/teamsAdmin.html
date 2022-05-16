@@ -5,26 +5,26 @@
     <title>Title</title>
 </head>
 <body>
-<form class="teams-form">
+<div class="teams-form">
     <div class="mb-3">
         <label>teams</label>
-        <input type="text" name="email" class="form-control" id="teamNaam" aria-describedby="teamNaam" placeholder="Vul team naam in">
+        <input type="text" name="teamNaam" class="form-control" id="teamNaam" aria-describedby="teamNaam" placeholder="Vul team naam in">
         <div id="team_naam" class="form-text"></div>
     </div>
     <div class="mb-3">
         <label>email user 1</label>
-        <input type="text" name="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Vul email van medewerker 1 in">
+        <input type="text" name="emailUser1" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Vul email van medewerker 1 in">
         <div id="usernameHelp1" class="form-text"></div>
     </div>
     <div class="mb-3">
         <label>email user 1</label>
-        <input type="text" name="email" class="form-control" id="InputEmail2" aria-describedby="emailHelp" placeholder="Vul email van medewerker 2 in">
+        <input type="text" name="emailUser2" class="form-control" id="InputEmail2" aria-describedby="emailHelp" placeholder="Vul email van medewerker 2 in">
         <div id="usernameHelp2" class="form-text"></div>
     </div>
 
     <div class="error mb-3 text-danger"></div>
 
-    <button type="submit" class="btn small-btn">maak een team aan</button>
-</form>
+    <button type="submit" class="btn small-btn" id="teamMakeButton">maak een team aan</button>
+</div>
 </body>
 </html>

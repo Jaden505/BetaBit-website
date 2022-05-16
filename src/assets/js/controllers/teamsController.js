@@ -10,15 +10,15 @@ import {SessionManager} from "../framework/utils/sessionManager.js";
 
 export class teamsController extends Controller {
     #teamsView
-    #teams
-
+    #teamsRepository
     constructor() {
         super();
 
-        this.#teams = new teamsRepository();
+        this.#teamsRepository = new teamsRepository();
 
 
         this.#setupView();
+
     }
 
     /**
@@ -34,5 +34,11 @@ export class teamsController extends Controller {
         //await for when HTML is loaded
         this.#teamsView = await super.loadHtmlIntoContent("html_views/teamsAdmin.html");
 
+        this.#teamsView.querySelector("#teamMakeButton").addEventListener("click", event => this.#teamMaker());
+    }
+    async #teamMaker(){
+        const naam= this.#teamsView.querySelector("#teamNaam").value;
+        await this.#teamsRepository.postTeam(naam);
+        console.log(naam);
     }
 }
