@@ -4,17 +4,17 @@
  */
 
 import {Controller} from "./controller.js";
-import {teamsRepository} from "../repositories/teamsRepository.js";
+import {TeamsRepository} from "../repositories/teamsRepository.js";
 import {App} from "../app.js";
 import {SessionManager} from "../framework/utils/sessionManager.js";
 
-export class teamsController extends Controller {
+export class TeamsController extends Controller {
     #teamsView
     #teamsRepository
     constructor() {
         super();
 
-        this.#teamsRepository = new teamsRepository();
+        this.#teamsRepository = new TeamsRepository();
 
 
         this.#setupView();

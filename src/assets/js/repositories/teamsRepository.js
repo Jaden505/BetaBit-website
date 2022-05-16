@@ -1,12 +1,12 @@
 /**
- * Repository responsible for all monthly leaderboards from server - CRUD
+ * Repository responsible for all admin sided team related stuff from server - CRUD
  *
  * @author Dia Fortmeier
  */
 
 import { NetworkManager } from "../framework/utils/networkManager.js";
 
-export class teamsRepository {
+export class TeamsRepository {
     //# is a private field in Javascript
     #route
     #networkManager

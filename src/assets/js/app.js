@@ -18,7 +18,7 @@ import { DefaultScheduleController }  from "./controllers/defaultScheduleControl
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
 import { DateController } from "./controllers/dateController.js";
-import { teamsController } from "./controllers/teamsController.js";
+import { TeamsController } from "./controllers/teamsController.js";
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -118,7 +118,7 @@ export class App {
 
             case App.CONTROLLER_TEAMSADMIN:
                 App.setCurrentController(name);
-                App.isLoggedIn(() => new teamsController(),() => new LoginController());
+                App.isLoggedIn(() => new TeamsController(),() => new LoginController());
                 break;
             default:
                 return false;
