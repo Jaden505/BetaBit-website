@@ -15,9 +15,16 @@ export class TeamsRepository {
         this.#route = "/admin"
         this.#networkManager = new NetworkManager();
     }
+
     async postTeam(naam) {
-        console.log(naam+" repo")
         return await this.#networkManager.doRequest(`${this.#route}/teams`, "POST", {"naam" : naam})
     }
+    async addMember(user_email,team_naam) {
+        return await this.#networkManager.doRequest(`${this.#route}/teams/members`, "POST", {"user_email" : user_email, "team_naam": team_naam})
+    }
+    async getTeam() {
+        return await this.#networkManager.doRequest(`${this.#route}/teams`, "GET")
+    }
+
 
 }
