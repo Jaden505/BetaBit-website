@@ -203,13 +203,39 @@ label {
     float: left;
 }
 
+#createUserForm {
+    float: left;
+}
+
 #users {
-    float: right;
-    width: 30%;
+    width: 400px;
     overflow:scroll;
     height: 600px;
 }
 
+@media (max-width: 992px) {
+    #users {
+        width: 300px;
+    }
+    #searchbarCreateUsers {
+        width: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    #users {
+        float: right;
+    }
+}
+
 hr {
     width: 60%;
+}
+
+#userRole {
+    width: 185px;
+}
+
+#searchbarCreateUsers {
+    width: 400px;
 }

@@ -71,14 +71,28 @@ class AdminsRoutes {
      * @instance
      */
     #getUsers() {
-        this.#app.get("/admin/get/users", async (req, res) => {
+        this.#app.post("/admin/get/users", async (req, res) => {
+            const search_string = "%" + req.body.search_value + "%";
+            let data;
+
             try {
-                const data = await this.#databaseHelper.handleQuery({
-                    query: "SELECT * FROM Users;"});
+                if (search_string === "") {
+                    data = await this.#databaseHelper.handleQuery({
+                        query: "SELECT username, email FROM Users;"
+                    });
+                }
+
+                else {
+                    data = await this.#databaseHelper.handleQuery({
+                        query: `SELECT username, email FROM Users
+                                WHERE username LIKE ?;`,
+                        values: [search_string]
+                    });
+                }
 
                 if (data.length >= 1) {res.status(this.#errorCodes.HTTP_OK_CODE).json(data)}
                 else {
-                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "There are no users yet"});
+                    res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: "There are no users"});
                 }
             }
             catch (e) {

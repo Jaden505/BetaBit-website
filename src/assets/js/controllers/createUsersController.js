@@ -33,8 +33,16 @@ export class createUsersController extends Controller {
 
         this.#createUsersView.querySelector("#submitCreateUser").addEventListener("click", this.#sendUserData.bind(this))
 
+        // Search bar on keyup call display function
+        let currentController = this;
+        let searchbar = document.getElementById("searchbarCreateUsers");
+        searchbar.onkeyup = async function () {
+            let users = await currentController.#createUsers.getUsers(searchbar.value);
+            currentController.#displayUsers(users);
+        };
+
         this.#displayUsersAmount();
-        this.#displayUsers();
+        this.#displayUsers(await this.#createUsers.getUsers(""));
     }
 
     async #sendUserData() {
@@ -52,7 +60,7 @@ export class createUsersController extends Controller {
         try {
             await this.#createUsers.addUser(email, name, role, password);
 
-            this.#displayUsers();
+            this.#displayUsers(await this.#createUsers.getUsers(""));
             this.#displayUsersAmount();
 
             errorHolder.style.color = 'green';
@@ -65,16 +73,17 @@ export class createUsersController extends Controller {
     }
 
     async #displayUsersAmount() {
-        const users = await this.#createUsers.getUsers();
+        const users = await this.#createUsers.getUsers("");
         const amount = users.length;
         const user_amount_holder = document.getElementById('amount_users');
 
         user_amount_holder.innerHTML = amount;
     }
 
-    async #displayUsers() {
-        const users = await this.#createUsers.getUsers();
-        const users_holder_elem = document.getElementById("users")
+    async #displayUsers(users) {
+        const users_holder = document.getElementById("users_list")
+
+        users_holder.innerHTML = "";
 
         for (let ind in users) {
             let user = users[ind];
@@ -85,7 +94,7 @@ export class createUsersController extends Controller {
 
             elem.innerText = user['username'] + "\n" + user['email'];
 
-            users_holder_elem.appendChild(elem)
+            users_holder.appendChild(elem)
         }
     }
 }

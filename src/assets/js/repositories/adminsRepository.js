@@ -26,11 +26,11 @@ export class AdminsRepository {
     }
 
     /**
-     * Async function that get all users from database
+     * Async function that get all users from database with given search value
      *
-     * GET request, because no given data is needed
+     * POST request, because given data is needed
      */
-    async getUsers() {
-        return await this.#networkManager.doRequest(`${this.#route}/get/users`, "GET");
+    async getUsers(search_value) {
+        return await this.#networkManager.doRequest(`${this.#route}/get/users`, "POST", {"search_value": search_value});
     }
 }
