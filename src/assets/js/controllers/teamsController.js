@@ -39,6 +39,6 @@ export class TeamsController extends Controller {
     async #teamMaker(){
         const naam= this.#teamsView.querySelector("#teamNaam").value;
         await this.#teamsRepository.postTeam(naam);
-        console.log(naam);
+        console.log(naam+"controller");
     }
 }

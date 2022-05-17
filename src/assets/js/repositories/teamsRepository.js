@@ -1,7 +1,7 @@
 /**
  * Repository responsible for all admin sided team related stuff from server - CRUD
  *
- * @author Dia Fortmeier
+ * @author Mairo Tzouvelekis
  */
 
 import { NetworkManager } from "../framework/utils/networkManager.js";
@@ -12,12 +12,12 @@ export class TeamsRepository {
     #networkManager
 
     constructor() {
-        this.#route = "/admin/teams"
+        this.#route = "/admin"
         this.#networkManager = new NetworkManager();
     }
     async postTeam(naam) {
-        console.log(naam)
-        return await this.#networkManager.doRequest(`${this.#route}`, "POST", {"naam" : naam})
+        console.log(naam+" repo")
+        return await this.#networkManager.doRequest(`${this.#route}/teams`, "POST", {"naam" : naam})
     }
 
 }

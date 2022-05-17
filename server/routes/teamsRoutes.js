@@ -5,23 +5,24 @@ class TeamsRoutes {
     #app
 
     constructor(app) {
-        this.#app=app
+        this.#app= app;
         this.#createTeams()
     }
 
 
     #createTeams() {
+        console.log("create teams start")
         this.#app.post("/admin/teams", async (req, res) => {
-            const naam = req.body.teamNaam;
+
+            const naamTeam = req.body.naam;
             // const emailUser1 = req.body.emailUser1;
             // const emailUser2 = req.body.emailUser2;
-
+            console.log(naamTeam+" route")
             try {
                 const data = await this.#databaseHelper.handleQuery({
-                    query: `INSERT INTO teams (?)`,
-                    values: [naam]
+                    query: `INSERT INTO teams (naam) VALUES (?)`,
+                values:[naamTeam]
                 });
-
                 // returns schedules
                 res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } catch (e) {
