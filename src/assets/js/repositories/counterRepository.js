@@ -31,7 +31,7 @@ export class CounterRepository {
      *
      *
      */
-    async defaultSchedule(update_date) {
+    async counterDate(update_date) {
         return await this.#networkManager.doRequest(`${this.#route}/default`, "POST", {"update_date": update_date});
     }
 }
