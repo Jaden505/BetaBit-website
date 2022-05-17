@@ -1,7 +1,7 @@
 /**
- * Responsible for handling the actions happening on the navigation
+ * Responsible for create user accounts
  *
- * @author Lennard Fonteijn & Pim Meijer
+ * @author Jaden van Rijswijk
  */
 
 import { AdminsRepository } from "../repositories/adminsRepository.js";
@@ -51,7 +51,7 @@ export class createUsersController extends Controller {
         const email = document.getElementById("userEmail").value
         const name = document.getElementById("userName").value
         let role = document.getElementById("userRole").value
-        const password = document.getElementById("userPassword").value
+        const password = createUsersController.generatePassword();
 
         role === 'admin' ? role = 1 : role = 2;
 
@@ -72,6 +72,9 @@ export class createUsersController extends Controller {
         }
     }
 
+    /**
+     *  Returns amount of users currently in database
+     */
     async #displayUsersAmount() {
         const users = await this.#createUsers.getUsers("");
         const amount = users.length;
@@ -96,5 +99,12 @@ export class createUsersController extends Controller {
 
             users_holder.appendChild(elem)
         }
+    }
+
+    /**
+     * Returns random string of 8 letters and/or numbers
+     */
+    static generatePassword() {
+        return Math.random().toString(36).slice(-8);
     }
 }
