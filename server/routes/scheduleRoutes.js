@@ -59,11 +59,11 @@ class ScheduleRoutes {
                                  INNER JOIN daytypes d on ds.type = d.id
                                  INNER JOIN transport t on ds.transport = t.id
                         WHERE ds.user_email = ?;`,
-                values: [email]
-            });
+                        values: [email]
+                    });
 
-            // returns default schedules
-            res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
+                // returns default schedules
+                res.status(this.#errorCodes.HTTP_OK_CODE).json(data);
             } catch (e) {
                 res.status(this.#errorCodes.BAD_REQUEST_CODE).json({reason: e});
             }
@@ -131,7 +131,8 @@ class ScheduleRoutes {
      * @instance
      */
     #setDefaultSchedule() {
-        this.#app.put("/schedule/update/default", async (req, res) => {
+        console.log("check")
+        this.#app.post("/schedule/update/default", async (req, res) => {
             const email = req.body.email;
             const type = req.body.day_type;
             const begin_date = req.body.begin_date;

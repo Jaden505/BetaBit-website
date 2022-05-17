@@ -75,12 +75,17 @@ export class ChangeDefaultScheduleController extends Controller {
      */
     async #updateDefaultScheduleData() {
         let dataMultiArray = await this.#gatherDataForUpdate();
-        await Promise.all(
-            dataMultiArray.map(async (i) => {
-                console.log(i)
-                await this.#sendUpdateRequest(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
-            })
-        )
+        const delay = timeToWait => new Promise(resolve => setTimeout(resolve, timeToWait));
+
+        let i = dataMultiArray[0];
+        console.log(i);
+        for (const d of dataMultiArray) {
+            await delay(1000)
+            await this.#changeDefaultSchedule.updateDefaultSchedule(d[0], d[1], d[2], d[3], d[4], d[5], d[6]);
+        }
+        //this.#sendUpdateRequest(i[0], i[1], i[2], i[3], i[4], i[5], i[6])
+    //
+
         // This is for fetching the individual values of the multidimensional array one by one
         // for (const data of dataMultiArray) {
         //     data.map((i) => {
@@ -120,11 +125,7 @@ export class ChangeDefaultScheduleController extends Controller {
         return multiArray;
     }
 
-    async #sendUpdateRequest(type, day_start, day_end, distance, vehicle, email, day) {
-        let cds = this.#changeDefaultSchedule;
 
-        await cds.updateDefaultSchedule(type, day_start, day_end, distance, vehicle, email, day);
-    }
 
     /**
      * Fetches the available options out of the database and adds them to the selectable day types
