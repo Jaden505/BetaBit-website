@@ -17,6 +17,8 @@ import { ChangeScheduleController }  from "./controllers/changeScheduleControlle
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
+import { IndividualYearLeaderboardController } from "./controllers/individualYearLeaderboardController.js";
+import { DateController } from "./controllers/dateController.js";
 
 export class App {
     //we only need one instance of the sessionManager, thus static use here
@@ -34,6 +36,8 @@ export class App {
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
     static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
     static CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD = "individual_month_leaderboard";
+    static CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD = "individual_year_leaderboard";
+    static CONTROLLER_DATE = "date";
 
     constructor() {
         //Always load the navigation
@@ -102,9 +106,18 @@ export class App {
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new ChangeDefaultScheduleController(),() => new LoginController());
                 break;
+
+            case App.CONTROLLER_DATE:
+                App.isLoggedIn(() => new DateController(),() => new LoginController());
+                break;
+
             case App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD:
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
+                break;
+            case App.CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD:
+                App.setCurrentController(name);
+                App.isLoggedIn(() => new IndividualYearLeaderboardController(),() => new LoginController());
                 break;
             default:
                 return false;
@@ -152,6 +165,19 @@ export class App {
      */
     static isLoggedIn(whenYes, whenNo) {
         if (App.sessionManager.get("email")) {
+            whenYes();
+        } else {
+            whenNo();
+        }
+    }
+
+    /**
+     * Convenience functions to handle logged-in-admin states
+     * @param whenYes - function when user is logged in admin
+     * @param whenNo - function when user isn't
+     */
+    static isLoggedInAdmin(whenYes, whenNo) {
+        if (App.sessionManager.get("email") && App.sessionManager.get("role") === 1) {
             whenYes();
         } else {
             whenNo();

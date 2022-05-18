@@ -2,6 +2,7 @@
  * Repository responsible for all monthly leaderboards from server - CRUD
  *
  * @author Dia Fortmeier
+ * && Jaden van Rijswijk
  */
 
 import { NetworkManager } from "../framework/utils/networkManager.js";
@@ -12,17 +13,17 @@ export class LeaderboardRepository {
     #networkManager
 
     constructor() {
-        this.#route = "/monthLeaderboard"
+        this.#route = "/leaderboard"
         this.#networkManager = new NetworkManager();
     }
 
     /**
-     * Async function that requests individualMonthLeaderboard data to network manager which will send it to our back-end
+     * Async function that requests individualLeaderboard data to network manager which will send it to our back-end
      *
-     * GET request, because no given data is needed
+     * POST request, because given data is needed
      */
-    async individualMonthLeaderboard() {
-        return await this.#networkManager.doRequest(`${this.#route}/individual`, "GET");
+    async individualLeaderboard(begin_date, end_date) {
+        return await this.#networkManager.doRequest(`${this.#route}/individual`, "POST", {"begin_date": begin_date, "end_date": end_date});
     }
 
     /**

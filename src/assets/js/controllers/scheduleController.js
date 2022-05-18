@@ -38,13 +38,17 @@ export class ScheduleController extends Controller {
         // Redirect buttons
         this.#scheduleView.querySelector("#changeSchedule").addEventListener("click", function () {
             document.querySelector("#popupOverlay").style.display = 'block';
-            App.loadController(App.CONTROLLER_CHANGE_SCHEDULE)});
+            App.loadController(App.CONTROLLER_CHANGE_SCHEDULE)
+        });
         this.#scheduleView.querySelector("#defaultSchedule").addEventListener("click", event => App.loadController(App.CONTROLLER_DEFAULT_SCHEDULE));
 
+        // Loads and displays dates
         this.#displaySchedule();
         this.#displayCurrentDates();
         this.#highlightDay();
         this.#getWeekOfTheYear();
+
+        // Dynamic
         if (screen.width < 992) {
             this.#createScheduleTabs();
         }
@@ -60,7 +64,7 @@ export class ScheduleController extends Controller {
      * @instance
      */
     #highlightDay() {
-        let day_containers = Array.from(document.getElementById("days_holder").children)
+        let day_containers = Array.from(this.#scheduleView.querySelector("#days_holder").children)
         let today = ScheduleController.days[this.#date.getDay()];
 
         for (let day of day_containers) {
@@ -70,7 +74,7 @@ export class ScheduleController extends Controller {
 
                 if (screen.width < 992) {
                     day.classList.add("selected-day");
-                    document.querySelector("#" + day.id + "_detail").classList.add("selected-day");
+                    this.#scheduleView.querySelector("#" + day.id + "_detail").classList.add("selected-day");
                 }
             }
         }
@@ -120,7 +124,7 @@ export class ScheduleController extends Controller {
      * @instance
      */
     #displayCurrentDates() {
-        let day_containers = document.getElementById("days_holder").children
+        let day_containers = this.#scheduleView.querySelector("#days_holder").children
         let current_days = this.#getCurrentDates("day");
         let current_months = this.#getCurrentDates("month");
 
@@ -129,9 +133,9 @@ export class ScheduleController extends Controller {
             day.querySelector(".date").innerHTML = current_days[i];
             day.querySelector(".month").innerHTML = current_months[i];
 
-            document.querySelector("#first-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#first-weekDay").innerHTML =
                 "maandag " + current_days[0] + " " + current_months[i] + " " + new Date().getFullYear();
-            document.querySelector("#last-weekDay").innerHTML =
+            this.#scheduleView.querySelector("#last-weekDay").innerHTML =
                 "zondag " + current_days[6] + " " + current_months[i] + " " + new Date().getFullYear();
         }
     }
@@ -156,7 +160,7 @@ export class ScheduleController extends Controller {
 
         let weekNumber = (new Date().getWeekNumber());
 
-        document.querySelector("#schedule-week").innerHTML = weekNumber.toString();
+        this.#scheduleView.querySelector("#schedule-week").innerHTML = weekNumber.toString();
     }
 
     /**
@@ -217,24 +221,6 @@ export class ScheduleController extends Controller {
     }
 
     /**
-     * calculates how much points you get
-     * the amount of points you get per KM and the max amount of point you can get per vehicle can easily be edited
-     * by changing the (x)var variables in the database. With the first number being the amount of points per KM and
-     * the second number being the point cap.
-     * @author Mairo Garf Tzouvelekis
-     * @public
-     */
-    static pointCalculator(distance,points_factor ,points_Max ) {
-        let number
-        number = distance * points_factor;
-        if (number > points_Max) {
-            console.log(number);
-            number = points_Max;
-        }
-        return number;
-    }
-
-    /**
      * Gets the default schedule, and schedule from the db.
      * It checks if the days exists in the schedule else it uses the default schedule day.
      * at the end the schedule gets put in the corresponding html fields.
@@ -273,7 +259,7 @@ export class ScheduleController extends Controller {
             }
 
             let totalEmissions = schedule.transport_emissions * schedule.travel_distance;
-            let totalPoints = ScheduleController.pointCalculator(schedule.travel_distance, schedule.points_factor, schedule.points_max);
+            let totalPoints = schedule.points_max;
 
             schedule_day.querySelector(".type-icon").classList.add(schedule.type_icon);
             schedule_day.querySelector(".day-type").innerHTML = schedule.daytype;
@@ -301,7 +287,6 @@ export class ScheduleController extends Controller {
                     ScheduleController.#getTransportTypeLabel(schedule.transport);
                 schedule_day.querySelector(".emission").innerHTML = totalEmissions + " g";
                 schedule_day.querySelector(".points").innerHTML = totalPoints + " punten";
-
             }
         });
     }

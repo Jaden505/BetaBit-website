@@ -1,5 +1,5 @@
 /**
- * Responsible for handling the actions happening on monthLeaderboard views
+ * Responsible for handling the actions happening on yearLeaderboard views
  *
  */
 
@@ -7,23 +7,17 @@ import {Controller} from "./controller.js";
 import {UtilsController} from "./utilsController.js";
 import {LeaderboardRepository} from "../repositories/leaderboardRepository.js";
 import {App} from "../app.js";
-import {DateController} from "./dateController.js";
-import {SessionManager} from "../framework/utils/sessionManager.js";
 
-export class IndividualMonthLeaderboardController extends Controller {
-    #monthLeaderboardView
-    #monthLeaderboard
+export class IndividualYearLeaderboardController extends Controller {
+    #yearLeaderboardView
+    #yearLeaderboard
     #utilsController
-    today
-    dateController
 
     constructor() {
         super();
 
-        this.#monthLeaderboard = new LeaderboardRepository();
+        this.#yearLeaderboard = new LeaderboardRepository();
         this.#utilsController = new UtilsController();
-        this.today = new Date;
-        this.dateController = new DateController();
 
         this.#setupView();
     }
@@ -31,7 +25,7 @@ export class IndividualMonthLeaderboardController extends Controller {
     /**
      * Loads contents of desired HTML file into the index.html .content div
      * @returns {Promise<>}
-     * @memberOf IndividualMonthLeaderboardController
+     * @memberOf IndividualYearLeaderboardController
      * @name setupView
      * @function
      * @private
@@ -39,39 +33,22 @@ export class IndividualMonthLeaderboardController extends Controller {
      */
     async #setupView() {
         //await for when HTML is loaded
-        this.#monthLeaderboardView = await super.loadHtmlIntoContent("html_views/individualMonthLeaderboard.html");
+        this.#yearLeaderboardView = await super.loadHtmlIntoContent("html_views/individualYearLeaderboard.html");
 
         // Redirect button
-        this.#monthLeaderboardView.querySelector("#yearLeaderboard").addEventListener("click", event => App.loadController(App.CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD));
+        this.#yearLeaderboardView.querySelector("#monthLeaderboard").addEventListener("click", event => App.loadController(App.CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD));
 
         // Search bar on keyup call display function
         let currentController = this;
         let searchbar = document.getElementById("searchbar");
         searchbar.onkeyup = async function () {
             let users = await currentController.getUsers(searchbar.value);
-            currentController.displayIndividualMonthLeaderboard(users);
+            currentController.displayIndividualYearLeaderboard(users);
         };
 
-        this.#utilsController.currentMonth();
-        this.#currentMonth();
-        await this.displayIndividualMonthLeaderboard(await this.getUsers());
+        this.#utilsController.currentYear();
+        await this.displayIndividualYearLeaderboard(await this.getUsers());
         this.createTopThreeLeaderboardIcons();
-        this.dateController.weekCounter();
-    }
-
-    /**
-     * Gets the current month and displays it.
-     * @author Dia Fortmeier
-     * @memberOf IndividualMonthLeaderboardController
-     * @name currentMonth
-     * @function
-     * @private
-     * @instance
-     */
-    #currentMonth() {
-        let currentMonth = this.today.toLocaleString('default', {month: 'long'});
-        currentMonth = currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
-        document.querySelector('#leaderboard-month').innerText = currentMonth;
     }
 
     /**
@@ -95,8 +72,8 @@ export class IndividualMonthLeaderboardController extends Controller {
      * @author Jaden Rijswijk
      */
     async getUsers(search_string = "") {
-        if (search_string === "") {return await this.#monthLeaderboard.individualLeaderboard(this.#utilsController.beginCurrentMonth(), this.#utilsController.endCurrentMonth());}
-        else {return await this.#monthLeaderboard.searchUsers(search_string);}
+        if (search_string === "") {return await this.#yearLeaderboard.individualLeaderboard(this.#utilsController.beginCurrentYear(), this.#utilsController.endCurrentYear());}
+        else {return await this.#yearLeaderboard.searchUsers(search_string);}
     }
 
     /**
@@ -149,18 +126,18 @@ export class IndividualMonthLeaderboardController extends Controller {
     }
 
     /**
-     * Gets the users and all their current month points.
+     * Gets the users and all their current year points.
      * Creates the elements needed to make leaderboard entries, and displays the data in those elements.
      * @author Dia Fortmeier
-     * @memberOf IndividualMonthLeaderboardController
-     * @name displayIndividualMonthLeaderboard
+     * @memberOf IndividualYearLeaderboardController
+     * @name displayIndividualYearLeaderboard
      * @function
      * @public
      * @returns {Promise<void>}
      * @instance
      */
-    async displayIndividualMonthLeaderboard(leaderboardUsers) {
-        const leaderboardContainer = this.#monthLeaderboardView.querySelector(".leaderboard-list");
+    async displayIndividualYearLeaderboard(leaderboardUsers) {
+        const leaderboardContainer = this.#yearLeaderboardView.querySelector(".leaderboard-list");
         let rankPlacementNumber = 0;
 
         leaderboardContainer.innerHTML = "";
@@ -195,7 +172,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             pointsTotal.textContent = lu.points;
 
             if (App.sessionManager.get("username") === lu.username) {
-                IndividualMonthLeaderboardController.createSessionUserPlacement(rankPlacementNumber, rankPlacement.id,
+                IndividualYearLeaderboardController.createSessionUserPlacement(rankPlacementNumber, rankPlacement.id,
                     lu.username,`https://ui-avatars.com/api/?name=${nameList}&background=B70D31&color=fff`,
                     lu.points);
             }
@@ -205,7 +182,7 @@ export class IndividualMonthLeaderboardController extends Controller {
             rankPoints.append(pointsLabel, pointsTotal);
             listRank.append(rankPlacement, rankUser, rankPoints);
 
-            IndividualMonthLeaderboardController.createUserHighlight(lu.email, listRank);
+            IndividualYearLeaderboardController.createUserHighlight(lu.email, listRank);
         });
     }
 
