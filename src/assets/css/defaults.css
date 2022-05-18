@@ -190,3 +190,52 @@ footer {
 #displayErrorCreateUsers {
     color: red;
 }
+
+label {
+    display: inline-block;
+    float: left;
+    clear: left;
+    text-align: left;
+    width: 250px;
+}
+
+.add-user-input {
+    float: left;
+}
+
+#createUserForm {
+    float: left;
+}
+
+#users {
+    width: 400px;
+    overflow:scroll;
+    height: 600px;
+}
+
+@media (max-width: 992px) {
+    #users {
+        width: 300px;
+    }
+    #searchbarCreateUsers {
+        width: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    #users {
+        float: right;
+    }
+}
+
+hr {
+    width: 60%;
+}
+
+#userRole {
+    width: 185px;
+}
+
+#searchbarCreateUsers {
+    width: 400px;
+}

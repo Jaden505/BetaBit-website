@@ -17,6 +17,7 @@ import { ChangeScheduleController }  from "./controllers/changeScheduleControlle
 import { DefaultScheduleController }  from "./controllers/defaultScheduleController.js"
 import { ChangeDefaultScheduleController } from "./controllers/changeDefaultScheduleController.js";
 import { IndividualMonthLeaderboardController } from "./controllers/individualMonthLeaderboardController.js";
+import { createUsersController } from "./controllers/createUsersController.js";
 import { IndividualYearLeaderboardController } from "./controllers/individualYearLeaderboardController.js";
 import { DateController } from "./controllers/dateController.js";
 
@@ -36,6 +37,7 @@ export class App {
     static CONTROLLER_CHANGE_SCHEDULE = "change_schedule";
     static CONTROLLER_CHANGE_DEFAULT_SCHEDULE = "change_default_schedule";
     static CONTROLLER_INDIVIDUAL_MONTH_LEADERBOARD = "individual_month_leaderboard";
+    static CONTROLLER_CREATE_USERS = "create_users";
     static CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD = "individual_year_leaderboard";
     static CONTROLLER_DATE = "date";
 
@@ -115,6 +117,9 @@ export class App {
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualMonthLeaderboardController(),() => new LoginController());
                 break;
+            case App.CONTROLLER_CREATE_USERS:
+                App.setCurrentController(name);
+                App.isLoggedInAdmin(() => new createUsersController(),() => new LoginController());
             case App.CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD:
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualYearLeaderboardController(),() => new LoginController());

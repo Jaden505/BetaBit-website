@@ -1,0 +1,44 @@
+<div class="container">
+    <br><br>
+
+    <div id="createUserForm">
+    <div class="label-input-holder">
+    <label for="userEmail">Email:</label>
+    <input id="userEmail" type="email" class="add-user-input">
+    <br>
+    <hr>
+    </div>
+
+    <div class="label-input-holder">
+    <label for="userName">Naam:</label>
+    <input type="text" id="userName" class="add-user-input">
+    <br>
+    <hr>
+    </div>
+
+    <div class="label-input-holder">
+    <label for="userRole">Type account</label>
+    <select id="userRole" name="roles" class="add-user-input">
+        <option value="user">Gebruiker</option>
+        <option value="admin">Admin</option>
+    </select>
+    <br>
+    <hr>
+    </div>
+
+    <button id="submitCreateUser" class="buttons">Voeg account toe</button>
+
+    <br>
+
+    <p id="displayErrorCreateUsers"></p>
+    </div>
+
+    <div id="users">
+        <input type="text" placeholder="Zoek een gebruiker..." id="searchbarCreateUsers" class="leaderboard-searchbar">
+
+        <p><b>Aantal bestaande gebruikers: <span id="amount_users"></span></b></p>
+        <br>
+
+        <div id="users_list"></div>
+    </div>
+</div>
