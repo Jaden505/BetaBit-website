@@ -120,6 +120,7 @@ export class App {
             case App.CONTROLLER_CREATE_USERS:
                 App.setCurrentController(name);
                 App.isLoggedInAdmin(() => new createUsersController(),() => new LoginController());
+                break;
             case App.CONTROLLER_INDIVIDUAL_YEAR_LEADERBOARD:
                 App.setCurrentController(name);
                 App.isLoggedIn(() => new IndividualYearLeaderboardController(),() => new LoginController());
